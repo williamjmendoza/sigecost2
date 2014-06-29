@@ -47,9 +47,9 @@
 	$db->TablePrefix = GetConfig('tablePrefix');
 	$db->charset = GetConfig('dbEncoding');
 	$db->timezone = '+0:00';
-	/*
+	
 	$connection = $db->Connect(
-			GetConfig('dbServer') . ":" . GetConfig('dbPort'),
+			GetConfig('dbServer'),
 			GetConfig('dbUser'),
 			GetConfig('dbPass'),
 			GetConfig('dbDatabase')
@@ -63,11 +63,11 @@
 		$error = str_replace(GetConfig('dbPass'), "[database pass]", $error);
 		$error = str_replace(GetConfig('dbDatabase'), "[database]", $error);
 
-		echo "<strong>No se pudo realizar la conexi&oacute;n con la base de datos de patrones: </strong>".$error;
+		echo "<strong>Ocurrieron errores al realizar la conexi&oacute;n con la base de datos de patrones: </strong>".$error;
 		exit;
 	
 	}
-	*/
+	
 	// Crear una referencia al objeto de base de datos
 	$GLOBALS['PATRONES_CLASS_DB'] = &$db;
 	
@@ -92,7 +92,7 @@
 			$error = str_replace(GetConfig('ontoDbPass'), "[onto database pass]", $error);
 			$error = str_replace(GetConfig('ontoDbDatabase'), "[onto database]", $error);
 			
-			echo "<strong>No se pudo realizar la conexi&oacute;n con la base de datos de la ontolog&iacute;a: </strong>".$error;
+			echo "<strong>Ocurrieron errores al realizar la conexi&oacute;n con la base de datos de la ontolog&iacute;a: </strong>".$error;
 			
 			exit;
 		}
@@ -100,55 +100,6 @@
 		$store->setUp();
 		
 	}
-	
-	
-	
-	
-	
-	/*
-	mysqli_connect(GetConfig('dbServer'), GetConfig('dbUser'), GetConfig('dbPass'), GetConfig('dbDatabase'), GetConfig('dbPort'));
-	
-	if (mysqli_connect_error()) {
-		die('Error de Conexión (' . mysqli_connect_errno() . ') '
-				. mysqli_connect_error());
-	}
-	
-	*/
-	
-	
-	
-	
-	$connection = $db->Connect(
-			GetConfig('dbServer') . "_:" . GetConfig('dbPort'),
-			GetConfig('dbUser'),
-			GetConfig('dbPass'),
-			GetConfig('dbDatabase')
-	);
-	
-	if (!$connection) {
-		
-		echo "<pre>";
-		echo "Error:" . mysql_error() . " - " . mysql_errno();
-		echo "</pre>";
-		
-		
-		
-		list($error, $level) = $db->GetError();
-	
-		$error = str_replace(GetConfig('dbServer'), "[database server]", $error);
-		$error = str_replace(GetConfig('dbUser'), "[database user]", $error);
-		$error = str_replace(GetConfig('dbPass'), "[database pass]", $error);
-		$error = str_replace(GetConfig('dbDatabase'), "[database]", $error);
-	
-		echo "<strong>No se pudo realizar la conexi&oacute;n con la base de datos de patrones: </strong>".$error;
-		exit;
-	
-	}
-	
-	
-	
-	
-	
 	
 	// Crear una referencia al objeto store de arc2
 	$GLOBALS['ONTOLOGIA_STORE'] = &$store;

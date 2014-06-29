@@ -129,26 +129,24 @@ class MySQLDb extends Db
 			$this->Disconnect($this->connection);
 		}
 
-		$connection_result = @mysql_connect($hostname, $username, $password, true);
+		$connection_result = @mysqli_connect($hostname, $username, $password, $databasename);
 		if (!$connection_result) {
-			$this->SetError(mysql_error());
+			$this->SetError(mysqli_connect_error());
 			return false;
 		}
 		$this->connection = &$connection_result;
 
-		$db_result = @mysql_select_db($databasename, $connection_result);
-		if (!$db_result) {
-			$this->SetError('Unable to select database \''.$databasename.'\': '.mysql_error());
-			return false;
-		}
 		$this->_hostname = $hostname;
 		$this->_username = $username;
 		$this->_password = $password;
 		$this->_databasename = $databasename;
 		
-		// Set the character set if we have one
+		// Cambiar el conjunto de caracteres si tenemos alguno
 		if($this->charset) {
-			$this->Query('SET NAMES '.$this->charset);
+			if (!mysqli_set_charset($this->connection, $this->charset)) {
+				$this->SetError(mysqli_error($this->connection));
+				return false;
+			}
 		}
 		
 		// Do we have a timezone? Set it
@@ -179,7 +177,7 @@ class MySQLDb extends Db
 			$this->SetError('Resource '.$resource.' is not really a resource');
 			return false;
 		}
-		$close_success = mysql_close($resource);
+		$close_success = mysqli_close($resource);
 		if ($close_success) {
 			$this->connection = null;
 		}
@@ -233,9 +231,9 @@ class MySQLDb extends Db
 		}
 
 		if (!$this->_unbuffered_query) {
-			$result = mysql_query($query, $this->connection);
+			$result = mysqli_query($this->connection, $query);
 		} else {
-			$result = mysql_unbuffered_query($query, $this->connection);
+			$result = mysqli_query($this->connection, $query, MYSQLI_USE_RESULT);
 			$this->_unbuffered_query = false;
 		}
 
@@ -263,8 +261,8 @@ class MySQLDb extends Db
 		}
 
 		if (!$result) {
-			$error = mysql_error($this->connection);
-			$errno = mysql_errno($this->connection);
+			$error = mysqli_error($this->connection);
+			$errno = mysqli_errno($this->connection);
 
 			if ($this->ErrorLog !== null) {
 				$this->LogError($query, $error);
@@ -286,7 +284,7 @@ class MySQLDb extends Db
 				return $this->Query($query);
 			}
 		}
-
+		
 		// make sure we set the 'retry' flag back to false if we are returning a result set.
 		$this->_retry = false;
 		return $result;
@@ -334,10 +332,10 @@ class MySQLDb extends Db
 		}
 
 		if($this->magic_quotes_runtime_on) {
-			return $this->StripslashesArray(mysql_fetch_assoc($resource));
+			return $this->StripslashesArray(mysqli_fetch_assoc($resource));
 		}
 		else {
-			return mysql_fetch_assoc($resource);
+			return mysqli_fetch_assoc($resource);
 		}
 	}
 
@@ -362,7 +360,7 @@ class MySQLDb extends Db
 		if (!$result) {
 			return false;
 		}
-		return mysql_insert_id($this->connection);
+		return mysqli_insert_id($this->connection);
 	}
 
 	/**
@@ -507,7 +505,7 @@ class MySQLDb extends Db
 			$this->SetError('Resource '.$resource.' is not really a resource');
 			return false;
 		}
-		$result = mysql_free_result($resource);
+		$result = mysqli_free_result($resource);
 		return $result;
 	}
 
@@ -531,7 +529,7 @@ class MySQLDb extends Db
 		if (!is_resource($resource)) {
 			$resource = $this->Query($resource);
 		}
-		$count = mysql_num_rows($resource);
+		$count = mysqli_num_rows($resource);
 		return $count;
 	}
 
@@ -566,9 +564,9 @@ class MySQLDb extends Db
 	{
 		if (is_string($var) || is_numeric($var) || is_null($var)) {
 			if ($this->use_real_escape) {
-				return @mysql_real_escape_string($var, $this->connection);
+				return @mysqli_real_escape_string($this->connection, $var);
 			} else {
-				return @mysql_escape_string($var, $this->connection);
+				return @mysqli_escape_string($this->connection, $var);
 			}
 		} else if (is_array($var)) {
 			return array_map(array($this, 'Quote'), $var);
@@ -589,7 +587,7 @@ class MySQLDb extends Db
 	*/
 	function LastId($seq='')
 	{
-		return mysql_insert_id($this->connection);
+		return mysqli_insert_id($this->connection);
 	}
 
 	/**
@@ -680,7 +678,7 @@ class MySQLDb extends Db
 	*/
 	function NumAffected($null=null)
 	{
-		return mysql_affected_rows($this->connection);
+		return mysqli_affected_rows($this->connection);
 	}
 
 }
