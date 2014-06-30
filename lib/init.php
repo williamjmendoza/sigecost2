@@ -1,6 +1,7 @@
 <?php
 
 	define('SIGECOST_BASE_PATH', dirname(realpath(dirname(__FILE__).'/../index.php')));
+	define('SIGECOST_CONTROLADOR_PATH', SIGECOST_BASE_PATH.'/controlador');
 	define('SIGECOST_LIB_PATH', SIGECOST_BASE_PATH.'/lib');
 	
 	define('SIGECOST_CONFIG_FILE', SIGECOST_BASE_PATH . '/config/config.php');
