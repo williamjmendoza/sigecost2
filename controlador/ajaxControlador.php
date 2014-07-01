@@ -2,8 +2,6 @@
 
 	class AjaxControlador
 	{
-		public $hoa = "";
-		
 		function __construct()
 		{
 			if(isset($_REQUEST['accion'])){
