@@ -1,8 +1,6 @@
 <?php
 	include(dirname(__FILE__)."/../init.php");
 	
-	echo "Query";
-	
 	$query = '
 	  		SELECT DISTINCT ?subject ?property ?object WHERE {
 				?subject ?property ?object .
@@ -32,10 +30,36 @@
 	//echo $r;
 ?>
 <html>
-	<script type="text/javascript" src="../js/jquery/jquery-1.11.1.min.js"></script>
+	<head>
+		<script type="text/javascript" src="../js/jquery/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript">
+			 $().ready(function() {
+		
+				 $.ajax({
+					url: "ajaxTmp.php",
+					dataType: "json",
+					data: {
+						accion: "getSoporteTecnicoSubclasses"
+					},
+					success: function(json){
+	
+						$.each(json.datos, function(id, arrDatos){
+							var objOption = document.createElement("option");
+							objOption.setAttribute('value', arrDatos.iri);
+							
+							objOption.appendChild(document.createTextNode(arrDatos.label));
+							$('#nivel_0').append(objOption);
+						});
+					}
+				});
+		
+			  });
+		</script>
+	</head>
 	<body>
 		<div>
-			<select name="nivel_0">
+			Soporte T&eacute;nico<br />
+			<select id="nivel_0" name="nivel_0">
 				<option value="0">Selecionar...</option>
 			</select>
 		</div>
