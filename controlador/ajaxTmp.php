@@ -60,7 +60,7 @@
 				
 		}
 		
-		function getInstances ()
+		function getInstancesSTEquipoReproduccion ()
 		{
 			$datos = array();
 			
@@ -116,14 +116,70 @@
 						// Indicar que no se encontraron resultados
 					}
 				}
-				
-				
 			}
 			
 			header("Content-Type: application/json; charset=" . GetConfig('CharacterSet'));
 			echo json_encode(array('datos' => $datos));
 		}
+		
+		function getInstancesSTEquipoReproduccionImpresoras ()
+		{
+			$datos = array();
+				
+			if(isset($_REQUEST["iri"]) && ($iri = trim($_REQUEST["iri"])) != '' ){
+					
+				if ($iri == "http://www.owl-ontologies.com/OntologySoporteTecnico.owl#InstalacionImpresora")
+				{
+					// Llamada al modelo
+						
+					$query = "
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+		
+						SELECT DISTINCT
+							?marcaEquipoReproduccion
+						WHERE {
+							?impresora rdf:type <". $iri ."> .
+							?impresora kb:enImpresora ?enImpresora .
+							?enImpresora kb:marcaEquipoReproduccion ?marcaEquipoReproduccion .
+						}
+					 	ORDER BY
+							?marcaEquipoReproduccion
+					";
+						
+				}
+		
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors()) {
+						
+					//error_log("arc2sparql error:\n" . join("\n", $errors));
+					//echo "arc2sparql error:\n" . join("\n", $errors);
+						
+					// Manejar el error e indicar al ajax
+				} else {
+						
+					if($rows){
+							
+						foreach ($rows as $row)
+						{
+							$datos[] = array(
+									'marcaEquipoReproduccion' => $row['marcaEquipoReproduccion']
+							);
+						}
+					} else {
+						// Indicar que no se encontraron resultados
+					}
+				}
+			}
+				
+			header("Content-Type: application/json; charset=" . GetConfig('CharacterSet'));
+			echo json_encode(array('datos' => $datos));
+		}
 	}
+	
+	
+	
 	/*
 	// Código para imprimir un resul set de arc2
 	

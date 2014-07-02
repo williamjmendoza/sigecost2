@@ -64,6 +64,7 @@
 				$.ajax({
 					url: "ajaxTmp.php",
 					dataType: "json",
+					type: "POST",
 					data: {
 						accion: "getSubclassesOf",
 						iri: iri

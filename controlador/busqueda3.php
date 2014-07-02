@@ -82,7 +82,7 @@
 							{
 								if(this.value != "0"){
 									if(this.value == "http://www.owl-ontologies.com/OntologySoporteTecnico.owl#InstalacionImpresora"){
-										createInstancesSTImpresora(this.value);
+										createInstancesSTSTEquipoReproduccionImpresoras("Marca", this.value);
 									} else {
 										createSelectSubclasses($(this.options[this.selectedIndex]).text(), this.value);
 									}
@@ -91,6 +91,69 @@
 						}
 					}
 				});
+			}
+
+			function createInstancesSTSTEquipoReproduccionImpresoras(label, iri)
+			{
+				$.ajax({
+					url: "ajaxTmp.php",
+					dataType: "json",
+					type: "POST",
+					data: {
+						accion: "getInstancesSTEquipoReproduccionImpresoras",
+						iri: iri
+					},
+					success: function(json){
+
+						if(json.datos.length > 0)
+						{
+
+							var objLi = document.createElement("li");
+							$("#searchSelects").append(objLi);
+
+							var objUl = document.createElement("ul");
+							objLi.appendChild(objUl);
+
+							var objLi = document.createElement("li");
+							objUl.appendChild(objLi);
+	
+							var objSpan = document.createElement("span");
+							objSpan.appendChild(document.createTextNode(label));
+							objLi.appendChild(objSpan);
+
+							var objLi = document.createElement("li");
+							objUl.appendChild(objLi);
+							
+							var objSelect = document.createElement("select");
+							objSelect.setAttribute("name", "nivel_0");
+							objLi.appendChild(objSelect);
+							
+							var objOption = document.createElement("option");
+							objOption.setAttribute("value", "0");
+							objOption.appendChild(document.createTextNode("Selecionar..."));
+							objSelect.appendChild(objOption);
+						
+							$.each(json.datos, function(id, arrDatos){
+								var objOption = document.createElement("option");
+								objOption.setAttribute('value', arrDatos.marcaEquipoReproduccion);
+								objOption.appendChild(document.createTextNode(arrDatos.marcaEquipoReproduccion));
+								objSelect.appendChild(objOption);
+							});
+	
+							$(objSelect).bind("change", function(event)
+							{
+								if(this.value != "0"){
+									if(this.value == "http://www.owl-ontologies.com/OntologySoporteTecnico.owl#InstalacionImpresora"){
+										//createInstancesSTImpresora(this.value);
+									} else {
+										//createSelectSubclasses($(this.options[this.selectedIndex]).text(), this.value);
+									}
+								}
+							});
+						}
+					}
+				});
+
 			}
 
 			function createInstancesSTImpresora(iri)
@@ -178,7 +241,6 @@
 						}
 					}
 				});
-
 			}
 		</script>
 	</head>
