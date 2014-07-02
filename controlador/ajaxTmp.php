@@ -176,6 +176,185 @@
 			header("Content-Type: application/json; charset=" . GetConfig('CharacterSet'));
 			echo json_encode(array('datos' => $datos));
 		}
+		
+		function getInstancesSTEquipoReproduccionModelo ()
+		{
+			$datos = array();
+		
+			if(
+				isset($_REQUEST["iri"]) && ($iri = trim($_REQUEST["iri"])) != ''
+				&& isset($_REQUEST["marca"]) && ($marca = trim($_REQUEST["marca"])) != ''
+			){
+					
+				
+				// Llamada al modelo
+	
+				$query = "
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+	
+					SELECT DISTINCT
+						?modeloEquipoReproduccion
+					WHERE {
+						?impresora rdf:type <". $iri ."> .
+						?impresora kb:enImpresora ?enImpresora .
+						?enImpresora kb:marcaEquipoReproduccion \"".$marca."\" .
+						?enImpresora kb:modeloEquipoReproduccion ?modeloEquipoReproduccion .
+					}
+				 	ORDER BY
+						?modeloEquipoReproduccion
+				";
+	
+		
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors()) {
+		
+					//error_log("arc2sparql error:\n" . join("\n", $errors));
+					//echo "arc2sparql error:\n" . join("\n", $errors);
+		
+					// Manejar el error e indicar al ajax
+				} else {
+		
+					if($rows){
+							
+						foreach ($rows as $row)
+						{
+							$datos[] = array(
+									'modeloEquipoReproduccion' => $row['modeloEquipoReproduccion']
+							);
+						}
+					} else {
+						// Indicar que no se encontraron resultados
+					}
+				}
+			}
+		
+			header("Content-Type: application/json; charset=" . GetConfig('CharacterSet'));
+			echo json_encode(array('datos' => $datos));
+		}
+		
+		
+		function getInstancesSTEquipoReproduccionSONombre ()
+		{
+			$datos = array();
+		
+			if(
+					isset($_REQUEST["iri"]) && ($iri = trim($_REQUEST["iri"])) != ''
+					&& isset($_REQUEST["marca"]) && ($marca = trim($_REQUEST["marca"])) != ''
+					&& isset($_REQUEST["modelo"]) && ($modelo = trim($_REQUEST["modelo"])) != ''
+			){
+					
+		
+				// Llamada al modelo
+		
+				$query = "
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+		
+					SELECT DISTINCT
+						?nombreSistemaOperativo
+					WHERE {
+						?impresora rdf:type <". $iri ."> .
+						?impresora kb:enImpresora ?enImpresora .
+						?enImpresora kb:marcaEquipoReproduccion \"".$marca."\" .
+						?enImpresora kb:modeloEquipoReproduccion \"".$modelo."\" .
+						?sistemaOperativo kb:sobreSistemaOperativo ?sobreSistemaOperativo .
+						?sobreSistemaOperativo kb:nombreSistemaOperativo ?nombreSistemaOperativo .
+					}
+				 	ORDER BY
+						?nombreSistemaOperativo
+				";
+		
+		
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors()) {
+		
+					//error_log("arc2sparql error:\n" . join("\n", $errors));
+					//echo "arc2sparql error:\n" . join("\n", $errors);
+		
+					// Manejar el error e indicar al ajax
+				} else {
+		
+					if($rows){
+							
+						foreach ($rows as $row)
+						{
+							$datos[] = array(
+									'nombreSistemaOperativo' => $row['nombreSistemaOperativo']
+							);
+						}
+					} else {
+						// Indicar que no se encontraron resultados
+					}
+				}
+			}
+		
+			header("Content-Type: application/json; charset=" . GetConfig('CharacterSet'));
+			echo json_encode(array('datos' => $datos));
+		}
+		
+		function getInstancesSTEquipoReproduccionSOVersion ()
+		{
+			$datos = array();
+			
+			if(
+					isset($_REQUEST["iri"]) && ($iri = trim($_REQUEST["iri"])) != ''
+					&& isset($_REQUEST["marca"]) && ($marca = trim($_REQUEST["marca"])) != ''
+					&& isset($_REQUEST["modelo"]) && ($modelo = trim($_REQUEST["modelo"])) != ''
+					&& isset($_REQUEST["nombreSO"]) && ($nombreSO = trim($_REQUEST["nombreSO"])) != ''
+			){
+		
+				// Llamada al modelo
+		
+				$query = "
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+		
+					SELECT DISTINCT
+						?versionSistemaOperativo
+					WHERE {
+						?impresora rdf:type <". $iri ."> .
+						?impresora kb:enImpresora ?enImpresora .
+						?enImpresora kb:marcaEquipoReproduccion \"".$marca."\" .
+						?enImpresora kb:modeloEquipoReproduccion \"".$modelo."\" .
+						?sistemaOperativo kb:sobreSistemaOperativo ?sobreSistemaOperativo .
+						?sobreSistemaOperativo kb:nombreSistemaOperativo \"".$nombreSO."\" .
+						?sobreSistemaOperativo kb:versionSistemaOperativo ?versionSistemaOperativo .
+						
+					}
+				 	ORDER BY
+						?versionSistemaOperativo
+				";
+		
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors()) {
+		
+					error_log("arc2sparql error:\n" . join("\n", $errors));
+					//echo "arc2sparql error:\n" . join("\n", $errors);
+		
+					// Manejar el error e indicar al ajax
+				} else {
+		
+					if($rows){
+							
+						foreach ($rows as $row)
+						{
+							$datos[] = array(
+									'versionSistemaOperativo' => $row['versionSistemaOperativo']
+							);
+						}
+					} else {
+						// Indicar que no se encontraron resultados
+					}
+				}
+			}
+		
+			header("Content-Type: application/json; charset=" . GetConfig('CharacterSet'));
+			echo json_encode(array('datos' => $datos));
+		}
 	}
 	
 	

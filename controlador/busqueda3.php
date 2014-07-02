@@ -123,6 +123,12 @@
 
 							var objLi = document.createElement("li");
 							objUl.appendChild(objLi);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "iri");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", iri);
+							objLi.appendChild(objInput);
 							
 							var objSelect = document.createElement("select");
 							objSelect.setAttribute("name", "nivel_0");
@@ -143,11 +149,8 @@
 							$(objSelect).bind("change", function(event)
 							{
 								if(this.value != "0"){
-									if(this.value == "http://www.owl-ontologies.com/OntologySoporteTecnico.owl#InstalacionImpresora"){
-										//createInstancesSTImpresora(this.value);
-									} else {
-										//createSelectSubclasses($(this.options[this.selectedIndex]).text(), this.value);
-									}
+									var iri = $(this).parent().find("input").val();
+									createInstancesSTSTEquipoReproduccionImpresorasModelo("Modelo", iri, this.value);
 								}
 							});
 						}
@@ -155,6 +158,263 @@
 				});
 
 			}
+
+
+			function createInstancesSTSTEquipoReproduccionImpresorasModelo(label, iri, marca)
+			{
+				$.ajax({
+					url: "ajaxTmp.php",
+					dataType: "json",
+					type: "POST",
+					data: {
+						accion: "getInstancesSTEquipoReproduccionModelo",
+						marca: marca,
+						iri: iri
+					},
+					success: function(json){
+
+						if(json.datos.length > 0)
+						{
+
+							var objLi = document.createElement("li");
+							$("#searchSelects").append(objLi);
+
+							var objUl = document.createElement("ul");
+							objLi.appendChild(objUl);
+
+							var objLi = document.createElement("li");
+							objUl.appendChild(objLi);
+	
+							var objSpan = document.createElement("span");
+							objSpan.appendChild(document.createTextNode(label));
+							objLi.appendChild(objSpan);
+
+							var objLi = document.createElement("li");
+							objUl.appendChild(objLi);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "iri");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", iri);
+							objLi.appendChild(objInput);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "marca");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", marca);
+							objLi.appendChild(objInput);
+							
+							var objSelect = document.createElement("select");
+							objSelect.setAttribute("name", "nivel_0");
+							objLi.appendChild(objSelect);
+							
+							var objOption = document.createElement("option");
+							objOption.setAttribute("value", "0");
+							objOption.appendChild(document.createTextNode("Selecionar..."));
+							objSelect.appendChild(objOption);
+						
+							$.each(json.datos, function(id, arrDatos){
+								var objOption = document.createElement("option");
+								objOption.setAttribute('value', arrDatos.modeloEquipoReproduccion);
+								objOption.appendChild(document.createTextNode(arrDatos.modeloEquipoReproduccion));
+								objSelect.appendChild(objOption);
+							});
+	
+							$(objSelect).bind("change", function(event)
+							{
+								if(this.value != "0"){
+									var iri = $(this).parent().find("input[name=\"iri\"]").val();
+									var marca = $(this).parent().find("input[name=\"marca\"]").val();
+									createInstancesSTSTEquipoReproduccionImpresorasSONombre("Nombre S.O.", iri, marca, this.value);
+								}
+							});
+						}
+					}
+				});
+			}
+			
+			function createInstancesSTSTEquipoReproduccionImpresorasSONombre(label, iri, marca, modelo)
+			{
+				$.ajax({
+					url: "ajaxTmp.php",
+					dataType: "json",
+					type: "POST",
+					data: {
+						accion: "getInstancesSTEquipoReproduccionSONombre",
+						marca: marca,
+						modelo: modelo,
+						iri: iri
+					},
+					success: function(json){
+
+						if(json.datos.length > 0)
+						{
+
+							var objLi = document.createElement("li");
+							$("#searchSelects").append(objLi);
+
+							var objUl = document.createElement("ul");
+							objLi.appendChild(objUl);
+
+							var objLi = document.createElement("li");
+							objUl.appendChild(objLi);
+	
+							var objSpan = document.createElement("span");
+							objSpan.appendChild(document.createTextNode(label));
+							objLi.appendChild(objSpan);
+
+							var objLi = document.createElement("li");
+							objUl.appendChild(objLi);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "iri");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", iri);
+							objLi.appendChild(objInput);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "marca");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", marca);
+							objLi.appendChild(objInput);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "modelo");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", modelo);
+							objLi.appendChild(objInput);
+							
+							var objSelect = document.createElement("select");
+							objSelect.setAttribute("name", "nivel_0");
+							objLi.appendChild(objSelect);
+							
+							var objOption = document.createElement("option");
+							objOption.setAttribute("value", "0");
+							objOption.appendChild(document.createTextNode("Selecionar..."));
+							objSelect.appendChild(objOption);
+						
+							$.each(json.datos, function(id, arrDatos){
+								var objOption = document.createElement("option");
+								objOption.setAttribute('value', arrDatos.nombreSistemaOperativo);
+								objOption.appendChild(document.createTextNode(arrDatos.nombreSistemaOperativo));
+								objSelect.appendChild(objOption);
+							});
+	
+							$(objSelect).bind("change", function(event)
+							{
+								if(this.value != "0"){
+									var iri = $(this).parent().find("input[name=\"iri\"]").val();
+									var marca = $(this).parent().find("input[name=\"marca\"]").val();
+									var modelo = $(this).parent().find("input[name=\"modelo\"]").val();
+									createInstancesSTSTEquipoReproduccionImpresorasSOVersion("Versión S.O.", iri, marca, modelo, this.value);
+								}
+							});
+						}
+					}
+				});
+			}
+
+			function createInstancesSTSTEquipoReproduccionImpresorasSOVersion(label, iri, marca, modelo, nombreSO)
+			{
+				$.ajax({
+					url: "ajaxTmp.php",
+					dataType: "json",
+					type: "POST",
+					data: {
+						accion: "getInstancesSTEquipoReproduccionSOVersion",
+						marca: marca,
+						modelo: modelo,
+						nombreSO: nombreSO,
+						iri: iri
+					},
+					success: function(json){
+
+						if(json.datos.length > 0)
+						{
+
+							var objLi = document.createElement("li");
+							$("#searchSelects").append(objLi);
+
+							var objUl = document.createElement("ul");
+							objLi.appendChild(objUl);
+
+							var objLi = document.createElement("li");
+							objUl.appendChild(objLi);
+	
+							var objSpan = document.createElement("span");
+							objSpan.appendChild(document.createTextNode(label));
+							objLi.appendChild(objSpan);
+
+							var objLi = document.createElement("li");
+							objUl.appendChild(objLi);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "iri");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", iri);
+							objLi.appendChild(objInput);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "marca");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", marca);
+							objLi.appendChild(objInput);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "modelo");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", modelo);
+							objLi.appendChild(objInput);
+
+							var objInput = document.createElement("input");
+							objInput.setAttribute("name", "nombreSO");
+							objInput.setAttribute("type", "hidden");
+							objInput.setAttribute("value", nombreSO);
+							objLi.appendChild(objInput);
+							
+							var objSelect = document.createElement("select");
+							objSelect.setAttribute("name", "nivel_0");
+							objLi.appendChild(objSelect);
+							
+							var objOption = document.createElement("option");
+							objOption.setAttribute("value", "0");
+							objOption.appendChild(document.createTextNode("Selecionar..."));
+							objSelect.appendChild(objOption);
+						
+							$.each(json.datos, function(id, arrDatos){
+								var objOption = document.createElement("option");
+								objOption.setAttribute('value', arrDatos.versionSistemaOperativo);
+								objOption.appendChild(document.createTextNode(arrDatos.versionSistemaOperativo));
+								objSelect.appendChild(objOption);
+							});
+	
+							$(objSelect).bind("change", function(event)
+							{
+								if(this.value != "0"){
+									
+								}
+							});
+						}
+					}
+				});
+			}
+
+			
+			
+
+
+
+
+
+
+			
+
+
+
+
+
+
+			
 
 			function createInstancesSTImpresora(iri)
 			{
