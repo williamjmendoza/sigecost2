@@ -9,25 +9,60 @@
 			}
 		';
 	
-	$r = '';
+
+	$query = '
+	  		SELECT DISTINCT ?subject ?property COUNT(?object) AS ?count WHERE {
+				?subject ?property ?object .
+			} GROUP BY ?subject ?property
+		';
 	
-	$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+	$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 	
-	if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors()) {
+	if($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors()){
 		error_log("arc2sparql error:\n" . join("\n", $errors));
 		echo "arc2sparql error:\n" . join("\n", $errors);
-	} else {
-		if($rows){
-			$r = '<table border=1> <th>N</th><th>Subject</th><th>Property</th><th>Object</th>'."\n";
-			$count = 0;
-			foreach ($rows as $row) {
-				$r .= '<tr><td>'.(++$count).'</td><td>'.$row['subject'] .  '</td><td>'.$row['property'] . '</td><td>'.$row['object'] . '</td></tr>'."\n";
-			}
-			$r .='</table>'."\n";
-		} else {
-			$r = '<em>No data returned</em>';
+		exit;
+	}
+		
+	$vars = $result["result"]["variables"];
+	$rows = $result["result"]["rows"];
+	$count = 0;
+	
+	if($rows){
+		echo '
+			<table border="1">
+				<tr>
+					<th>N</th>
+		';
+		
+		foreach ($vars AS $var){
+			echo '
+					<th>'.$var.'</th>
+			';
 		}
+		echo '
+				</tr>
+		';
+		foreach ($rows AS $row){
+			echo '
+				<tr>
+					<td>'.(++$count).'</td>
+			';
+			foreach ($vars AS $var){
+				echo '
+					<td>'.$row[$var].'</td>
+				';
+			}
+			echo '
+				</tr>
+			';
+		}
+		
+		echo '
+			</table>	
+		';
+	} else {
+		echo '<em>No data returned</em>';
 	}
 	
-	echo $r;
 ?>
