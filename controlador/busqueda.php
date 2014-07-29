@@ -52,7 +52,7 @@
 			}
 		
 		</style>
-		<script type="text/javascript" src="../js/jquery/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../lib/jquery/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript">
 			$().ready(function() {
 				createSelectSubclasses("Soporte técnico", "http://www.owl-ontologies.com/OntologySoporteTecnico.owl#SoporteTecnico");

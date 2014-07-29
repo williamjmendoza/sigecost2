@@ -1,6 +1,12 @@
 <?php
 	include(dirname(__FILE__)."/../init.php");
 	
+	
+	class TodasTripletas extends QueryScreen
+	{
+		$query = 
+	}
+	
 	echo "Query";
 	
 	$query = '
