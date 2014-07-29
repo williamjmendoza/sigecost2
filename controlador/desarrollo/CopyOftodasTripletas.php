@@ -4,7 +4,7 @@
 	
 	class TodasTripletas extends QueryScreen
 	{
-		$query = 
+		
 	}
 	
 	echo "Query";
