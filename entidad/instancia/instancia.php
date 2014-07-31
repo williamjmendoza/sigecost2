@@ -1,5 +1,5 @@
 <?php
-	class Entidad
+	class EntidadInstancia
 	{
 		private $_comments = array();
 		private $_iRI;

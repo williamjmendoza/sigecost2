@@ -1,6 +1,5 @@
 <?php
-	include(dirname(__FILE__)."/init.php");
-	
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -93,29 +92,19 @@
 		</nav>
 		
 		<div class="container">
-			<div class="jumbotron">
-			
-				<h1>Bienvenido a Sigecost</h1>
-				<p>
-					Sistema de gesti&oacute;n de conocimiento de soporte t&eacute;cnico
-					para los infocentros del pa&iacute;s.
-				</p>
-				<p><a class="btn btn-primary btn-lg" role="button">Leer m&aacute;s</a></p>
+			<div class="alert alert-danger alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<strong>¡Oh, cielos!</strong> <a href="#" class="alert-link">Cambie unas pocas cosas</a> e inténtelo nuevamente.
 			</div>
 		</div>
 		
 		
-		
 		<div class="container">
-			<h1>B&uacute;squedas</h1>
-			<ul>
-				<li><a href="controlador/todasTripletas.php">Todas las tripletas</a></li>
-				<li><a href="controlador/busqueda.php">B&uacute;squeda</a></li>
-			</ul>
+			<h1>Insertar una instancia de impresora</h1>
+			
 		</div>
 
-		
-		
+	
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	    <script src="<?php echo GetConfig('siteURL'); ?>/lib/jquery/jquery-1.11.1.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->

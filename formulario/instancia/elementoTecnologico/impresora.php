@@ -3,7 +3,7 @@
 	// Formularios
 	require_once ( SIGECOST_FORMULARIO_PATH . '/formulario.php');
 
-	class FormularioETEquipoReproduccion extends Formulario
+	class FormularioETImpresora extends Formulario
 	{
 		public function toArray()
 		{
