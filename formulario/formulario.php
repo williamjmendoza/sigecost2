@@ -1,4 +1,7 @@
 <?php
+
+	include_once('config.php');  // incluye el config del directorio de formularios
+
 	class Formulario
 	{
 		const TIPO_OPERACION_INSERTAR = 1;

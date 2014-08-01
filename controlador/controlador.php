@@ -1,4 +1,6 @@
 <?php
+
+	include_once(SIGECOST_FORMULARIO_PATH . '/formularioManejador.php');
 	
 	class Controlador
 	{

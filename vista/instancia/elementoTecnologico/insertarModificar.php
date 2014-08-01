@@ -1,6 +1,5 @@
 <?php
-	include(dirname(__FILE__)."/init.php");
-	
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -45,29 +44,36 @@
 		<?php require_once ( SIGECOST_VISTA_PATH . '/general/topMenu.php' ); ?>
 		
 		<div class="container">
-			<div class="jumbotron">
+		
+			<h1>Instancia del elemento tecnol&oacute;gico impresora</h1>
+			<br>
 			
-				<h1>Bienvenido a Sigecost</h1>
-				<p>
-					Sistema de gesti&oacute;n de conocimiento de soporte t&eacute;cnico
-					para los infocentros del pa&iacute;s.
-				</p>
-				<p><a class="btn btn-primary btn-lg" role="button">Leer m&aacute;s</a></p>
-			</div>
-		</div>
+			<form class="form-horizontal" role="form">
+				<div style="display:none;">
+					<input type="hidden" name="accion" value="guardar">
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="marca">Marca de la impresora:</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="marca" name="marca" placeholder="Introduzca la marca de la impresora">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="modelo">Modelo de la impresora:</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="modelo" name="modelo" placeholder="Introduzca el modelo de la impresora">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-9">
+						<button type="submit" class="btn btn-default">Guardar</button>
+					</div>
+				</div>
+			</form>
 		
-		
-		
-		<div class="container">
-			<h1>B&uacute;squedas</h1>
-			<ul>
-				<li><a href="controlador/todasTripletas.php">Todas las tripletas</a></li>
-				<li><a href="controlador/busqueda.php">B&uacute;squeda</a></li>
-			</ul>
 		</div>
 
-		
-		
+	
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	    <script src="<?php echo GetConfig('siteURL'); ?>/lib/jquery/jquery-1.11.1.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->

@@ -1,9 +1,9 @@
 <?php
 
 	// Entidades
-	require_once ( SIGECOST_ENTIDAD_PATH . '/entidad.php' );
+	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/instancia.php' );
 
-	class EntidadSoporteTecnico extends Entidad
+	class EntidadSoporteTecnico extends EntidadInstancia
 	{
 		private $_uRLSoporteTecnico;
 		
