@@ -3,23 +3,28 @@
 	require_once( dirname(__FILE__) . '/../../../init.php' );
 	
 	// Controladores
-	require_once ( SIGECOST_CONTROLADOR_PATH . '/controlador.php' );
+	require_once ( SIGECOST_CONTROLADOR_PATH . '/instancia/elementoTecnologico/equipoReproduccion.php' );
 	
 	// Modelos
 
-	class ControladorETImpresora extends Controlador
+	class ControladorETImpresora extends ControladorETEquipoReproduccion
 	{
 		public function insertar()
 		{
-			$this->__desplegarFormulario();
+			$this->desplegarFormulario();
 		}
 		
 		public function guardar()
 		{
-			echo "Guardando";
+			$form = FormularioManejador::GetFormulario(FORM_ET_IMPRESORA_INSERTAR_MODIFICAR);
+			
+			$this->validarMarca($form);
+			$this->validarModelo($form);
+			
+			$this->desplegarFormulario();
 		}
 		
-		private function __desplegarFormulario()
+		private function desplegarFormulario()
 		{
 			$form = FormularioManejador::GetFormulario(FORM_ET_IMPRESORA_INSERTAR_MODIFICAR);
 			

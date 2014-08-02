@@ -1,22 +1,9 @@
 <?php
 	class EntidadInstancia
 	{
-		private $_comments = array();
 		private $_iRI;
 		private $_label;
 		
-		public function getComments(){
-			return $this->_comments;
-		}
-		public function setComments(array $comments){
-			$this->_comments = $comments;
-		}
-		public function setComment($comment){
-			$this->_comments[] = $comment;
-		}
-		public function clearComments(){
-			$this->_comments = array();
-		}
 		public function getIRI(){
 			return $this->_iRI;
 		}
