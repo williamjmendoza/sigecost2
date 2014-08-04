@@ -5,6 +5,7 @@
 	define('SIGECOST_ENTIDAD_PATH', SIGECOST_BASE_PATH.'/entidad');
 	define('SIGECOST_FORMULARIO_PATH', SIGECOST_BASE_PATH.'/formulario');
 	define('SIGECOST_LIB_PATH', SIGECOST_BASE_PATH.'/lib');
+	define('SIGECOST_MODELO_PATH', SIGECOST_BASE_PATH.'/modelo');
 	define('SIGECOST_VISTA_PATH', SIGECOST_BASE_PATH.'/vista');
 	
 	define('SIGECOST_CONFIG_FILE', SIGECOST_BASE_PATH . '/config/config.php');

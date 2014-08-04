@@ -1,7 +1,7 @@
 <?php
 	
-	$form = FormularioManejador::GetFormulario(FORM_ET_IMPRESORA_INSERTAR_MODIFICAR);
-	$impresora = $form->getImpresora();
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR);
+	$equipoReproduccion = $form->getEquipoReproduccion();
 	
 ?>
 <!DOCTYPE html>
@@ -43,7 +43,7 @@
 					<div class="col-sm-5">
 						<input
 							type="text" class="form-control" id="marca" name="marca" placeholder="Introduzca la marca de la impresora"
-							value="<?php echo $impresora != null ? $impresora->getMarca() : "" ?>"
+							value="<?php echo $equipoReproduccion->getMarca() ?>"
 						>
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 					<label class="control-label col-sm-3" for="modelo">Modelo de la impresora:</label>
 					<div class="col-sm-5">
 						<input type="text" class="form-control" id="modelo" name="modelo" placeholder="Introduzca el modelo de la impresora"
-							value="<?php echo $impresora != null ? $impresora->getModelo() : "" ?>"
+							value="<?php echo $equipoReproduccion->getModelo() ?>"
 						>
 					</div>
 				</div>
