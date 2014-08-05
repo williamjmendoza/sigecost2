@@ -29,12 +29,22 @@
 				';
 				
 				$query = '
-				
+						PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+						PREFIX owl: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+						
+						INSERT INTO <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+						{
+							owl:Impresora_numeroConsecutivo rdf:type kb:Impresora .
+							owl:Impresora_numeroConsecutivo owl:modeloEquipoReproduccion "'.$impresora->getMarca().'"^^xsd:string .
+							owl:Impresora_numeroConsecutivo owl:marcaEquipoReproduccion "'.$impresora->getModelo().'"^^xsd:string .
+						}
 				';
-				//$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+				//$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 				
-				//if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
-					//throw new Exception("Error al guardar la instancia de impresora. Detalles:\n". join("\n", $errors));
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception("Error al guardar la instancia de impresora. Detalles:\n". join("\n", $errors));
 				
 				//$result = $GLOBALS['ONTOLOGIA_STORE']->CommitTransaction();
 					
@@ -45,7 +55,7 @@
 				//return $iri;
 				
 				// Borrar
-				return false;
+				return true;
 				
 			} catch (Exception $e) {
 				//if(isset($resultTransaction) && $resultTransaction === true) $GLOBALS['ONTOLOGIA_STORE']->RollbackAllTransactions();

@@ -220,6 +220,50 @@
 			';
 				
 			$this->execute($query);
+			
+			$query = '
+				PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+			
+				DESCRIBE kb:Impresora_numeroConsecutivo
+			';
+			
+			$this->execute($query);
+			
+			$query = '
+				PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX owl: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX fn: <http://www.w3.org/2005/xpath-functions#>
+				PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+				PREFIX mysql: <http://web-semantics.org/ns/mysql/>
+					
+				SELECT
+					?subject
+				WHERE
+				{
+					{
+						?subject rdf:type kb:Impresora .
+						#?subject ?property ?object .
+						#?subject owl:marcaEquipoReproduccion ?marca .
+						#?subject owl:modeloEquipoReproduccion ?modelo .
+						
+						#FILTER regex(str(?subject), owl:Impresora_)
+						#FILTER regex(xsd:string(fn:substring(?marca, 1)), "Laserjet P11")
+						#FILTER (mysql:concat(?marca, " ", ?modelo) = "HP Laserjet P1102W") .
+						#FILTER regex(mysql:substring(?subject, (mysql:length(owl:) + 1), (mysql:length(?subject) - mysql:length(owl:)) ), "Impresora_")
+						FILTER regex(mysql:substring(?subject, (mysql:length(owl:) + 1), (mysql:length(?subject) - mysql:length(owl:)) ),
+							"ontologiasoportetecnicov1_Class")
+					}
+				}
+				ORDER BY
+					DESC(mysql:substring(
+						?subject,
+						( mysql:length(owl:) + 1 + mysql:length("ontologiasoportetecnicov1_Class") ),
+						( mysql:length(?subject) - mysql:length(owl:) - mysql:length("ontologiasoportetecnicov1_Class") )
+					))
+				LIMIT 1
+			';
+			
+			$this->execute($query);
 		}
 		
 	}
