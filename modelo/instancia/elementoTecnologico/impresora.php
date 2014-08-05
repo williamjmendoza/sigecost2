@@ -18,10 +18,19 @@
 					
 				//if($resultTransaction === false)
 					//throw new Exception('Error al iniciar la transacción. Detalles: ' . $GLOBALS['ONTOLOGIA_STORE']->GetErrorMsg());
-					
-				$query = "
 				
-				";
+				'
+					PREFIX libro: <http://ejemplo.org/libro/>
+					PREFIX elemento: <http://purl.org/dc/elements/1.1/>
+					INSERT INTO <http://ejemplo.org/>
+					{ ?libro elemento:references ?titulo .}
+					WHERE
+					{?libro elemento:title ?titulo .}
+				';
+				
+				$query = '
+				
+				';
 				//$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
 				
 				//if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())

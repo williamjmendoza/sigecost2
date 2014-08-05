@@ -1,6 +1,6 @@
 <?php
 	require_once ( dirname(__FILE__) . '/../../init.php' );
-	require_once ( SIGECOST_CONTROLADOR_PATH . '/queryScreen/queryScreen.php' );
+	require_once ( SIGECOST_CONTROLADOR_PATH . '/desarrollo/queryScreen.php' );
 	
 	class ConsultaInstancias extends QueryScreen
 	{
@@ -177,8 +177,48 @@
 					
 			';
 			
+			$this->execute($query);
+		}
+		
+		public function getInstanciaImpresora()
+		{
+			$query = '
+				PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					
+				SELECT
+					?subject
+				WHERE
+				{
+					?subject rdf:type kb:Impresora
+				}
+			';
 			
+			$this->execute($query);
 			
+			echo "<br> <br>";
+			
+			$query = '
+				PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+			
+				SELECT
+					?subject ?property ?object
+				WHERE
+				{
+					{ kb:ontologiasoportetecnicov1_Class37 ?property ?object }
+					UNION
+					{ ?subject ?property kb:ontologiasoportetecnicov1_Class37 }
+				}
+			';
+			
+			$this->execute($query);
+			
+			$query = '
+				PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+		
+				DESCRIBE kb:ontologiasoportetecnicov1_Class37
+			';
+				
 			$this->execute($query);
 		}
 		
