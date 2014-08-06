@@ -20,7 +20,7 @@
 					throw new Exception($preMsg . ' El parámetro \'$fragmentoIriClase\' está vacío.');
 				
 				$query = '
-					PREFIX kb: <'.$iriOntologia.'>
+					PREFIX : <'.$iriOntologia.'>
 					PREFIX mysql: <http://web-semantics.org/ns/mysql/>
 					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 				
@@ -28,15 +28,15 @@
 						?iriUltimaInstancia
 					WHERE
 					{
-						?iriUltimaInstancia rdf:type kb:'.$fragmentoIriClase.'
-						FILTER regex(mysql:substring(?iriUltimaInstancia, (mysql:length(kb:) + 1), (mysql:length(?iriUltimaInstancia) - mysql:length(kb:)) ),
+						?iriUltimaInstancia rdf:type :'.$fragmentoIriClase.'
+						FILTER regex(mysql:substring(?iriUltimaInstancia, (mysql:length(:) + 1), (mysql:length(?iriUltimaInstancia) - mysql:length(:)) ),
 							"'.$fragmentoIriInstancia.'")
 					}
 					ORDER BY
 						DESC(mysql:substring(
 							?iriUltimaInstancia,
-							( mysql:length(kb:) + mysql:length("'.$fragmentoIriInstancia.'") + 1 ),
-							( mysql:length(?iriUltimaInstancia) - mysql:length(kb:) - mysql:length("'.$fragmentoIriInstancia.'") )
+							( mysql:length(:) + mysql:length("'.$fragmentoIriInstancia.'") + 1 ),
+							( mysql:length(?iriUltimaInstancia) - mysql:length(:) - mysql:length("'.$fragmentoIriInstancia.'") )
 						))
 					LIMIT 1
 				';
@@ -58,13 +58,6 @@
 							strlen($iriInstancia) - strlen($iriOntologia) - strlen($fragmentoIriInstancia)
 					)) + 1;
 				}
-				
-				// Borrar
-				/*
-				echo "<pre>";
-				print_r($secuencia);
-				echo "</pre>";
-				*/
 				
 				return $secuencia;
 				

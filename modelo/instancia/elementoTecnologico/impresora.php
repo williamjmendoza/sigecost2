@@ -3,6 +3,9 @@
 	// Entidades	
 	require_once( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/impresora.php' );
 	
+	// Lib
+	require_once( SIGECOST_LIB_PATH . '/definiciones.php' );
+	
 	// Modelos
 	require_once ( SIGECOST_MODELO_PATH . '/general.php' );
 
@@ -22,29 +25,28 @@
 				//if($resultTransaction === false)
 					//throw new Exception('Error al iniciar la transacción. Detalles: ' . $GLOBALS['ONTOLOGIA_STORE']->GetErrorMsg());
 				
-				$fragmentoIriClase = 'Impresora';
-				
 				// Consultar el número de secuencia para la siguiente instancia de impresora a crear.
-				$secuencia = ModeloGeneral::getSiguienteSecuenciaInstancia($fragmentoIriClase);
+				$secuencia = ModeloGeneral::getSiguienteSecuenciaInstancia(SIGECOST_FRAGMENTO_IMPRESORA);
 				
 				if($secuencia === false)
 					throw new Exception('Error al guardar la instancia de impresora. No se pudo obtener el número de la siguiente secuencia '.  
-							'para la instancia de la clase \''.$fragmentoIriClase.'\'');
+							'para la instancia de la clase \''.SIGECOST_FRAGMENTO_IMPRESORA.'\'');
 					
-				$fragmentoIriInstancia = $fragmentoIriClase . '_' . $secuencia;
+				$fragmentoIriInstancia = SIGECOST_FRAGMENTO_IMPRESORA . '_' . $secuencia;
 				
 				$query = '
-						PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+						PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 						
 						INSERT INTO <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
 						{
-							kb:'.$fragmentoIriInstancia.' rdf:type kb:Impresora .
-							kb:'.$fragmentoIriInstancia.' kb:modeloEquipoReproduccion "'.$impresora->getMarca().'"^^xsd:string .
-							kb:'.$fragmentoIriInstancia.' kb:marcaEquipoReproduccion "'.$impresora->getModelo().'"^^xsd:string .
+							:'.$fragmentoIriInstancia.' rdf:type :Impresora .
+							:'.$fragmentoIriInstancia.' :marcaEquipoReproduccion "'.$impresora->getMarca().'"^^xsd:string .		
+							:'.$fragmentoIriInstancia.' :modeloEquipoReproduccion "'.$impresora->getModelo().'"^^xsd:string .
 						}
 				';
+				
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 				
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
