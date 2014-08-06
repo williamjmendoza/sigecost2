@@ -1,4 +1,8 @@
 <?php
+	// Iri de la ontología
+	define('SIGECOST_IRI_ONTOLOGIA', 'http://www.owl-ontologies.com/OntologySoporteTecnico.owl');
+	define('SIGECOST_IRI_ONTOLOGIA_NUMERAL', SIGECOST_IRI_ONTOLOGIA . '#');
+
 	// Fragmentos de los nombres de las clases en la ontología
 	define('SIGECOST_FRAGMENTO_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO', 'AplicacionGraficaDigitalDibujoDiseno');
 	define('SIGECOST_FRAGMENTO_APLICACION_OFIMATICA', 'AplicacionOfimatica');

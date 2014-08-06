@@ -35,11 +35,11 @@
 				$fragmentoIriInstancia = SIGECOST_FRAGMENTO_IMPRESORA . '_' . $secuencia;
 				
 				$query = '
-						PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 						
-						INSERT INTO <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+						INSERT INTO <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						{
 							:'.$fragmentoIriInstancia.' rdf:type :Impresora .
 							:'.$fragmentoIriInstancia.' :marcaEquipoReproduccion "'.$impresora->getMarca().'"^^xsd:string .		
