@@ -18,20 +18,39 @@
 		public function guardar()
 		{
 			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR);
-				
+			
+			// Validar, obtener y guardar todos los inputs desde el formulario
 			$this->__validarMarca($form);
 			$this->__validarModelo($form);
-				
+			
+			// Verificar que no hubo nigún error con los datos suministrados en el formulario
 			if(count($GLOBALS['SigecostErrors']['general']) == 0)
 			{
-				$resultado = ModeloInstanciaETImpresora::guardarImpresora($form->getEquipoReproduccion());
-		
-				if ($resultado === false) {
-					$GLOBALS['SigecostErrors']['general'][] = "La instancia de impresora no pudo ser guardada.";
-					$this->__desplegarFormulario();
-				} else {
-					$GLOBALS['SigecostInfo']['general'][] = "Instancia de impresora '' guardada satisfactoriamente.";
+				try
+				{	
+					// Consultar si existe una instancia de impresora con las mismas características
+					if( ($existeImpresora = ModeloInstanciaETImpresora::existeImpresora($form->getEquipoReproduccion())) === null )
+						throw new Exception("La instancia de impresora no pudo ser guardada.");
+				
+					// Validar si existe una instancia de impresora con las mismas características
+					if ($existeImpresora === true)
+						throw new Exception("Ya existe una instancia de impresora con las mismas caracter&iacute;sticas.");
+	
+					// Guardar la instancia de impresora en la base de datos
+					$fragmentoNuevaInstancia = ModeloInstanciaETImpresora::guardarImpresora($form->getEquipoReproduccion());
+			
+					// Verificar si ocurrio algún error mientras se guardaba la instancia de impresora
+					if ($fragmentoNuevaInstancia === false) 
+						throw new Exception("La instancia de impresora no pudo ser guardada.");
+					
+					// Mostrar un mensaje indicando que se ha guardado satisfactoriamente y mostrar los detalles
+					// de la instancia de impresora guardada
+					$GLOBALS['SigecostInfo']['general'][] = "Instancia de impresora guardada satisfactoriamente.";
 					$this->__desplegarDetalles();
+					
+				} catch (Exception $e){
+					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+					$this->__desplegarFormulario();
 				}
 			} else {
 				$this->__desplegarFormulario();

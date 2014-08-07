@@ -48,7 +48,8 @@
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
 				
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
-					throw new Exception($preMsg . ' Instancia consultada \'<' . SIGECOST_IRI_ONTOLOGIA_NUMERAL . $fragmentoIriClase . '>\'. Detalles:\n'. join('\n', $errors));
+					throw new Exception($preMsg . ' Instancia consultada \'<' . SIGECOST_IRI_ONTOLOGIA_NUMERAL .
+							$fragmentoIriClase . '>\'. Detalles:\n'. join('\n', $errors));
 				
 				// Validar que se encontró al menos una instancia para la clase $fragmentoIriClase
 				if($rows)
