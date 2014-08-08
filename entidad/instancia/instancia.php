@@ -1,14 +1,14 @@
 <?php
 	class EntidadInstancia
 	{
-		private $_iRI;
+		private $_iri;
 		private $_label;
 		
-		public function getIRI(){
-			return $this->_iRI;
+		public function getIri(){
+			return $this->_iri;
 		}
-		public function setIRI($iRI){
-			$this->_iRI = $iRI;
+		public function setIri($iri){
+			$this->_iri = $iri;
 		}
 		public function getLabel(){
 			return $this->_label;

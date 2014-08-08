@@ -1,5 +1,5 @@
 <?php
-	
+	$impresora = $GLOBALS['SigecostRequestVars']['impresora']; 
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +29,10 @@
 		<div class="container">
 		
 			<h1>Instancia del elemento tecnol&oacute;gico impresora</h1>
-			<br>
+			
+			<pre>
+				<?php var_dump($impresora); ?>
+			</pre>
 		
 		</div>
 		

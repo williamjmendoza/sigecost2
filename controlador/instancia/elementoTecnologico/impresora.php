@@ -12,7 +12,7 @@
 	{
 		public function desplegarDetalles()
 		{
-			$this->__desplegarDetalles();
+			$this->__desplegarDetalles('http://www.owl-ontologies.com/OntologySoporteTecnico.owl#Impresora_4');
 		}
 		
 		public function guardar()
@@ -37,16 +37,16 @@
 						throw new Exception("Ya existe una instancia de impresora con las mismas caracter&iacute;sticas.");
 	
 					// Guardar la instancia de impresora en la base de datos
-					$fragmentoNuevaInstancia = ModeloInstanciaETImpresora::guardarImpresora($form->getEquipoReproduccion());
+					$iriNuevaInstancia = ModeloInstanciaETImpresora::guardarImpresora($form->getEquipoReproduccion());
 			
 					// Verificar si ocurrio algún error mientras se guardaba la instancia de impresora
-					if ($fragmentoNuevaInstancia === false) 
+					if ($iriNuevaInstancia === false) 
 						throw new Exception("La instancia de impresora no pudo ser guardada.");
 					
 					// Mostrar un mensaje indicando que se ha guardado satisfactoriamente y mostrar los detalles
 					// de la instancia de impresora guardada
 					$GLOBALS['SigecostInfo']['general'][] = "Instancia de impresora guardada satisfactoriamente.";
-					$this->__desplegarDetalles();
+					$this->__desplegarDetalles($iriNuevaInstancia);
 					
 				} catch (Exception $e){
 					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
@@ -62,8 +62,13 @@
 			$this->__desplegarFormulario();
 		}
 		
-		private function __desplegarDetalles()
+		private function __desplegarDetalles($iriInstancia)
 		{
+			
+			$impresora = ModeloInstanciaETImpresora::obtenerImpresoraPorIri($iriInstancia);
+			
+			$GLOBALS['SigecostRequestVars']['impresora'] = $impresora;
+			
 			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/impresoraDetalles.php' );
 		}
 		
