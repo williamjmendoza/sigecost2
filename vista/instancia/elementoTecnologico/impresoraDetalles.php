@@ -28,12 +28,25 @@
 		
 		<div class="container">
 		
-			<h1>Instancia del elemento tecnol&oacute;gico impresora</h1>
+			<div class="page-header">
+				<h1>Instancia del elemento tecnol&oacute;gico impresora</h1>
+			</div>
 			
-			<pre>
-				<?php var_dump($impresora); ?>
-			</pre>
-		
+			<div class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="marca">Marca de la impresora:</label>
+					<div class="col-sm-5">
+						<p class="form-control-static"><?php echo $impresora->getMarca(); ?></p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="marca">Modelo de la impresora:</label>
+					<div class="col-sm-5">
+						<p class="form-control-static"><?php echo $impresora->getModelo(); ?></p>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 		
 		<?php require ( SIGECOST_VISTA_PATH . '/general/footer.php' ); ?>

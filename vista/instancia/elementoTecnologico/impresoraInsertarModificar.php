@@ -31,8 +31,9 @@
 		
 		<div class="container">
 		
-			<h1>Instancia del elemento tecnol&oacute;gico impresora</h1>
-			<br>
+			<div class="page-header">
+				<h1>Instancia del elemento tecnol&oacute;gico impresora</h1>
+			</div>
 			
 			<form class="form-horizontal" role="form" method="post">
 				<div style="display:none;">
@@ -56,7 +57,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-offset-3 col-sm-9">
+					<div class="col-sm-offset-3 col-sm-5">
 						<button type="submit" class="btn btn-default">Guardar</button>
 					</div>
 				</div>
