@@ -19,6 +19,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Instancia <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/elementoTecnologico/impresora.php?accion=insertar">Insertar impresora</a></li>
+						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/elementoTecnologico/sistemaOperativo.php?accion=insertar">Insertar sistema operativo</a></li>
 						<li><a href="#">Modificar</a></li>
 						<li><a href="#">Enlace 3.3</a></li>
 						<li class="divider"></li>
