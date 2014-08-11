@@ -8,6 +8,10 @@
 		{
 			try
 			{
+				// Inicializar los arrays de mensajes 
+				$GLOBALS['SigecostErrors']['general'] = array();
+				$GLOBALS['SigecostInfo']['general'] = array();
+				
 				/*
 				 * Uno de los errores que puede hacer que $_REQUEST["accion"] no se haya establecido
 				* es el hecho de que el archivo del informe exceda el tamaño establecido por las variables
