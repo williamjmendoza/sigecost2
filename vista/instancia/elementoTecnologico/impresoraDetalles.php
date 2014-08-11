@@ -24,6 +24,14 @@
 	
 		<?php require ( SIGECOST_VISTA_PATH . '/general/topMenu.php' ); ?>
 		
+		<div class="container">
+			<ul class="nav nav-tabs" role="tablist">
+				<li><a href="impresora.php?accion=insertar">Insertar</a></li>
+				<li><a href="impresora.php?accion=Buscar">Buscar</a></li>
+				<li class="active"><a href="#">Detallar</a></li>
+			</ul>
+		</div>
+		
 		<?php include( SIGECOST_VISTA_PATH . '/mensajes.php');?>
 		
 		<div class="container">

@@ -27,6 +27,13 @@
 	
 		<?php require ( SIGECOST_VISTA_PATH . '/general/topMenu.php' ); ?>
 		
+		<div class="container">
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="active"><a href="sistemaOperativo.php?accion=insertar">Insertar</a></li>
+				<li><a href="sistemaOperativo.php?accion=Buscar">Buscar</a></li>
+			</ul>
+		</div>
+		
 		<?php include( SIGECOST_VISTA_PATH . '/mensajes.php');?>
 		
 		<div class="container">
@@ -58,7 +65,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-3 col-sm-5">
-						<button type="submit" class="btn btn-default">Guardar</button>
+						<button type="submit" class="btn btn-primary">Guardar</button>
 					</div>
 				</div>
 			</form>
