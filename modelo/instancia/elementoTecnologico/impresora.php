@@ -13,6 +13,8 @@
 	{
 		public static function existeImpresora(EntidadInstanciaETImpresora $impresora)
 		{
+			$preMsg = 'Error al verificar la existencia de una instancia de impresora.';
+			
 			try
 			{
 				if ($impresora === null)
@@ -30,7 +32,7 @@
 				if ($impresora->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$impresora->getModelo()\' está vacío.');
 		
-				// Verificar si existe una impresora con la misma marca y modelos que la pasada por parámetros
+				// Verificar si existe una impresora con la misma marca y modelo, que la pasada por parámetros
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -58,9 +60,11 @@
 			}
 		}
 		
-		// Retorna el iri de la nueva instancia de impresora guardada
+		// Guarda una nueva instancia de impresora, y retorno su iri
 		public static function guardarImpresora(EntidadInstanciaETImpresora $impresora)
 		{
+			$preMsg = 'Error al guardar la impresora.';
+			
 			try
 			{
 				if ($impresora === null)
@@ -77,9 +81,6 @@
 				
 				if ($impresora->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$impresora->getModelo()\' está vacío.');
-
-				if($impresora == null)
-					throw new Exception('Error al guardar la instancia de impresora. Detalles: El parámetro \'$impresora\' es nulo.');
 				
 				// Consultar el número de secuencia para la siguiente instancia de impresora a crear.
 				$secuencia = ModeloGeneral::getSiguienteSecuenciaInstancia(SIGECOST_FRAGMENTO_IMPRESORA);
@@ -144,7 +145,7 @@
 		
 		public static function obtenerImpresoraPorIri($iri)
 		{
-			$preMsg = 'Error al obtener la impresora dado el iri.';
+			$preMsg = 'Error al obtener una instancia de impresora dado el iri.';
 			
 			try {
 				if ($iri === null)
@@ -156,11 +157,13 @@
 				// Obtener la instancia de impresora dado el iri
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 				
 						SELECT
 							?iri ?marca ?modelo
 						WHERE
 						{
+							?iri rdf:type :'.SIGECOST_FRAGMENTO_IMPRESORA.' .
 							?iri :marcaEquipoReproduccion ?marca .
 							?iri :modeloEquipoReproduccion ?modelo .
 							FILTER regex(str(?iri), "'.$iri.'")

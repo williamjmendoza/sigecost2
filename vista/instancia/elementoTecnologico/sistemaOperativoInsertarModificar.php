@@ -1,4 +1,7 @@
 <?php
+
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR);
+	$sistemaOperativo = $form->getSistemaOperativo();
 	
 ?>
 <!DOCTYPE html>
@@ -41,7 +44,7 @@
 					<div class="col-sm-5">
 						<input
 							type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduzca el nombre del S.O."
-							value="<?php  ?>"
+							value="<?php echo $sistemaOperativo != null ? $sistemaOperativo->getNombre() : "" ?>"
 						>
 					</div>
 				</div>
@@ -49,7 +52,7 @@
 					<label class="control-label col-sm-3" for="version">Versi&oacute;n del sistema operativo:</label>
 					<div class="col-sm-5">
 						<input type="text" class="form-control" id="version" name="version" placeholder="Introduzca la versi&oacute;n del S.O."
-							value="<?php  ?>"
+							value="<?php echo $sistemaOperativo != null ? $sistemaOperativo->getVersion() : "" ?>"
 						>
 					</div>
 				</div>

@@ -43,7 +43,7 @@
 					if ($iriNuevaInstancia === false) 
 						throw new Exception("La instancia de impresora no pudo ser guardada.");
 					
-					// Mostrar un mensaje indicando que se ha guardado satisfactoriamente y mostrar los detalles
+					// Mostrar un mensaje indicando que se ha guardado satisfactoriamente, y mostrar los detalles
 					// de la instancia de impresora guardada
 					$GLOBALS['SigecostInfo']['general'][] = "Instancia de impresora guardada satisfactoriamente.";
 					$this->__desplegarDetalles($iriNuevaInstancia);

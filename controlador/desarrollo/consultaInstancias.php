@@ -265,6 +265,82 @@
 			$this->execute($query);
 		}
 		
+		public function getInstanciaSO()
+		{
+			$query = '
+				PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					
+				SELECT
+					?subject
+				WHERE
+				{
+					?subject rdf:type :SistemaOperativo
+				}
+			';
+			
+			$this->execute($query);
+			
+			echo "<br> <br>";
+			
+			$query = '
+				PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+			
+				SELECT
+					?subject ?property ?object
+				WHERE
+				{
+					{ :ontologiasoportetecnicov1_Class9 ?property ?object }
+					UNION
+					{ ?subject ?property :ontologiasoportetecnicov1_Class9 }
+				}
+			';
+			
+			$this->execute($query);
+			
+			$query = '
+				PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+			
+				DESCRIBE :ontologiasoportetecnicov1_Class9
+			';
+			
+			$this->execute($query);
+				
+			$query = '
+				PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX fn: <http://www.w3.org/2005/xpath-functions#>
+				PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+				PREFIX mysql: <http://web-semantics.org/ns/mysql/>
+			
+				SELECT
+					?subject
+				WHERE
+				{
+					{
+						?subject rdf:type :Impresora .
+						#?subject ?property ?object .
+						#?subject kb:marcaEquipoReproduccion ?marca .
+						#?subject kb:modeloEquipoReproduccion ?modelo .
+			
+						#FILTER regex(str(?subject), kb:Impresora_)
+						#FILTER regex(xsd:string(fn:substring(?marca, 1)), "Laserjet P11")
+						#FILTER (mysql:concat(?marca, " ", ?modelo) = "HP Laserjet P1102W") .
+						#FILTER regex(mysql:substring(?subject, (mysql:length(kb:) + 1), (mysql:length(?subject) - mysql:length(kb:)) ), "Impresora_")
+						FILTER regex(mysql:substring(?subject, (mysql:length(:) + 1), (mysql:length(?subject) - mysql:length(:)) ),
+							"ontologiasoportetecnicov1_Class")
+					}
+				}
+				ORDER BY
+					DESC(mysql:substring(
+						?subject,
+						( mysql:length(:) + 1 + mysql:length("ontologiasoportetecnicov1_Class") ),
+						( mysql:length(?subject) - mysql:length(:) - mysql:length("ontologiasoportetecnicov1_Class") )
+					))
+				LIMIT 1
+			';
+				
+			$this->execute($query);
+		}
 	}
 	
 	new ConsultaInstancias();
