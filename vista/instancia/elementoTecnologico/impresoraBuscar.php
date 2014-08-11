@@ -1,0 +1,97 @@
+<?php
+
+	$impresoras = $GLOBALS['SigecostRequestVars']['impresoras'];
+	
+?>
+<!DOCTYPE html>
+<html lang="es">
+
+	<head>
+	
+		<?php require ( SIGECOST_VISTA_PATH . '/general/head.php' ); ?>
+		
+    	<style type="text/css">
+    	/*
+    		div > div > div {
+    			border-width: 1px; border-color: red; border-style: solid;
+    		}
+    		*/
+    		
+    		body { padding-top: 70px; }
+    	</style>
+    	
+    	<script type="text/javascript">
+    	
+			function setAccion(accion) {
+				$('input[type="hidden"][name="accion"]').val(accion);
+			}
+			
+    	</script>
+	
+	</head>
+	
+	<body>
+	
+		<?php require ( SIGECOST_VISTA_PATH . '/general/topMenu.php' ); ?>
+		
+		<?php include( SIGECOST_VISTA_PATH . '/mensajes.php');?>
+		
+		<div class="container">
+		
+			<div class="page-header">
+				<h1>Instancias del elemento tecnol&oacute;gico impresora</h1>
+			</div>
+			
+			<?php
+				if (is_array($impresoras) && count($impresoras) > 0)
+				{
+			?>
+			<div class="table-responsive">
+				<table class="table table table-hover table-responsive">
+					<thead>
+						<tr>
+							<th>Marca</th>
+							<th>Modelo</th>
+							<th>Opciones</th>
+						</tr>
+					</thead>
+					<tbody>
+			<?php
+					foreach ($impresoras AS $impresora)
+					{
+			?>
+						<tr>
+							<td><?php echo $impresora->getMarca() ?> </td>
+							<td><?php echo $impresora->getModelo() ?></td>
+							<td>
+								<form class="form-horizontal" role="form" action="impresora.php" method="post">
+									<div style="display:none;">
+										<input type="hidden" name="accion" value="">
+										<input type="hidden" name="iri" value="<?php echo $impresora->getIri() ?>">
+									</div>
+									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('modificar');">Modificar</button>
+									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Detalles</button>
+								</form>
+							</td>
+						</tr>	
+			<?php
+					}
+			?>
+					</tbody>
+				</table>
+			</div>
+			<?php
+				} else {
+			?>
+			<p>No existen impresoras que mostrar.</p>
+			<?php
+				}
+			?>
+		
+		</div>
+		
+		<?php require ( SIGECOST_VISTA_PATH . '/general/footer.php' ); ?>
+			
+	</body>
+
+</html>

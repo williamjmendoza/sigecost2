@@ -11,6 +11,48 @@
 	
 	class ModeloInstanciaETSistemaOperativo
 	{
+		public static function buscarSistemasOperativos()
+		{
+			$preMsg = 'Error al buscar las instancias de sistemas operativos.';
+			$sistemasOperativos = array();
+			try
+			{
+				// Obtener las instancias de los sistemas operativos
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+						SELECT
+							?iri ?nombre ?version
+						WHERE
+						{
+							?iri rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
+							?iri :nombreSistemaOperativo ?nombre .
+							?iri :versionSistemaOperativo ?version .
+						}
+						ORDER BY
+							?nombre ?version
+				';
+		
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+		
+				if (is_array($rows) && count($rows) > 0){
+					foreach ($rows AS $row){
+						$sistemasOperativos[$row['iri']] = self::llenarSistemaOperativo($row);
+					}
+				}
+				
+				return $sistemasOperativos;
+		
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 		public static function existeSistemaOperativo(EntidadInstanciaETSistemaOperativo $sistemaOperativo)
 		{
 			$preMsg = 'Error al verificar la existencia de una instancia de sistema operativo.';
@@ -122,19 +164,19 @@
 			}
 		}
 		
-		public static function llenarSistemaOperativo($rows)
+		public static function llenarSistemaOperativo($row)
 		{
 			try {
 				$impresora = null;
 		
-				if(!is_array($rows))
+				if(!is_array($row))
 					throw new Exception('Error al intentar llenar la instancia de sistema operativo. '.
-						'Detalles: el parámetro \'$rows\' no es un arreglo.');
+						'Detalles: el parámetro \'$row\' no es un arreglo.');
 		
 				$sistemaOperativo = new EntidadInstanciaETSistemaOperativo();
-				$sistemaOperativo->setIri($rows['iri']);
-				$sistemaOperativo->setNombre($rows['nombre']);
-				$sistemaOperativo->setVersion($rows['version']);
+				$sistemaOperativo->setIri($row['iri']);
+				$sistemaOperativo->setNombre($row['nombre']);
+				$sistemaOperativo->setVersion($row['version']);
 		
 				return $sistemaOperativo;
 		

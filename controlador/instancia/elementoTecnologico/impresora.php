@@ -10,9 +10,22 @@
 
 	class ControladorInstanciaETImpresora extends ControladorInstanciaETEquipoReproduccion
 	{
+		public function buscar()
+		{
+			$impresoras = ModeloInstanciaETImpresora::buscarImpresoras();
+				
+			$GLOBALS['SigecostRequestVars']['impresoras'] = $impresoras;
+			
+			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/impresoraBuscar.php' );
+		}
+		
 		public function desplegarDetalles()
 		{
-			$this->__desplegarDetalles('http://www.owl-ontologies.com/OntologySoporteTecnico.owl#Impresora_4');
+			if(!isset($_REQUEST['iri']) || ($iri=trim($_REQUEST['iri'])) == ''){
+				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir un iri.';
+			} else {
+				$this->__desplegarDetalles($iri);
+			}
 		}
 		
 		public function guardar()

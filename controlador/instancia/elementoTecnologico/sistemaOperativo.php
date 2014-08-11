@@ -10,6 +10,24 @@
 	
 	class ControladorInstanciaETSistemaOperativo extends Controlador
 	{
+		public function buscar()
+		{
+			$sistemasOperativos = ModeloInstanciaETSistemaOperativo::buscarSistemasOperativos();
+		
+			$GLOBALS['SigecostRequestVars']['sistemasOperativos'] = $sistemasOperativos;
+			
+			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/sistemaOperativoBuscar.php' );
+		}
+		
+		public function desplegarDetalles()
+		{
+			if(!isset($_REQUEST['iri']) || ($iri=trim($_REQUEST['iri'])) == ''){
+				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir un iri.';
+			} else {
+				$this->__desplegarDetalles($iri);
+			}
+		}
+		
 		public function guardar()
 		{
 			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR);
