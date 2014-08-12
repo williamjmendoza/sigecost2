@@ -74,7 +74,7 @@
 				if ($impresora->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$impresora->getModelo()\' está vacío.');
 		
-				// Verificar si existe una impresora con la misma marca y modelo, que la pasada por parámetros
+				// Verificar si existe una instancia de impresora con la misma marca y modelo, que la pasada por parámetros
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -102,10 +102,10 @@
 			}
 		}
 		
-		// Guarda una nueva instancia de impresora, y retorno su iri
+		// Guarda una nueva instancia de impresora, y retorna su iri
 		public static function guardarImpresora(EntidadInstanciaETImpresora $impresora)
 		{
-			$preMsg = 'Error al guardar la impresora.';
+			$preMsg = 'Error al guardar la instancia de impresora.';
 			
 			try
 			{

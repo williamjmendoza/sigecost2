@@ -57,8 +57,6 @@
 								{
 									foreach ($impresoras AS $impresora)
 									{
-										//<?php echo $equipoReproduccion != null ? $equipoReproduccion->getIri() . " --Algo" : "Nada"
-										//select - HTML selected="selected"
 										$seledted = strcmp($equipoReproduccion->getIri(), $impresora->GetIri()) == 0 ? ' selected="selected"' : "";  
 										
 							?>
