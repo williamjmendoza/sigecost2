@@ -1,8 +1,9 @@
 <?php
 
 	$impresoras = $GLOBALS['SigecostRequestVars']['impresoras'];
-	//$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR);
-	//$equipoReproduccion = $form->getEquipoReproduccion();
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR);
+	$sTEquipoReproduccion = $form->getSoporteTecnico();
+	$equipoReproduccion = $sTEquipoReproduccion->getEquipoReproduccion();
 	
 ?>
 <!DOCTYPE html>
@@ -42,22 +43,26 @@
 					<div class="col-sm-7">
 						<input
 							type="text" class="form-control" id="urlSoporteTecnico" name="urlSoporteTecnico" placeholder="Introduzca el url de S.T."
-							value="<?php //echo $equipoReproduccion != null ? $equipoReproduccion->getMarca() : "" ?>"
+							value="<?php echo $sTEquipoReproduccion != null ? $sTEquipoReproduccion->getUrlSoporteTecnico() : "" ?>"
 						>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="impresora">En impresora:</label>
+					<label class="control-label col-sm-3" for="iriEquipoReproduccion">En impresora:</label>
 					<div class="col-sm-7">
-						<select class="form-control" id="impresora"  name="impresora">
+						<select class="form-control" id="iriEquipoReproduccion"  name="iriEquipoReproduccion">
 							<option value="0">Seleccionar impresora...</option>
 							<?php
 								if(is_array($impresoras) && count($impresoras) > 0)
 								{
 									foreach ($impresoras AS $impresora)
 									{
+										//<?php echo $equipoReproduccion != null ? $equipoReproduccion->getIri() . " --Algo" : "Nada"
+										//select - HTML selected="selected"
+										$seledted = strcmp($equipoReproduccion->getIri(), $impresora->GetIri()) == 0 ? ' selected="selected"' : "";  
+										
 							?>
-							<option value="<?php echo $impresora->GetIri() ?>">
+							<option value="<?php echo $impresora->GetIri() ?>"<?php echo $seledted ?>>
 								<?php echo $impresora->getMarca() . ' - ' . $impresora->getModelo() ?>
 							</option>
 							<?php

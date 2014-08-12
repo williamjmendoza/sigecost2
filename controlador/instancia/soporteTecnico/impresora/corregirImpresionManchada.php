@@ -12,7 +12,13 @@
 	{
 		public function guardar()
 		{
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR);
 			
+			// Validar, obtener y guardar todos los inputs desde el formulario
+			$this->__validarUrlSoporteTecnico($form);
+			$this->__validarIriEquipoReproduccion($form);
+			
+			$this->__desplegarFormulario();
 		}
 		
 		public function insertar()

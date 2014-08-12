@@ -3,7 +3,7 @@
 	define('FORM_INSTANCIA_ET_ESCANER_INSERTAR_MODIFICAR', 1);
 	define('FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR', 2);
 	define('FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR', 3);
-	define('FORM_INSTANCIA_ST_IMPRESORA_INSERTAR_MODIFICAR', 4);
+	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 4);
 		
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 	
@@ -23,10 +23,10 @@
 			'ClassName' => 'FormularioInstanciaETSistemaOperativo',
 			'GlobalName' => 'ClassFormularioInstanciaETSistemaOperativo'
 		),
-		FORM_INSTANCIA_ST_IMPRESORA_INSERTAR_MODIFICAR => array(
-			'File' => 'instancia/soporteTecnico/impresora.php',
-			'ClassName' => 'FormularioInstanciaSTImpresora',
-			'GlobalName' => 'ClassFormularioInstanciaSTImpresora'
+		FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR => array(
+			'File' => 'instancia/soporteTecnico/impresora/corregirImpresionManchada.php',
+			'ClassName' => 'FormularioInstanciaSTImpresoraCorregirImpresionManchada',
+			'GlobalName' => 'ClassFormularioInstanciaSTImpresoraCorregirImpresionManchada'
 		),
 	);
 

@@ -9,10 +9,10 @@
 		
 		private $_tipoOperacion = self::TIPO_OPERACION_INSERTAR;
 		
-		public function GetTipoOperacion(){
+		public function getTipoOperacion(){
 			return $this->_tipoOperacion;
 		}
-		public function SetTipoOperacion($tipoOperacion){
+		public function setTipoOperacion($tipoOperacion){
 			$this->_tipoOperacion = $tipoOperacion;
 		}
 	}
