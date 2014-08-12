@@ -11,6 +11,15 @@
 	
 	class ControladorInstanciaSTImpresoraCorregirImpresionManchada extends ControladorInstanciaSTImpresora
 	{
+		public function buscar()
+		{
+			$instancias = ModeloInstanciaSTImpresoraCorregirImpresionManchada::buscarInstancias();
+			
+			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
+				
+			require ( SIGECOST_VISTA_PATH . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaBuscar.php' );
+		}
+		
 		public function desplegarDetalles()
 		{
 			$this->__desplegarDetalles('http://www.owl-ontologies.com/OntologySoporteTecnico.owl#CorregirImpresionManchada_1');
