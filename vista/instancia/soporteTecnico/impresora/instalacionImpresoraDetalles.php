@@ -2,6 +2,7 @@
 
 	$instancia = $GLOBALS['SigecostRequestVars']['instancia'];
 	$instanciaImpresora = $instancia->getEquipoReproduccion();
+	$instanciaSistemaOperativo = $instancia->getSistemaOperativo();
 	
 ?>
 <!DOCTYPE html>
@@ -19,8 +20,8 @@
 		
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
-				<li><a href="corregirImpresionManchada.php?accion=insertar">Insertar</a></li>
-				<li><a href="corregirImpresionManchada.php?accion=Buscar">Buscar</a></li>
+				<li><a href="instalacionImpresora.php?accion=insertar">Insertar</a></li>
+				<li><a href="instalacionImpresora.php?accion=Buscar">Buscar</a></li>
 				<li class="active"><a href="#">Detallar</a></li>
 			</ul>
 		</div>
@@ -30,7 +31,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en impresora: <small>corregir impresi&oacute;n manchada</small></h1>
+				<h1>Instancia de soporte t&eacute;cnico en impresora: <small>instalaci&oacute;n de impresora</small></h1>
 			</div>
 			
 			<div class="form-horizontal" role="form">
@@ -45,6 +46,14 @@
 					<div class="col-sm-7">
 						<p class="form-control-static">
 							<?php echo $instanciaImpresora != null ? $instanciaImpresora->getMarca() . ' - ' .$instanciaImpresora->getModelo() : "" ?>
+						</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="iriSistemaOperativo">Sobre sistema operativo:</label>
+					<div class="col-sm-7">
+						<p class="form-control-static">
+							<?php echo $instanciaSistemaOperativo != null ? $instanciaSistemaOperativo->getNombre() . ' - ' . $instanciaSistemaOperativo->getVersion() : "" ?>
 						</p>
 					</div>
 				</div>

@@ -1,9 +1,11 @@
 <?php
 
 	$impresoras = $GLOBALS['SigecostRequestVars']['impresoras'];
-	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR);
+	$sistemasOperativos = $GLOBALS['SigecostRequestVars']['sistemasOperativos'];
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR);
 	$instancia = $form->getSoporteTecnico();
 	$instanciaImpresora = $instancia->getEquipoReproduccion();
+	$instanciaSistemaOperativo = $instancia->getSistemaOperativo();
 	
 ?>
 <!DOCTYPE html>
@@ -21,8 +23,8 @@
 		
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
-				<li class="active"><a href="corregirImpresionManchada.php?accion=insertar">Insertar</a></li>
-				<li><a href="corregirImpresionManchada.php?accion=Buscar">Buscar</a></li>
+				<li class="active"><a href="instalacionImpresora.php?accion=insertar">Insertar</a></li>
+				<li><a href="instalacionImpresora.php?accion=Buscar">Buscar</a></li>
 			</ul>
 		</div>
 		
@@ -31,10 +33,10 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en impresora: <small>corregir impresi&oacute;n manchada</small></h1>
+				<h1>Instancia de soporte t&eacute;cnico en impresora: <small>instalaci&oacute;n de impresora</small></h1>
 			</div>
 			
-			<form class="form-horizontal" role="form" method="post" action="corregirImpresionManchada.php">
+			<form class="form-horizontal" role="form" method="post" action="instalacionImpresora.php">
 				<div style="display:none;">
 					<input type="hidden" name="accion" value="guardar">
 				</div>
@@ -62,6 +64,30 @@
 							?>
 							<option value="<?php echo $impresora->GetIri() ?>"<?php echo $seledted ?>>
 								<?php echo $impresora->getMarca() . ' - ' . $impresora->getModelo() ?>
+							</option>
+							<?php
+									}
+								}
+							?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="iriSistemaOperativo">Sobre sistema operativo:</label>
+					<div class="col-sm-7">
+						<select class="form-control" id="iriSistemaOperativo"  name="iriSistemaOperativo">
+							<option value="0">Seleccionar sistema operativo...</option>
+							<?php
+								
+								if(is_array($sistemasOperativos) && count($sistemasOperativos) > 0)
+								{
+									foreach ($sistemasOperativos AS $sistemaOperativo)
+									{
+										$seledted = strcmp($instanciaSistemaOperativo->getIri(), $sistemaOperativo->getIri()) == 0 ? ' selected="selected"' : "";  
+										
+							?> 
+							<option value="<?php echo $sistemaOperativo->GetIri() ?>"<?php echo $seledted ?>>
+								<?php echo $sistemaOperativo->getNombre() . ' - ' . $sistemaOperativo->getVersion() ?>
 							</option>
 							<?php
 									}

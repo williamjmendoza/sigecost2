@@ -9,6 +9,52 @@
 	
 	class ModeloInstanciaSTImpresoraCorregirImpresionManchada
 	{
+		public static function buscarInstancias()
+		{
+			$preMsg = 'Error al buscar las instancias de soporte técnico en impresoras para corregir impresión manchada.';
+			$instancias = array();
+			
+			try
+			{
+				// Buscar las instancias de soporte técnico en impresora para corregir impresión manchada
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				
+						SELECT
+							?iri ?urlSoporteTecnico ?iriEquipoReproduccion ?marcaEquipoReproduccion ?modeloEquipoReproduccion
+						WHERE
+						{
+							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA.' .
+							OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
+							?iri :enImpresora ?iriEquipoReproduccion .
+							?iriEquipoReproduccion rdf:type :'.SIGECOST_FRAGMENTO_IMPRESORA.' .
+							?iriEquipoReproduccion :marcaEquipoReproduccion ?marcaEquipoReproduccion .
+							?iriEquipoReproduccion :modeloEquipoReproduccion ?modeloEquipoReproduccion .
+						}
+						ORDER BY
+							?urlSoporteTecnico ?marcaEquipoReproduccion ?modeloEquipoReproduccion
+				';
+				
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+				
+				if (is_array($rows) && count($rows) > 0){
+					foreach ($rows AS $row){
+						$instancias[$row['iri']] = self::llenarInstancia($row);
+					}
+				}
+				
+				return $instancias;
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 		public static function existeInstancia(EntidadInstanciaSTImpresoraCorregirImpresionManchada $instancia)
 		{
 			$preMsg = 'Error al verificar la existencia de una instancia de soporte técnico en impresora para corregir impresión manchada.';
@@ -51,7 +97,6 @@
 					
 				return $result['result'];
 				
-				
 			} catch (Exception $e) {
 				error_log($e, 0);
 				return null;
@@ -86,7 +131,7 @@
 						'No se pudo obtener el número de la siguiente secuencia para la instancia de la clase \'' . 
 						SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA.'\'');
 					
-				// Construir el fragmento de la nueva instancia de conctenando el framento de la clase "SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA"
+				// Construir el fragmento de la nueva instancia de concatenando el framento de la clase "SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA"
 				// con el el caracater underscore "_" y el número de secuencia obtenido "$secuencia"
 				$fragmentoIriInstancia = SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA . '_' . $secuencia;
 				
@@ -136,7 +181,7 @@
 				$impresora->setMarca($row['marcaEquipoReproduccion']);
 				$impresora->setModelo($row['modeloEquipoReproduccion']);
 				$instancia->setEquipoReproduccion($impresora);
-		
+				
 				return $instancia;
 		
 			} catch (Exception $e) {
@@ -167,9 +212,9 @@
 						WHERE
 						{
 							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA.' .
-							?iri :uRLSoporteTecnico ?urlSoporteTecnico .
+							OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
 							?iri :enImpresora ?iriEquipoReproduccion .
-							FILTER regex(str(?iri), "'.$iri.'") .
+							FILTER (?iri = <'.$iri.'>) .
 							?iriEquipoReproduccion rdf:type :'.SIGECOST_FRAGMENTO_IMPRESORA.' .
 							?iriEquipoReproduccion :marcaEquipoReproduccion ?marcaEquipoReproduccion .
 							?iriEquipoReproduccion :modeloEquipoReproduccion ?modeloEquipoReproduccion .

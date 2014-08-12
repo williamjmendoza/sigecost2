@@ -11,9 +11,22 @@
 	
 	class ControladorInstanciaSTImpresoraCorregirImpresionManchada extends ControladorInstanciaSTImpresora
 	{
+		public function buscar()
+		{
+			$instancias = ModeloInstanciaSTImpresoraCorregirImpresionManchada::buscarInstancias();
+			
+			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
+				
+			require ( SIGECOST_VISTA_PATH . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaBuscar.php' );
+		}
+		
 		public function desplegarDetalles()
 		{
-			$this->__desplegarDetalles('http://www.owl-ontologies.com/OntologySoporteTecnico.owl#CorregirImpresionManchada_1');
+			if(!isset($_REQUEST['iri']) || ($iri=trim($_REQUEST['iri'])) == ''){
+				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir un iri.';
+			} else {
+				$this->__desplegarDetalles($iri);
+			}
 		}
 		
 		public function guardar()
@@ -36,7 +49,6 @@
 					// Validar si existe una instancia de soporte técnico en impresora para corregir impresión manchada, con las mismas características
 					if ($existeInstancia === true)
 						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
-					
 					
 					// Guardar instancia de soporte técnico en impresora para corregir impresión manchada, en la base de datos
 					$iriNuevaInstancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::guardarInstancia($form->getSoporteTecnico());

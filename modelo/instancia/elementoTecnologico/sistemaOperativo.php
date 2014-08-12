@@ -186,6 +186,48 @@
 			}
 		}
 		
+		public static function obtenerTodosSitemasOperativos()
+		{
+			$preMsg = 'Error al obtener todas las instancias de sistemas operativos.';
+			$sistemasOperativos = array();
+			try
+			{
+				// Obtener todas las instancias de los sistemas operativos
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+			
+						SELECT
+							?iri ?nombre ?version
+						WHERE
+						{
+							?iri rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
+							?iri :nombreSistemaOperativo ?nombre .
+							?iri :versionSistemaOperativo ?version .
+						}
+						ORDER BY
+							?nombre ?version
+				';
+			
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+			
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+			
+				if (is_array($rows) && count($rows) > 0){
+					foreach ($rows AS $row){
+						$sistemasOperativos[$row['iri']] = self::llenarSistemaOperativo($row);
+					}
+				}
+			
+				return $sistemasOperativos;
+			
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 		public static function obtenerSistemaOperativoPorIri($iri)
 		{
 			$preMsg = 'Error al obtener una instancia de sistema operativo dado el iri.';
@@ -209,7 +251,7 @@
 							?iri rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
 							?iri :nombreSistemaOperativo ?nombre .
 							?iri :versionSistemaOperativo ?version .
-							FILTER regex(str(?iri), "'.$iri.'")
+							FILTER (?iri = <'.$iri.'>) .
 						}
 				';
 		

@@ -27,6 +27,9 @@
 						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/soporteTecnico/impresora/corregirImpresionManchada.php?accion=insertar">
 							Corregir impresi&oacute;n manchada
 						</a></li>
+						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/soporteTecnico/impresora/instalacionImpresora.php?accion=insertar">
+							Inatalaci&oacute;n impresora
+						</a></li>
 					</ul>
 				</li>
 				<li class="active"><a href="#">Enlace 1</a></li>

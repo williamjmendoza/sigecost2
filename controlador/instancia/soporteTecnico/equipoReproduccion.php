@@ -5,7 +5,7 @@
 
 	class ControladorInstanciaSTEquipoReproduccion extends ControladorInstanciaSoporteTecnico
 	{
-		// Obtener y validar el iri del equipo de reproducción
+		// Obtener y validar el iri de la instancia de equipo de reproducción
 		protected function __validarIriEquipoReproduccion(FormularioInstanciaSTEquipoReproduccion $form)
 		{
 			if(!isset($_POST['iriEquipoReproduccion']) || ($iriEquipoReproduccion=trim($_POST['iriEquipoReproduccion'])) == ''

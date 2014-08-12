@@ -208,7 +208,7 @@
 							?iri rdf:type :'.SIGECOST_FRAGMENTO_ESCANER.' .
 							?iri :marcaEquipoReproduccion ?marca .
 							?iri :modeloEquipoReproduccion ?modelo .
-							FILTER regex(str(?iri), "'.$iri.'")
+							FILTER (?iri = <'.$iri.'>) .
 						}
 				';
 		
