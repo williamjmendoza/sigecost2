@@ -16,6 +16,7 @@
 			}
 		}
 		
+		// Obtener y validar el modelo
 		protected function __validarModelo(FormularioInstanciaETEquipoReproduccion $form)
 		{
 			if(!isset($_POST['modelo']) || ($modelo=trim($_POST['modelo'])) == ''){

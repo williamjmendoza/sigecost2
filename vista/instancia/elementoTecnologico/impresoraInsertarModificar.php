@@ -32,7 +32,7 @@
 				<h1>Instancia del elemento tecnol&oacute;gico impresora</h1>
 			</div>
 			
-			<form class="form-horizontal" role="form" method="post">
+			<form class="form-horizontal" role="form" method="post" action="impresora.php">
 				<div style="display:none;">
 					<input type="hidden" name="accion" value="guardar">
 				</div>

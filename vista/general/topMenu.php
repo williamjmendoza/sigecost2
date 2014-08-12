@@ -20,10 +20,13 @@
 					<ul class="dropdown-menu" role="menu">
 						<li class="dropdown-header">Elemento tecnol&oacute;gico</li>
 						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/elementoTecnologico/impresora.php?accion=insertar">Impresora</a></li>
+					    <li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
 						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/elementoTecnologico/sistemaOperativo.php?accion=insertar">Sistema operativo</a></li>
 						<li class="divider"></li>
 						<li class="dropdown-header">Soporte t&eacute;cnico</li>
-						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/soporteTecnico/impresora.php?accion=insertar">Impresora</a></li>
+						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/soporteTecnico/impresora/corregirImpresionManchada.php?accion=insertar">
+							Corregir impresi&oacute;n manchada
+						</a></li>
 					</ul>
 				</li>
 				<li class="active"><a href="#">Enlace 1</a></li>

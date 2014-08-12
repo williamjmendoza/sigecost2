@@ -230,5 +230,47 @@
 			}
 		}
 		
+		public static function obtenerTodasImpresoras()
+		{
+			$preMsg = 'Error al obtener todas las instancias de impresoras.';
+			$impresoras = array();
+			try
+			{
+				// Obtener todas las instancias de las impresoras
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+						SELECT
+							?iri ?marca ?modelo
+						WHERE
+						{
+							?iri rdf:type :'.SIGECOST_FRAGMENTO_IMPRESORA.' .
+							?iri :marcaEquipoReproduccion ?marca .
+							?iri :modeloEquipoReproduccion ?modelo .
+						}
+						ORDER BY
+							?marca ?modelo
+				';
+		
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+		
+				if (is_array($rows) && count($rows) > 0){
+					foreach ($rows AS $row){
+						$impresoras[$row['iri']] = self::llenarImpresora($row);
+					}
+				}
+		
+				return $impresoras;
+		
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 	}
 ?>
