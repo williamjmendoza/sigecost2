@@ -3,15 +3,15 @@
 	// Entidades
 	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/instancia.php' );
 
-	class EntidadSoporteTecnico extends EntidadInstancia
+	class EntidadInstanciaSoporteTecnico extends EntidadInstancia
 	{
-		private $_uRLSoporteTecnico;
+		private $_urlSoporteTecnico;
 		
-		public function getURLSoporteTecnico(){
-			return $this->_uRLSoporteTecnico;
+		public function getUrlSoporteTecnico(){
+			return $this->_urlSoporteTecnico;
 		}
-		public function setURLSoporteTecnico($uRLSoporteTecnico){
-			$this->_uRLSoporteTecnico = $uRLSoporteTecnico;
+		public function setUrlSoporteTecnico($urlSoporteTecnico){
+			$this->_urlSoporteTecnico = $urlSoporteTecnico;
 		}
 	}
 ?>

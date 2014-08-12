@@ -3,10 +3,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<!-- En dispositivos móviles, para garantizar la generación de gráficos correcta y un funcionamiento correcto de zoom de toque de pantalla. -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Prueba de bootstrap</title>
+	<title>Sigecost</title>
 	
 	<!-- Bootstrap -->
 	<link href="<?php echo GetConfig('siteURL'); ?>/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo GetConfig('siteURL'); ?>/css/general.css" rel="stylesheet">
     	
     <?php 
     /*

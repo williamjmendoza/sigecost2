@@ -10,10 +10,14 @@
 	class ControladorSTImpresora extends Controlador
 	{
 		
-		public function prueba()
+		public function insertar()
 		{
-			echo "Holita 2";	
-			
+			$this->__desplegarFormulario();			
+		}
+		
+		private function __desplegarFormulario()
+		{
+			require ( SIGECOST_VISTA_PATH . '/instancia/soporteTecnico/impresoraInsertarModificar.php' );
 		}
 	}
 	

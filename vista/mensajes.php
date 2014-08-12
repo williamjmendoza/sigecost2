@@ -4,7 +4,7 @@
 				|| is_array($GLOBALS['SigecostInfo']['general']) && count($GLOBALS['SigecostInfo']['general']) > 0
 			){
 				echo '
-		<div class="container">
+		<div class="container" style="padding-top: 20px;">
 			<a name="mensajes"></a>
 				';
 			
