@@ -134,7 +134,7 @@
 					// Construir el fragmento de la nueva instancia de escaner
 					// conctenando el framento de la clase escaner "SIGECOST_FRAGMENTO_ESCANER"
 					// con el el caracater underscore "_" y el número de secuencia obtenido "$secuencia"
-					$fragmentoIriInstancia = SIGECOST_FRAGMENTO__ESCANER . '_' . $secuencia;
+					$fragmentoIriInstancia = SIGECOST_FRAGMENTO_ESCANER . '_' . $secuencia;
 		
 					// Guardar la nueva instancia de escaner
 					$query = '
