@@ -1,11 +1,11 @@
 <?php
 
 	// Entidades
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/soporteTecnico/impresora/corregirImpresionManchada.php' );
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/impresora.php' );
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/soporteTecnico/impresora/corregirImpresionManchada.php' );
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/elementoTecnologico/impresora.php' );
 
 	// Modelos
-	require_once ( SIGECOST_MODELO_PATH . '/general.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/general.php' );
 	
 	class ModeloInstanciaSTImpresoraCorregirImpresionManchada
 	{

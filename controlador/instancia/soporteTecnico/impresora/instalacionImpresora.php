@@ -2,12 +2,12 @@
 	require_once( dirname(__FILE__) . '/../../../../init.php' );
 
 	// Controladores
-	require_once ( SIGECOST_CONTROLADOR_PATH . '/instancia/soporteTecnico/impresora/impresora.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/impresora/impresora.php' );
 	
 	// Modelos
-	require_once ( SIGECOST_MODELO_PATH . '/instancia/elementoTecnologico/impresora.php' );
-	require_once ( SIGECOST_MODELO_PATH . '/instancia/elementoTecnologico/sistemaOperativo.php' );
-	require_once ( SIGECOST_MODELO_PATH . '/instancia/soporteTecnico/impresora/instalacionImpresora.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/impresora.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/sistemaOperativo.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/impresora/instalacionImpresora.php' );
 	
 	class ControladorInstanciaSTImpresoraInstalacionImpresora extends ControladorInstanciaSTImpresora
 	{
@@ -17,7 +17,7 @@
 				
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
 		
-			require ( SIGECOST_VISTA_PATH . '/instancia/soporteTecnico/impresora/instalacionImpresoraBuscar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/instalacionImpresoraBuscar.php' );
 		}
 		
 		public function desplegarDetalles()
@@ -83,7 +83,7 @@
 			
 			$GLOBALS['SigecostRequestVars']['instancia'] = $instancia;
 		
-			require ( SIGECOST_VISTA_PATH . '/instancia/soporteTecnico/impresora/instalacionImpresoraDetalles.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/instalacionImpresoraDetalles.php' );
 		}
 		
 		private function __desplegarFormulario()
@@ -94,7 +94,7 @@
 			$GLOBALS['SigecostRequestVars']['impresoras'] = $impresoras;
 			$GLOBALS['SigecostRequestVars']['sistemasOperativos'] = $sistemasOperativos;
 				
-			require ( SIGECOST_VISTA_PATH . '/instancia/soporteTecnico/impresora/instalacionImpresoraInsertarModificar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/instalacionImpresoraInsertarModificar.php' );
 		}
 		
 		// Obtener y validar el iri de la instancia de sistema operativo

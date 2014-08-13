@@ -1,7 +1,7 @@
 <?php
 	
 	// Controladores
-	require_once ( SIGECOST_CONTROLADOR_PATH . '/controlador.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/controlador.php' );
 
 	class ControladorInstanciaETEquipoReproduccion extends Controlador
 	{

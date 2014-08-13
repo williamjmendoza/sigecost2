@@ -1,7 +1,7 @@
 <?php
 
 	// Entidades
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/instancia.php' );
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/instancia.php' );
 
 	class EntidadInstanciaSoporteTecnico extends EntidadInstancia
 	{

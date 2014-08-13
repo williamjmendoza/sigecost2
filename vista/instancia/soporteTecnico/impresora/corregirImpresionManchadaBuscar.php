@@ -8,7 +8,7 @@
 
 	<head>
 	
-		<?php require ( SIGECOST_VISTA_PATH . '/general/head.php' ); ?>
+		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
 		
     	<script type="text/javascript">
     	
@@ -22,7 +22,7 @@
 	
 	<body>
 	
-		<?php require ( SIGECOST_VISTA_PATH . '/general/topMenu.php' ); ?>
+		<?php require ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
 		
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
@@ -31,7 +31,7 @@
 			</ul>
 		</div>
 		
-		<?php include( SIGECOST_VISTA_PATH . '/mensajes.php');?>
+		<?php include( SIGECOST_PATH_VISTA . '/mensajes.php');?>
 		
 		<div class="container">
 		
@@ -92,7 +92,7 @@
 		
 		</div>
 		
-		<?php require ( SIGECOST_VISTA_PATH . '/general/footer.php' ); ?>
+		<?php require ( SIGECOST_PATH_VISTA . '/general/footer.php' ); ?>
 			
 	</body>
 

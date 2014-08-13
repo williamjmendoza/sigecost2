@@ -1,8 +1,8 @@
 <?php
 
 	// Entidades
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/equipoReproduccion.php' );
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/soporteTecnico/soporteTecnico.php' );
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/elementoTecnologico/equipoReproduccion.php' );
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/soporteTecnico/soporteTecnico.php' );
 	
 	class EntidadInstanciaSTEquipoReproduccion extends EntidadInstanciaSoporteTecnico
 	{

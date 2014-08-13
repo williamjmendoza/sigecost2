@@ -6,8 +6,8 @@
 	<title>Sigecost</title>
 	
 	<!-- Bootstrap -->
-	<link href="<?php echo GetConfig('siteURL'); ?>/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="<?php echo GetConfig('siteURL'); ?>/css/general.css" rel="stylesheet">
+	<link href="<?php echo SIGECOST_PATH_URL_BASE ?>/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo SIGECOST_PATH_URL_BASE ?>/estilos/general.css" rel="stylesheet">
     	
     <?php 
     /*

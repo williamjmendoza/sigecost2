@@ -1,13 +1,13 @@
 <?php
 
 	// Entidades
-	require_once( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/sistemaOperativo.php' );
+	require_once( SIGECOST_PATH_ENTIDAD . '/instancia/elementoTecnologico/sistemaOperativo.php' );
 	
 	// Lib
-	require_once( SIGECOST_LIB_PATH . '/definiciones.php' );
+	require_once( SIGECOST_PATH_LIB . '/definiciones.php' );
 	
 	// Modelos
-	require_once ( SIGECOST_MODELO_PATH . '/general.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/general.php' );
 	
 	class ModeloInstanciaETSistemaOperativo
 	{

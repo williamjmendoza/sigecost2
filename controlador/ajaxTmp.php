@@ -1,7 +1,7 @@
 <?php
 
 	require_once (dirname(__FILE__) . "/../init.php");
-	require_once (SIGECOST_CONTROLADOR_PATH . "/ajaxControlador.php");
+	require_once (SIGECOST_PATH_CONTROLADOR . "/ajaxControlador.php");
 
 	class AjaxTmpControlador extends AjaxControlador 
 	{

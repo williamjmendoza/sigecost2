@@ -1,6 +1,6 @@
 <?php
 
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/equipoReproduccion.php' );
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/elementoTecnologico/equipoReproduccion.php' );
 
 	class EntidadInstanciaETEscaner extends EntidadInstanciaETEquipoReproduccion
 	{

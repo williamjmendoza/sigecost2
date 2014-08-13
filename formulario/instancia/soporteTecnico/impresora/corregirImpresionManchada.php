@@ -1,11 +1,11 @@
 <?php
 
 	// Entidades
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/impresora.php');
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/soporteTecnico/impresora/corregirImpresionManchada.php');
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/elementoTecnologico/impresora.php');
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/soporteTecnico/impresora/corregirImpresionManchada.php');
 
 	// Formularios
-	require_once ( SIGECOST_FORMULARIO_PATH . '/instancia/soporteTecnico/impresora/impresora.php');
+	require_once ( SIGECOST_PATH_FORMULARIO . '/instancia/soporteTecnico/impresora/impresora.php');
 
 	class FormularioInstanciaSTImpresoraCorregirImpresionManchada extends FormularioInstanciaSTImpresora
 	{

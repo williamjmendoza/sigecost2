@@ -3,10 +3,10 @@
 	require_once( dirname(__FILE__) . '/../../../init.php' );
 	
 	// Controladores
-	require_once ( SIGECOST_CONTROLADOR_PATH . '/controlador.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/controlador.php' );
 	
 	// Modelos
-	require_once ( SIGECOST_MODELO_PATH . '/instancia/elementoTecnologico/sistemaOperativo.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/sistemaOperativo.php' );
 	
 	class ControladorInstanciaETSistemaOperativo extends Controlador
 	{
@@ -16,7 +16,7 @@
 		
 			$GLOBALS['SigecostRequestVars']['sistemasOperativos'] = $sistemasOperativos;
 			
-			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/sistemaOperativoBuscar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/sistemaOperativoBuscar.php' );
 		}
 		
 		public function desplegarDetalles()
@@ -82,12 +82,12 @@
 				
 			$GLOBALS['SigecostRequestVars']['sistemaOperativo'] = $sistemaOperativo;
 				
-			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/sistemaOperativoDetalles.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/sistemaOperativoDetalles.php' );
 		}
 		
 		private function __desplegarFormulario()
 		{
-			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/sistemaOperativoInsertarModificar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/sistemaOperativoInsertarModificar.php' );
 		}
 		
 		private function __validarNombre(FormularioInstanciaETSistemaOperativo $form)

@@ -1,10 +1,10 @@
 <?php
 
 	// Entidades
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/sistemaOperativo.php');
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/elementoTecnologico/sistemaOperativo.php');
 
 	// Formularios
-	require_once ( SIGECOST_FORMULARIO_PATH . '/formulario.php');
+	require_once ( SIGECOST_PATH_FORMULARIO . '/formulario.php');
 
 	class FormularioInstanciaETSistemaOperativo extends Formulario
 	{

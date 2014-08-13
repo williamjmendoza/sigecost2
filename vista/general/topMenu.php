@@ -9,7 +9,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php echo GetConfig('siteURL'); ?>">Sigecost</a>
+			<a class="navbar-brand" href="<?php echo SIGECOST_PATH_URL_BASE; ?>">Sigecost</a>
 		</div>
 		
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,15 +19,15 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Instancias <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class="dropdown-header">Elemento tecnol&oacute;gico</li>
-						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/elementoTecnologico/impresora.php?accion=insertar">Impresora</a></li>
-					    <li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
-						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/elementoTecnologico/sistemaOperativo.php?accion=insertar">Sistema operativo</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/impresora.php?accion=insertar">Impresora</a></li>
+					    <li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/sistemaOperativo.php?accion=insertar">Sistema operativo</a></li>
 						<li class="divider"></li>
 						<li class="dropdown-header">Soporte t&eacute;cnico</li>
-						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/soporteTecnico/impresora/corregirImpresionManchada.php?accion=insertar">
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/corregirImpresionManchada.php?accion=insertar">
 							Corregir impresi&oacute;n manchada
 						</a></li>
-						<li><a href="<?php echo GetConfig('siteURL'); ?>/controlador/instancia/soporteTecnico/impresora/instalacionImpresora.php?accion=insertar">
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/instalacionImpresora.php?accion=insertar">
 							Inatalaci&oacute;n impresora
 						</a></li>
 					</ul>

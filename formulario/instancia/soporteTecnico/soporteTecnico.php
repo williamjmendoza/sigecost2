@@ -1,10 +1,10 @@
 <?php
 
 	// Entidades
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/soporteTecnico/soporteTecnico.php');
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/soporteTecnico/soporteTecnico.php');
 
 	// Formularios
-	require_once ( SIGECOST_FORMULARIO_PATH . '/formulario.php');
+	require_once ( SIGECOST_PATH_FORMULARIO . '/formulario.php');
 	
 	class FormularioInstanciaSoporteTecnico extends Formulario
 	{

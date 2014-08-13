@@ -3,10 +3,10 @@
 	require_once( dirname(__FILE__) . '/../../../init.php' );
 	
 	// Controladores
-	require_once( SIGECOST_CONTROLADOR_PATH . '/instancia/elementoTecnologico/equipoReproduccion.php' );
+	require_once( SIGECOST_PATH_CONTROLADOR . '/instancia/elementoTecnologico/equipoReproduccion.php' );
 	
 	// Modelos
-	require_once( SIGECOST_MODELO_PATH . '/instancia/elementoTecnologico/escaner.php' );
+	require_once( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/escaner.php' );
 	
 	class ControladorInstanciaETEscaner extends ControladorInstanciaETEquipoReproduccion
 	{
@@ -16,7 +16,7 @@
 				
 			$GLOBALS['SigecostRequestVars']['escaners'] = $escaners;
 
-			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/escanerBuscar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/escanerBuscar.php' );
 		}
 		
 		public function desplegarDetalles()
@@ -82,12 +82,12 @@
 			
 			$GLOBALS['SigecostRequestVars']['escaner'] = $escaner;
 			
-			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/escanerDetalles.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/escanerDetalles.php' );
 		}
 		
 		private function __desplegarFormulario()
 		{
-			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/escanerInsertarModificar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/escanerInsertarModificar.php' );
 		}
 	}
 	

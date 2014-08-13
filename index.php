@@ -7,7 +7,7 @@
 
 	<head>
 	
-		<?php require ( SIGECOST_VISTA_PATH . '/general/head.php' ); ?>
+		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
     	
     	<style type="text/css">
     	/*
@@ -23,7 +23,7 @@
 	
 	<body>
 	
-		<?php require_once ( SIGECOST_VISTA_PATH . '/general/topMenu.php' ); ?>
+		<?php require_once ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
 		
 		<div class="container">
 			<div class="jumbotron">
@@ -47,7 +47,7 @@
 			</ul>
 		</div>
 
-		<?php require ( SIGECOST_VISTA_PATH . '/general/footer.php' ); ?>
+		<?php require ( SIGECOST_PATH_VISTA . '/general/footer.php' ); ?>
 	
 	</body>
 

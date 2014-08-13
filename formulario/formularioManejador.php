@@ -1,5 +1,5 @@
 <?php
-	include_once( SIGECOST_FORMULARIO_PATH . '/config.php' );
+	include_once( SIGECOST_PATH_FORMULARIO . '/config.php' );
 	
 	class FormularioManejador
 	{
@@ -14,7 +14,7 @@
 			
 			if(!isset($list[$globalName]))
 			{
-				include_once(SIGECOST_FORMULARIO_PATH . '/' . $file);
+				include_once(SIGECOST_PATH_FORMULARIO . '/' . $file);
 				$list[$globalName] = new $className();
 				$form = $list[$globalName];
 			} else {

@@ -1,14 +1,14 @@
 <?php
 
-	define('SIGECOST_BASE_PATH', dirname(realpath(dirname(__FILE__).'/../index.php')));
-	define('SIGECOST_CONTROLADOR_PATH', SIGECOST_BASE_PATH.'/controlador');
-	define('SIGECOST_ENTIDAD_PATH', SIGECOST_BASE_PATH.'/entidad');
-	define('SIGECOST_FORMULARIO_PATH', SIGECOST_BASE_PATH.'/formulario');
-	define('SIGECOST_LIB_PATH', SIGECOST_BASE_PATH.'/lib');
-	define('SIGECOST_MODELO_PATH', SIGECOST_BASE_PATH.'/modelo');
-	define('SIGECOST_VISTA_PATH', SIGECOST_BASE_PATH.'/vista');
+	define('SIGECOST_PATH_BASE', dirname(realpath(dirname(__FILE__).'/../index.php')));
+	define('SIGECOST_PATH_CONTROLADOR', SIGECOST_PATH_BASE.'/controlador');
+	define('SIGECOST_PATH_ENTIDAD', SIGECOST_PATH_BASE.'/entidad');
+	define('SIGECOST_PATH_FORMULARIO', SIGECOST_PATH_BASE.'/formulario');
+	define('SIGECOST_PATH_LIB', SIGECOST_PATH_BASE.'/lib');
+	define('SIGECOST_PATH_MODELO', SIGECOST_PATH_BASE.'/modelo');
+	define('SIGECOST_PATH_VISTA', SIGECOST_PATH_BASE.'/vista');
 	
-	define('SIGECOST_CONFIG_FILE', SIGECOST_BASE_PATH . '/config/config.php');
+	define('SIGECOST_CONFIG_FILE', SIGECOST_PATH_BASE . '/config/config.php');
 
 	// Versión mínima de PHP requerida para ejecutar Sigecost
 	define("PHP_VERSION_REQUIRED", "5.3");
@@ -37,11 +37,15 @@
 		die("<h1>Se requiere PHP ".PHP_VERSION_REQUIRED." o superior para ejecutar Sigecost.</h1>");
 	}
 	
-	require_once (SIGECOST_LIB_PATH . '/general.php');
+	require_once (SIGECOST_PATH_LIB . '/general.php');
 	
 	require (SIGECOST_CONFIG_FILE);
 	
-	require (SIGECOST_LIB_PATH . '/database/mysql.php');
+	// The url root to sigecost
+	define('SIGECOST_PATH_URL_BASE', GetConfig('siteURL'));
+	define('SIGECOST_PATH_URL_CONTROLADOR', SIGECOST_PATH_URL_BASE . substr(SIGECOST_PATH_CONTROLADOR, strlen(SIGECOST_PATH_BASE)));
+	
+	require (SIGECOST_PATH_LIB . '/database/mysql.php');
 	
 	header("Content-Type: text/html; charset=" . GetConfig('CharacterSet'));
 	
@@ -82,7 +86,7 @@
 	 * Arc2 introduce una clase estática, que es todo lo que necesita ser incluido. Cualquier otro componente puede
 	 * ser cargado vía arc2, sin necesidad de conocer la ruta exacta del archivo con la clase.
 	 */
-	require_once (SIGECOST_LIB_PATH . '/semsol-arc2/ARC2.php');
+	require_once (SIGECOST_PATH_LIB . '/semsol-arc2/ARC2.php');
 	
 	$store = ARC2::getStore(GetConfig('ontoArc2Config'));
 	

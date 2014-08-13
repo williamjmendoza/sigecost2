@@ -3,10 +3,10 @@
 	require_once( dirname(__FILE__) . '/../../../init.php' );
 	
 	// Controladores
-	require_once( SIGECOST_CONTROLADOR_PATH . '/instancia/elementoTecnologico/equipoReproduccion.php' );
+	require_once( SIGECOST_PATH_CONTROLADOR . '/instancia/elementoTecnologico/equipoReproduccion.php' );
 	
 	// Modelos
-	require_once( SIGECOST_MODELO_PATH . '/instancia/elementoTecnologico/impresora.php' );
+	require_once( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/impresora.php' );
 
 	class ControladorInstanciaETImpresora extends ControladorInstanciaETEquipoReproduccion
 	{
@@ -16,7 +16,7 @@
 				
 			$GLOBALS['SigecostRequestVars']['impresoras'] = $impresoras;
 			
-			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/impresoraBuscar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/impresoraBuscar.php' );
 		}
 		
 		public function desplegarDetalles()
@@ -82,12 +82,12 @@
 			
 			$GLOBALS['SigecostRequestVars']['impresora'] = $impresora;
 			
-			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/impresoraDetalles.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/impresoraDetalles.php' );
 		}
 		
 		private function __desplegarFormulario()
 		{
-			require ( SIGECOST_VISTA_PATH . '/instancia/elementoTecnologico/impresoraInsertarModificar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/impresoraInsertarModificar.php' );
 		}
 	}
 	

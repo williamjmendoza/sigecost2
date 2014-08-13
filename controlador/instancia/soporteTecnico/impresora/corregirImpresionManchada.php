@@ -3,11 +3,11 @@
 	require_once( dirname(__FILE__) . '/../../../../init.php' );
 	
 	// Controladores
-	require_once ( SIGECOST_CONTROLADOR_PATH . '/instancia/soporteTecnico/impresora/impresora.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/impresora/impresora.php' );
 	
 	// Modelos
-	require_once ( SIGECOST_MODELO_PATH . '/instancia/elementoTecnologico/impresora.php' );
-	require_once ( SIGECOST_MODELO_PATH . '/instancia/soporteTecnico/impresora/corregirImpresionManchada.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/impresora.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/impresora/corregirImpresionManchada.php' );
 	
 	class ControladorInstanciaSTImpresoraCorregirImpresionManchada extends ControladorInstanciaSTImpresora
 	{
@@ -17,7 +17,7 @@
 			
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
 				
-			require ( SIGECOST_VISTA_PATH . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaBuscar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaBuscar.php' );
 		}
 		
 		public function desplegarDetalles()
@@ -81,7 +81,7 @@
 				
 			$GLOBALS['SigecostRequestVars']['instancia'] = $instancia;
 				
-			require ( SIGECOST_VISTA_PATH . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaDetalles.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaDetalles.php' );
 		}
 		
 		private function __desplegarFormulario()
@@ -90,7 +90,7 @@
 			
 			$GLOBALS['SigecostRequestVars']['impresoras'] = $impresoras;
 			
-			require ( SIGECOST_VISTA_PATH . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaInsertarModificar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaInsertarModificar.php' );
 		}
 	}
 	

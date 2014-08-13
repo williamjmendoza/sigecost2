@@ -1,10 +1,10 @@
 <?php
 
 	// Controladores
-	require_once ( SIGECOST_CONTROLADOR_PATH . '/controlador.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/controlador.php' );
 	
 	// Formularios
-	require_once ( SIGECOST_FORMULARIO_PATH . '/instancia/soporteTecnico/soporteTecnico.php' );
+	require_once ( SIGECOST_PATH_FORMULARIO . '/instancia/soporteTecnico/soporteTecnico.php' );
 	
 	class ControladorInstanciaSoporteTecnico extends Controlador
 	{

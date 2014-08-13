@@ -1,6 +1,6 @@
 <?php
 	require_once ( dirname(__FILE__) . '/../../init.php' );
-	require_once ( SIGECOST_CONTROLADOR_PATH . '/desarrollo/queryScreen.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/desarrollo/queryScreen.php' );
 	
 	class ConsultaInstancias extends QueryScreen
 	{

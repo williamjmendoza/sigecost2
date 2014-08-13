@@ -1,10 +1,10 @@
 <?php
 
 	// Entidades
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/escaner.php');
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/elementoTecnologico/escaner.php');
 
 	// Formularios
-	require_once ( SIGECOST_FORMULARIO_PATH . '/instancia/elementoTecnologico/equipoReproduccion.php');
+	require_once ( SIGECOST_PATH_FORMULARIO . '/instancia/elementoTecnologico/equipoReproduccion.php');
 
 	class FormularioInstanciaETEscaner extends FormularioInstanciaETEquipoReproduccion
 	{

@@ -1,12 +1,12 @@
 <?php
 
 	// Entidades
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/impresora.php');
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/elementoTecnologico/sistemaOperativo.php');
-	require_once ( SIGECOST_ENTIDAD_PATH . '/instancia/soporteTecnico/impresora/instalacionImpresora.php');
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/elementoTecnologico/impresora.php');
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/elementoTecnologico/sistemaOperativo.php');
+	require_once ( SIGECOST_PATH_ENTIDAD . '/instancia/soporteTecnico/impresora/instalacionImpresora.php');
 
 	// Formularios
-	require_once ( SIGECOST_FORMULARIO_PATH . '/instancia/soporteTecnico/impresora/impresora.php');
+	require_once ( SIGECOST_PATH_FORMULARIO . '/instancia/soporteTecnico/impresora/impresora.php');
 
 	class FormularioInstanciaSTImpresoraInstalacionImpresora extends FormularioInstanciaSTImpresora
 	{

@@ -1,7 +1,7 @@
 <?php
 
 	// Formularios
-	require_once ( SIGECOST_FORMULARIO_PATH . '/instancia/soporteTecnico/soporteTecnico.php');
+	require_once ( SIGECOST_PATH_FORMULARIO . '/instancia/soporteTecnico/soporteTecnico.php');
 	
 	class FormularioInstanciaSTEquipoReproduccion extends FormularioInstanciaSoporteTecnico
 	{

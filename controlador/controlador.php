@@ -1,6 +1,6 @@
 <?php
 
-	include_once(SIGECOST_FORMULARIO_PATH . '/formularioManejador.php');
+	include_once(SIGECOST_PATH_FORMULARIO . '/formularioManejador.php');
 	
 	class Controlador
 	{
@@ -37,7 +37,7 @@
 				$GLOBALS['SigecostErrors']['general'] = array();
 				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
 				
-				include(SIGECOST_VISTA_PATH . "/desplegarMensajes.php");
+				include(SIGECOST_PATH_VISTA . "/desplegarMensajes.php");
 				exit;
 			}
 		}

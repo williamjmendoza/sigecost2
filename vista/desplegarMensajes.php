@@ -24,7 +24,7 @@
 			</ul>	
 			';
 		} else {
-			include(SIGECOST_VISTA_PATH . "/mensajes.php");
+			include(SIGECOST_PATH_VISTA . "/mensajes.php");
 		}
 	?>		
 	</body>
