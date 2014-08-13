@@ -14,6 +14,12 @@
 		public function buscar()
 		{
 			$instancias = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias();
+			
+			$contador = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias(true);
+			
+			echo "<pre>";
+			print_r($contador);
+			echo "</pre>";
 				
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
 		

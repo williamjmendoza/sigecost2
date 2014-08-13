@@ -9,7 +9,7 @@
 
 	class ModeloInstanciaSTImpresoraInstalacionImpresora
 	{
-		public static function buscarInstancias()
+		public static function buscarInstancias($contar = false)
 		{
 			$preMsg = 'Error al buscar las instancias de soporte técnico en impresoras para la instalación de impresora.';
 			$instancias = array();
@@ -22,6 +22,7 @@
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 			
 						SELECT
+							' . ( $contar ? '(COUNT(*) AS ?contador)' : '
 							?iri
 							?urlSoporteTecnico
 							?iriEquipoReproduccion
@@ -30,6 +31,7 @@
 							?iriSistemaOperativo
 							?nombreSistemaOperativo
 							?versionSistemaOperativo
+							' ) . '
 						WHERE
 						{
 							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
@@ -56,14 +58,21 @@
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
 				
-				if (is_array($rows) && count($rows) > 0){
-					foreach ($rows AS $row){
-						$instancias[$row['iri']] = self::llenarInstancia($row);
+				if($contar)
+				{
+					if (is_array($rows) && count($rows) > 0){
+						reset($rows);
+						return current($rows)['contador'];
 					}
+					else return null;
+				} else {
+					if (is_array($rows) && count($rows) > 0){
+						foreach ($rows AS $row){
+							$instancias[$row['iri']] = self::llenarInstancia($row);
+						}
+					}
+					return $instancias;
 				}
-				
-				return $instancias;
-				
 			} catch (Exception $e) {
 				error_log($e, 0);
 				return false;
