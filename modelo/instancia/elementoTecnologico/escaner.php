@@ -230,5 +230,46 @@
 			}
 		}
 		
+		public static function obtenerTodosEscaners()
+		{
+			$preMsg = 'Error al obtener todas las instancias de escaners.';
+			$escaners = array();
+			try
+			{
+				// Obtener todas las instancias de las escaners
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+						SELECT
+							?iri ?marca ?modelo
+						WHERE
+						{
+							?iri rdf:type :'.SIGECOST_FRAGMENTO_ESCANER.' .
+							?iri :marcaEquipoReproduccion ?marca .
+							?iri :modeloEquipoReproduccion ?modelo .
+						}
+						ORDER BY
+							?marca ?modelo
+				';
+		
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+		
+				if (is_array($rows) && count($rows) > 0){
+					foreach ($rows AS $row){
+						$escaners[$row['iri']] = self::llenarEscaner($row);
+					}
+				}
+		
+				return $escaners;
+		
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
 	}
 ?>

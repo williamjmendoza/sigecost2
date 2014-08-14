@@ -1,10 +1,11 @@
 <?php
 
 	define('FORM_INSTANCIA_ET_ESCANER_INSERTAR_MODIFICAR', 1);
-	define('FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR', 2);
-	define('FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR', 3);
-	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 4);
-	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 5);
+	define('FORM_INSTANCIA_ET_FOTOCOPIADORA_INSERTAR_MODIFICAR', 2);
+	define('FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR', 3);
+	define('FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR', 4);
+	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 5);
+	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 6);
 		
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 	
@@ -13,6 +14,11 @@
 			'File' => 'instancia/elementoTecnologico/escaner.php',
 			'ClassName' => 'FormularioInstanciaETEscaner',
 			'GlobalName' => 'ClassFormularioInstanciaETEscaner'
+		),
+		FORM_INSTANCIA_ET_FOTOCOPIADORA_INSERTAR_MODIFICAR => array(
+			'File' => 'instancia/elementoTecnologico/fotocopiadora.php',
+			'ClassName' => 'FormularioInstanciaETFotocopiadora',
+			'GlobalName' => 'ClassFormularioInstanciaETFotocopiadora'
 		),
 		FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR => array(
 			'File' => 'instancia/elementoTecnologico/impresora.php',
