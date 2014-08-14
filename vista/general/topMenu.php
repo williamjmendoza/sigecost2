@@ -19,16 +19,26 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Instancias <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class="dropdown-header">Elemento tecnol&oacute;gico</li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/aplicacionGraficaDigitalDibujoDiseno.php?accion=insertar">
+							Aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o
+						</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/impresora.php?accion=insertar">Impresora</a></li>
 					    <li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/fotocopiadora.php?accion=insertar">Fotocopiadora</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/sistemaOperativo.php?accion=insertar">Sistema operativo</a></li>
 						<li class="divider"></li>
 						<li class="dropdown-header">Soporte t&eacute;cnico</li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/corregirImpresionManchada.php?accion=insertar">
 							Corregir impresi&oacute;n manchada
 						</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/desatascarPapel.php?accion=insertar">
+							Desatascar Papel
+						</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/instalacionImpresora.php?accion=insertar">
-							Inatalaci&oacute;n impresora
+							Instalaci&oacute;n impresora
+						</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/repararImpresionCorrida.php?accion=insertar">
+							Reparar impresi&oacute;n corrida
 						</a></li>
 					</ul>
 				</li>
