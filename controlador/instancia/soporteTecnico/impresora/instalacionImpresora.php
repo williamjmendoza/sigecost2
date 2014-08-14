@@ -4,6 +4,9 @@
 	// Controladores
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/impresora/impresora.php' );
 	
+	// Libs
+	require_once ( SIGECOST_PATH_LIB . '/paginacion.php' );
+	
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/impresora.php' );
 	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/sistemaOperativo.php' );
@@ -13,9 +16,23 @@
 	{
 		public function buscar()
 		{
-			$instancias = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias();
+			$contador = 0;
 			
-			$contador = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias(true);
+			$parametros = array(
+				'desplazamiento' => 4,
+				'limite' => 10
+			);
+			
+			$instancias = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias($parametros);
+			
+			$contador = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias(array('contar' => true));
+			
+			$paginacion = new LibPaginacion(10, 50);
+			$paginacion->leerParametrosRequest();
+			
+			echo "<pre>";
+			print_r($paginacion);
+			echo "</pre>";
 			
 			echo "<pre>";
 			print_r($contador);

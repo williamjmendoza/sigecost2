@@ -9,20 +9,31 @@
 
 	class ModeloInstanciaSTImpresoraInstalacionImpresora
 	{
-		public static function buscarInstancias($contar = false)
+		public static function buscarInstancias(array $parametros = null)
 		{
 			$preMsg = 'Error al buscar las instancias de soporte técnico en impresoras para la instalación de impresora.';
+			
+			$contar = false;
 			$instancias = array();
+			$limite = '';
+			$desplazamiento = '';
 			
 			try
 			{
+				if($parametros !== null && count($parametros) > 0){
+					if(isset($parametros['contar']) && $parametros['contar'] === true) $contar = true;
+					if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
+					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
+				}
+				
+				
 				// Buscar las instancias de soporte técnico en impresora para la instalación de impresora
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 			
 						SELECT
-							' . ( $contar ? '(COUNT(*) AS ?contador)' : '
+							' . ( $contar ? '(COUNT(?iri) AS ?contador)' : '
 							?iri
 							?urlSoporteTecnico
 							?iriEquipoReproduccion
@@ -51,6 +62,8 @@
 							?modeloEquipoReproduccion
 							?nombreSistemaOperativo
 							?versionSistemaOperativo
+						'.$desplazamiento.'
+						'.$limite.'
 				';
 				
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
