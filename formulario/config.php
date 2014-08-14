@@ -7,6 +7,7 @@
 	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 5);
 	define('FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_INSERTAR_MODIFICAR', 6);
 	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 7);
+	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 8);
 		
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 	
@@ -45,6 +46,11 @@
 			'File' => 'instancia/soporteTecnico/impresora/instalacionImpresora.php',
 			'ClassName' => 'FormularioInstanciaSTImpresoraInstalacionImpresora',
 			'GlobalName' => 'ClassFormularioInstanciaSTImpresoraInstalacionImpresora'
+		),
+		FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR => array(
+			'File' => 'instancia/soporteTecnico/impresora/repararImpresionCorrida.php',
+			'ClassName' => 'FormularioInstanciaSTImpresoraRepararImpresionCorrida',
+			'GlobalName' => 'ClassFormularioInstanciaSTImpresoraRepararImpresionCorrida'
 		),
 	);
 

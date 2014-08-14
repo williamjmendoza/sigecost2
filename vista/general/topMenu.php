@@ -32,7 +32,10 @@
 							Desatascar Papel
 						</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/instalacionImpresora.php?accion=insertar">
-							Inatalaci&oacute;n impresora
+							Instalaci&oacute;n impresora
+						</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/repararImpresionCorrida.php?accion=insertar">
+							Reparar impresi&oacute;n corrida
 						</a></li>
 					</ul>
 				</li>
