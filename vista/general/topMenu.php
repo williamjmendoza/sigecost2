@@ -19,6 +19,9 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Instancias <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class="dropdown-header">Elemento tecnol&oacute;gico</li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/aplicacionGraficaDigitalDibujoDiseno.php?accion=insertar">
+							Aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o
+						</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/impresora.php?accion=insertar">Impresora</a></li>
 					    <li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/fotocopiadora.php?accion=insertar">Fotocopiadora</a></li>
