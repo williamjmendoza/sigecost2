@@ -80,7 +80,7 @@
 										<input type="hidden" name="iri" value="<?php echo $instancia->getIri() ?>">
 									</div>
 									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('modificar');">Modificar</button>
-									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Detallar</button>
+									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Ver Detalles</button>
 								</form>
 							</td>
 						</tr>	

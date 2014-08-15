@@ -67,7 +67,7 @@
 										<input type="hidden" name="iri" value="<?php echo $escaner->getIri() ?>">
 									</div>
 									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('modificar');">Modificar</button>
-									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Detallar</button>
+									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Ver detalles</button>
 								</form>
 							</td>
 						</tr>	

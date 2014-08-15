@@ -18,7 +18,7 @@
 			<ul class="nav nav-tabs" role="tablist">
 				<li><a href="impresora.php?accion=insertar">Insertar</a></li>
 				<li><a href="impresora.php?accion=Buscar">Buscar</a></li>
-				<li class="active"><a href="#">Detallar</a></li>
+				<li class="active"><a href="#">Ver detalles</a></li>
 			</ul>
 		</div>
 		
