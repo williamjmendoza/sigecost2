@@ -1,6 +1,6 @@
 <?php
 
-	$instancias = $GLOBALS['SigecostRequestVars']['instancias'];
+	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
 	
 ?>
 <!DOCTYPE html>
@@ -26,8 +26,8 @@
 		
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
-				<li><a href="desatascarPapel.php?accion=insertar">Insertar</a></li>
-				<li class="active"><a href="desatascarPapel.php?accion=Buscar">Buscar</a></li>
+				<li><a href="aplicacionGraficaDigitalDibujoDiseno.php?accion=insertar">Insertar</a></li>
+				<li class="active"><a href="aplicacionGraficaDigitalDibujoDiseno.php?accion=Buscar">Buscar</a></li>
 			</ul>
 		</div>
 		
@@ -36,43 +36,38 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancias de soporte t&eacute;cnico en impresora: <small>desatascar papel</small></h1>
+			<h1>Instancias del elemento tecnol&oacute;gico aplicaci&oacute;n gr&aacute;fica digital, dibujo y Dise&ntilde;o</h1>
 			</div>
 			
 			<?php
-				if (is_array($instancias) && count($instancias) > 0)
+				if (is_array($aplicaciones) && count($aplicaciones) > 0)
 				{
 			?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
 					<thead>
 						<tr>
-							<th rowspan="2">Url soporte t&eacute;cnico</th>
-							<th colspan="2">Impresora</th>
-							<th rowspan="2">Opciones</th>
-						</tr>
-						<tr>
-							<th>Marca</th>
-							<th>Modelo</th>
+							<th>Nombre</th>
+							<th>Versi&oacute;n</th>
+							<th>Opciones</th>
 						</tr>
 					</thead>
 					<tbody>
 			<?php
-					foreach ($instancias AS $instancia)
+					foreach ($aplicaciones AS $aplicacion)
 					{
 			?>
 						<tr>
-							<td><?php echo $instancia->getUrlSoporteTecnico() ?></td>
-							<td><?php echo $instancia->getEquipoReproduccion()->getMarca() ?> </td>
-							<td><?php echo $instancia->getEquipoReproduccion()->getModelo() ?></td>
+							<td><?php echo $aplicacion->getNombre() ?> </td>
+							<td><?php echo $aplicacion->getVersion() ?></td>
 							<td>
-								<form class="form-horizontal" role="form" action="desatascarPapel.php" method="post">
+								<form class="form-horizontal" role="form" action="aplicacionGraficaDigitalDibujoDiseno.php" method="post">
 									<div style="display:none;">
 										<input type="hidden" name="accion" value="">
-										<input type="hidden" name="iri" value="<?php echo $instancia->getIri() ?>">
+										<input type="hidden" name="iri" value="<?php echo $aplicacion->getIri() ?>">
 									</div>
 									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('modificar');">Modificar</button>
-									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Detallar</button>
+									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Ver detalles</button>
 								</form>
 							</td>
 						</tr>	
@@ -85,7 +80,7 @@
 			<?php
 				} else {
 			?>
-			<p>No existen instancias que mostrar.</p>
+			<p>No existen aplicaciones gr&aacute;fica digital, dibujo y dise&ntilde;o que mostrar.</p>
 			<?php
 				}
 			?>

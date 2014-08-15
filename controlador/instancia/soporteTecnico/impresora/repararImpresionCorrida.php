@@ -17,7 +17,7 @@
 			
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
 				
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/RepararImpresionCorridaBuscar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/repararImpresionCorridaBuscar.php' );
 		}
 		
 		public function desplegarDetalles()

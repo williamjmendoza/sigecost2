@@ -36,7 +36,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en impresora: <small>corregir impresi&oacute;n manchada</small></h1>
+				<h1>Instancias de soporte t&eacute;cnico en impresora: <small>corregir impresi&oacute;n manchada</small></h1>
 			</div>
 			
 			<?php
