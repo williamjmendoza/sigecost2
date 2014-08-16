@@ -3,14 +3,16 @@
 	define('FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO', 1);
 	define('FORM_INSTANCIA_ET_APLICACION_OFIMATICA', 2);
 	define('FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA', 3);
-	define('FORM_INSTANCIA_ET_ESCANER_INSERTAR_MODIFICAR', 4);
-	define('FORM_INSTANCIA_ET_FOTOCOPIADORA_INSERTAR_MODIFICAR', 5);
-	define('FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR', 6);
-	define('FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR', 7);
-	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 8);
-	define('FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_INSERTAR_MODIFICAR', 9);
-	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 10);
-	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 11);
+	define('FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO', 4);
+	define('FORM_INSTANCIA_ET_ESCANER_INSERTAR_MODIFICAR', 5);
+	define('FORM_INSTANCIA_ET_FOTOCOPIADORA_INSERTAR_MODIFICAR', 6);
+	define('FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR', 7);
+	define('FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR', 8);
+	define('FORM_INSTANCIA_ST_APLICACION_G_D_D_D_DESINSTALACION_APLICACION_INSERTAR_MODIFICAR', 9);
+	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 10);
+	define('FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_INSERTAR_MODIFICAR', 11);
+	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 12);
+	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 13);
 		
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 	
@@ -29,6 +31,11 @@
 			'File' => 'instancia/elementoTecnologico/aplicacionProduccionAudiovisualMusica.php',
 			'ClassName' => 'FormularioInstanciaETAplicacionProduccionAudiovisualMusica',
 			'GlobalName' => 'ClassFormularioInstanciaETAplicacionProduccionAudiovisualMusica'
+		),
+		FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO => array(
+			'File' => 'instancia/elementoTecnologico/aplicacionReproduccionSonidoVideo.php',
+			'ClassName' => 'FormularioInstanciaETAplicacionReproduccionSonidoVideo',
+			'GlobalName' => 'ClassFormularioInstanciaETAplicacionReproduccionSonidoVideo'
 		),
 		FORM_INSTANCIA_ET_ESCANER_INSERTAR_MODIFICAR => array(
 			'File' => 'instancia/elementoTecnologico/escaner.php',
@@ -49,6 +56,11 @@
 			'File' => 'instancia/elementoTecnologico/sistemaOperativo.php',
 			'ClassName' => 'FormularioInstanciaETSistemaOperativo',
 			'GlobalName' => 'ClassFormularioInstanciaETSistemaOperativo'
+		),
+		FORM_INSTANCIA_ST_APLICACION_G_D_D_D_DESINSTALACION_APLICACION_INSERTAR_MODIFICAR => array(
+			'File' => 'instancia/soporteTecnico/aplicacionGDDD/desinstalacionAplicacion.php',
+			'ClassName' => 'FormularioInstanciaSTAplicacionGDDDDesinstalacionAplicacion',
+			'GlobalName' => 'ClassFormularioInstanciaSTAplicacionGDDDDesinstalacionAplicacion'
 		),
 		FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR => array(
 			'File' => 'instancia/soporteTecnico/impresora/corregirImpresionManchada.php',

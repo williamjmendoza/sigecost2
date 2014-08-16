@@ -253,7 +253,7 @@
 							?iriAplicacion :nombreAplicacionPrograma ?nombreAplicacion .
 							?iriAplicacion :versionAplicacionPrograma ?versionAplicacion .
 						}
-						OERDER BY
+						ORDER BY
 							?nombreAplicacion ?versionAplicacion
 				';
 				

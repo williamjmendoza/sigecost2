@@ -1,10 +1,10 @@
 <?php
 
-	$impresoras = $GLOBALS['SigecostRequestVars']['impresoras'];
+	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
 	$sistemasOperativos = $GLOBALS['SigecostRequestVars']['sistemasOperativos'];
-	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR);
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_G_D_D_D_DESINSTALACION_APLICACION_INSERTAR_MODIFICAR);
 	$instancia = $form->getSoporteTecnico();
-	$instanciaImpresora = $instancia->getEquipoReproduccion();
+	$instanciaAplicacion = $instancia->getAplicacionPrograma();
 	$instanciaSistemaOperativo = $instancia->getSistemaOperativo();
 	
 ?>
@@ -23,8 +23,8 @@
 		
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
-				<li class="active"><a href="instalacionImpresora.php?accion=insertar">Insertar</a></li>
-				<li><a href="instalacionImpresora.php?accion=Buscar">Buscar</a></li>
+				<li class="active"><a href="desinstalacionAplicacion.php?accion=insertar">Insertar</a></li>
+				<li><a href="desinstalacionAplicacion.php?accion=Buscar">Buscar</a></li>
 			</ul>
 		</div>
 		
@@ -33,10 +33,12 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en impresora: <small>instalaci&oacute;n de impresora</small></h1>
+				<h1>Instancia de soporte t&eacute;cnico en aplicacion gr&aacute;fica digital, dibujo y dise&ntilde;o:&nbsp;
+					<small>desinstalaci&oacute;n de aplicaci&oacute;n</small>
+				</h1>
 			</div>
 			
-			<form class="form-horizontal" role="form" method="post" action="instalacionImpresora.php">
+			<form class="form-horizontal" role="form" method="post" action="desinstalacionAplicacion.php">
 				<div style="display:none;">
 					<input type="hidden" name="accion" value="guardar">
 				</div>
@@ -50,20 +52,20 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="iriEquipoReproduccion">En impresora:</label>
+					<label class="control-label col-sm-3" for="iriAplicacionPrograma">En aplicaci&oacute;n de programa:</label>
 					<div class="col-sm-7">
-						<select class="form-control" id="iriEquipoReproduccion"  name="iriEquipoReproduccion">
-							<option value="0">Seleccionar impresora...</option>
+						<select class="form-control" id="iriAplicacionPrograma"  name="iriAplicacionPrograma">
+							<option value="0">Seleccionar aplicaci&oacute;n...</option>
 							<?php
-								if(is_array($impresoras) && count($impresoras) > 0)
+								if(is_array($aplicaciones) && count($aplicaciones) > 0)
 								{
-									foreach ($impresoras AS $impresora)
+									foreach ($aplicaciones AS $aplicacion)
 									{
-										$seledted = strcmp($instanciaImpresora->getIri(), $impresora->getIri()) == 0 ? ' selected="selected"' : "";  
+										$seledted = strcmp($instanciaAplicacion->getIri(), $aplicacion->getIri()) == 0 ? ' selected="selected"' : "";  
 										
 							?>
-							<option value="<?php echo $impresora->getIri() ?>"<?php echo $seledted ?>>
-								<?php echo $impresora->getMarca() . ' - ' . $impresora->getModelo() ?>
+							<option value="<?php echo $aplicacion->getIri() ?>"<?php echo $seledted ?>>
+								<?php echo $aplicacion->getNombre() . ' - ' . $aplicacion->getVersion() ?>
 							</option>
 							<?php
 									}
