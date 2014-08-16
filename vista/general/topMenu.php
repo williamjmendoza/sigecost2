@@ -25,6 +25,9 @@
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/aplicacionOfimatica.php?accion=insertar">
 							Aplicaci&oacute;n ofim&aacute;tica
 						</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/aplicacionProduccionAudiovisualMusica.php?accion=insertar">
+							Aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica
+						</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/impresora.php?accion=insertar">Impresora</a></li>
 					    <li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/fotocopiadora.php?accion=insertar">Fotocopiadora</a></li>
