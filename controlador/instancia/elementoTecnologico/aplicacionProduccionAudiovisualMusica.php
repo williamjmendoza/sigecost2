@@ -53,11 +53,11 @@
 					
 					// Verificar si ocurrio alg煤n error mientras se guardaba la instancia de la aplicaci贸n Produccion Audiovisual Musica
 					if ($iriNuevaInstancia === false)
-						throw new Exception("La instancia de aplicaci贸n no pudo ser guardada.");
+						throw new Exception("La instancia de aplicaci&oacute;n no pudo ser guardada.");
 					
 					// Mostrar un mensaje indicando que se ha guardado satisfactoriamente, y mostrar los detalles
 					// de la instancia de aplicaci贸n Produccion Audiovisual Musica  guardada
-					$GLOBALS['SigecostInfo']['general'][] = "Instancia de aplicaci贸n producci髇 audiovisual m鷖ica guardada satisfactoriamente.";
+					$GLOBALS['SigecostInfo']['general'][] = "Instancia de aplicaci&oacute;n de producci&oacute;n audiovisual y m&uacute;sica guardada satisfactoriamente.";
 					$this->__desplegarDetalles($iriNuevaInstancia);
 					
 				} catch (Exception $e){
