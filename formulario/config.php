@@ -1,38 +1,39 @@
 <?php
 
-	define('FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO', 1);
-	define('FORM_INSTANCIA_ET_APLICACION_OFIMATICA', 2);
-	define('FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA', 3);
-	define('FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO', 4);
+	define('FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_INSERTAR_MODIFICAR', 1);
+	define('FORM_INSTANCIA_ET_APLICACION_OFIMATICA_INSERTAR_MODIFICAR', 2);
+	define('FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA_INSERTAR_MODIFICAR', 3);
+	define('FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO_INSERTAR_MODIFICAR', 4);
 	define('FORM_INSTANCIA_ET_ESCANER_INSERTAR_MODIFICAR', 5);
 	define('FORM_INSTANCIA_ET_FOTOCOPIADORA_INSERTAR_MODIFICAR', 6);
 	define('FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR', 7);
-	define('FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR', 8);
-	define('FORM_INSTANCIA_ST_APLICACION_G_D_D_D_DESINSTALACION_APLICACION_INSERTAR_MODIFICAR', 9);
-	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 10);
-	define('FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_INSERTAR_MODIFICAR', 11);
-	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 12);
-	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 13);
+	define('FORM_INSTANCIA_ET_CONSUMIBLE_INSERTAR_MODIFICAR', 8);
+	define('FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR', 9);
+	define('FORM_INSTANCIA_ST_APLICACION_G_D_D_D_DESINSTALACION_APLICACION_INSERTAR_MODIFICAR', 10);
+	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 11);
+	define('FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_INSERTAR_MODIFICAR', 12);
+	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 13);
+	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 14);
 		
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 	
 	$GLOBALS['Sigecost']['__Forms']['__Config'] = array(
-		FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO => array(
+		FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_INSERTAR_MODIFICAR => array(
 			'File' => 'instancia/elementoTecnologico/aplicacionGraficaDigitalDibujoDiseno.php',
 			'ClassName' => 'FormularioInstanciaETAplicacionGraficaDigitalDibujoDiseno',
 			'GlobalName' => 'ClassFormularioInstanciaETAplicacionGraficaDigitalDibujoDiseno'
 		),
-		FORM_INSTANCIA_ET_APLICACION_OFIMATICA => array(
+		FORM_INSTANCIA_ET_APLICACION_OFIMATICA_INSERTAR_MODIFICAR => array(
 			'File' => 'instancia/elementoTecnologico/aplicacionOfimatica.php',
 			'ClassName' => 'FormularioInstanciaETAplicacionOfimatica',
 			'GlobalName' => 'ClassFormularioInstanciaETAplicacionOfimatica'
 		),
-		FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA => array(
+		FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA_INSERTAR_MODIFICAR => array(
 			'File' => 'instancia/elementoTecnologico/aplicacionProduccionAudiovisualMusica.php',
 			'ClassName' => 'FormularioInstanciaETAplicacionProduccionAudiovisualMusica',
 			'GlobalName' => 'ClassFormularioInstanciaETAplicacionProduccionAudiovisualMusica'
 		),
-		FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO => array(
+		FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO_INSERTAR_MODIFICAR => array(
 			'File' => 'instancia/elementoTecnologico/aplicacionReproduccionSonidoVideo.php',
 			'ClassName' => 'FormularioInstanciaETAplicacionReproduccionSonidoVideo',
 			'GlobalName' => 'ClassFormularioInstanciaETAplicacionReproduccionSonidoVideo'
@@ -51,7 +52,12 @@
 			'File' => 'instancia/elementoTecnologico/impresora.php',
 			'ClassName' => 'FormularioInstanciaETImpresora',
 			'GlobalName' => 'ClassFormularioInstanciaETImpresora'
-		),			
+		),
+		FORM_INSTANCIA_ET_CONSUMIBLE_INSERTAR_MODIFICAR => array(
+			'File' => 'instancia/elementoTecnologico/consumible.php',
+			'ClassName' => 'FormularioInstanciaETConsumible',
+			'GlobalName' => 'ClassFormularioInstanciaETConsumible'
+		),
 		FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR => array(
 			'File' => 'instancia/elementoTecnologico/sistemaOperativo.php',
 			'ClassName' => 'FormularioInstanciaETSistemaOperativo',
