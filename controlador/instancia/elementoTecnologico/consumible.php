@@ -92,7 +92,7 @@
 		
 		private function __validarEspecificacion(FormularioInstanciaETConsumible $form)
 		{
-			if(!isset($_POST['especificacion']) || ($nombre=trim($_POST['especificacion'])) == ''){
+			if(!isset($_POST['especificacion']) || ($especificacion=trim($_POST['especificacion'])) == ''){
 				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir una especificacion.';
 			} else {
 				$form->getConsumible()->setEspecificacion($especificacion);
@@ -101,7 +101,7 @@
 		
 		private function __validarTipo(FormularioInstanciaETConsumible $form)
 		{
-			if(!isset($_POST['tipo']) || ($version=trim($_POST['tipo'])) == ''){
+			if(!isset($_POST['tipo']) || ($tipo=trim($_POST['tipo'])) == ''){
 				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir un tipo.';
 			} else {
 				$form->getConsumible()->setTipo($tipo);
