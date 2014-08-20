@@ -1,6 +1,6 @@
 <?php
 	
-	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_IMPRESORA_INSERTAR_MODIFICAR);
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_ESCANER_INSERTAR_MODIFICAR);
 	$equipoReproduccion = $form->getEquipoReproduccion();
 	
 ?>

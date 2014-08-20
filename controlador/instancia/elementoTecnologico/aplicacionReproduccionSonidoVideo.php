@@ -29,7 +29,7 @@
 		
 		public function guardar()
 		{
-			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO);
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO_INSERTAR_MODIFICAR);
 				
 			// Validar, obtener y guardar todos los inputs desde el formulario
 			$this->__validarNombre($form);

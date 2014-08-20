@@ -1,6 +1,6 @@
 <?php
 
-	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA);
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA_INSERTAR_MODIFICAR);
 	$aplicacion = $form->getAplicacionPrograma();
 
 ?>
