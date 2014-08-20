@@ -15,7 +15,7 @@
 		
 			$GLOBALS['SigecostRequestVars']['aplicaciones'] = $aplicaciones;
 				
-			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/AplicacionGraficaDigitalDibujoDisenoBuscar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/aplicacionGraficaDigitalDibujoDisenoBuscar.php' );
 		}
 		
 		public function desplegarDetalles()

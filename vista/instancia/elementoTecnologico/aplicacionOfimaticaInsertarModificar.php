@@ -1,6 +1,6 @@
 <?php
 
-	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_OFIMATICA);
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_OFIMATICA_INSERTAR_MODIFICAR);
 	$aplicacion = $form->getAplicacionPrograma();
 
 ?>
