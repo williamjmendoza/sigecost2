@@ -233,7 +233,7 @@
 			}
 		}
 		
-		public static function obtenerTodasImpresoras()
+		public static function obtenerTodasAplicaciones()
 		{
 			$preMsg = 'Error al obtener todas las instancias de aplicaciones ofimática.';
 			$aplicaciones = array();
