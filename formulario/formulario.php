@@ -1,6 +1,6 @@
 <?php
 
-	include_once('config.php');  // incluye el config del directorio de formularios
+	include_once( SIGECOST_PATH_FORMULARIO . '/config.php');  // incluye el config del directorio de formularios
 
 	class Formulario
 	{

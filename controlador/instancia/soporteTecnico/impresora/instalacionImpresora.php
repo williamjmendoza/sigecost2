@@ -3,6 +3,7 @@
 
 	// Controladores
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/impresora/impresora.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/paginacion.php' );
 	
 	// Libs
 	require_once ( SIGECOST_PATH_LIB . '/paginacion.php' );
@@ -14,8 +15,14 @@
 	
 	class ControladorInstanciaSTImpresoraInstalacionImpresora extends ControladorInstanciaSTImpresora
 	{
+		use ControladorTraitPaginacion;
+		
 		public function buscar()
 		{
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_BUSCAR);
+			
+			$this->__validarPagina($form);
+			
 			$contador = 0;
 			
 			$parametros = array(
@@ -25,7 +32,7 @@
 			
 			$instancias = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias($parametros);
 			
-			$contador = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias(array('contar' => true));
+			$contador = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstanciasContador();
 			
 			$paginacion = new LibPaginacion(10, 50);
 			$paginacion->leerParametrosRequest();
@@ -41,6 +48,11 @@
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
 		
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/instalacionImpresoraBuscar.php' );
+			
+			echo "<pre>";
+			print_r($form);
+			echo "</pre>";
+					
 		}
 		
 		public function desplegarDetalles()
