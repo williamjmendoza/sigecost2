@@ -101,5 +101,4 @@
 	}
 	
 	new ControladorInstanciaSTAplicacionGDDDDesinstalacionAplicacion();
-	
 ?>
