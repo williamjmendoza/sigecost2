@@ -34,6 +34,7 @@
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/barraDibujo.php?accion=insertar">Barra de Dibujo</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/barraFormato.php?accion=insertar">Barra de Formato</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/computadorEscritorio.php?accion=insertar">Computador de Escritorio</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/computadorPortatil.php?accion=insertar">Computador Portatil</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/consumible.php?accion=insertar">Consumible</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/fotocopiadora.php?accion=insertar">Fotocopiadora</a></li>
