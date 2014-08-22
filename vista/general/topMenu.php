@@ -31,16 +31,13 @@
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/aplicacionReproduccionSonidoVideo.php?accion=insertar">
 							Aplicaci&oacute;n reproducci&oacute;n sonido y video
 						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/barraDibujo.php?accion=insertar">
-							Barra de Dibujo
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/barraFormato.php?accion=insertar">
-							Barra de Formato
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/impresora.php?accion=insertar">Impresora</a></li>
-					    <li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/fotocopiadora.php?accion=insertar">Fotocopiadora</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/barraDibujo.php?accion=insertar">Barra de Dibujo</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/barraFormato.php?accion=insertar">Barra de Formato</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/computadorEscritorio.php?accion=insertar">Computador de Escritorio</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/consumible.php?accion=insertar">Consumible</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/fotocopiadora.php?accion=insertar">Fotocopiadora</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/impresora.php?accion=insertar">Impresora</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/sistemaOperativo.php?accion=insertar">Sistema operativo</a></li>
 						<li class="divider"></li>
 						<li class="dropdown-header">Soporte t&eacute;cnico</li>
