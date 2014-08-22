@@ -84,7 +84,7 @@
 			
 		}
 		
-		public static function buscarInstanciasContador(array $parametros = null)
+		public static function buscarInstanciasTotalElementos(array $parametros = null)
 		{
 			$preMsg = 'Error al buscar el contador de las instancias de soporte técnico en impresoras para la instalación de impresora.';
 			
@@ -94,7 +94,7 @@
 					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 	
 					SELECT
-						(COUNT(?iri) AS ?contador)
+						(COUNT(?iri) AS ?totalElementos)
 					WHERE
 					{
 						'.self::buscarInstanciasSubQuery().'
@@ -108,9 +108,9 @@
 			
 			if (is_array($rows) && count($rows) > 0){
 				reset($rows);
-				return current($rows)['contador'];
+				return current($rows)['totalElementos'];
 			}
-			else return null;
+			else return false;
 		}
 		
 		public static function buscarInstanciasSubQuery(array $parametros = null)

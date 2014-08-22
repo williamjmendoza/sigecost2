@@ -11,9 +11,5 @@
 	{
 		use FormularioTraitPaginacion;
 		
-		public function __construct()
-		{
-			$this->setPaginacion(new EntidadPaginacion());
-		}
 	}
 ?>

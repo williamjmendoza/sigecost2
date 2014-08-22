@@ -1,41 +1,31 @@
 <?php
 	class EntidadPaginacion
 	{
-		private $_desplazamiento;
-		private $_limite = 10;
-		private $_pagina = null;
-		private $_totalElementos = 50;
+		private $_paginaActual = 0;
+		private $_tamanoPagina = 0;
+		private $_totalElementos = 0;
+		private $_urlObjetivo = "#";
 		
-		public function __construct(){}
-		
-		/*
-		public function __construct($limite, $totalElementos)
+		public function __construct($totalElementos)
 		{
 			$this->setTotalElementos($totalElementos);
-			//$this->setDesplazamiento(($pagina - 1) * $limite);
-			$this->setLimite($limite);
-		}*/
+		}
 		
 		// Getters & setters
-		
 		public function getDesplazamiento(){
-			return $this->_desplazamiento;
+			return (($this->getPaginaActual() - 1) * $this->getTamanoPagina());
 		}
-		private function setDesplazamiento($desplazamiento){
-			$this->_desplazamiento = $desplazamiento;
+		public function getPaginaActual(){
+			return $this->_paginaActual;
 		}
-		public function getLimite(){
-			return $this->_limite;
+		public function setPaginaActual($paginaActual){
+			$this->_paginaActual = $paginaActual;
 		}
-		private function setLimite($limite){
-			$this->_limite = $limite;
+		public function getTamanoPagina(){
+			return $this->_tamanoPagina;
 		}
-		public function getPagina(){
-			return $this->_pagina;
-		}
-		public function setPagina($pagina){
-			$this->_pagina = $pagina;
-			$this->setDesplazamiento(($pagina - 1) * $this->getLimite());
+		public function setTamanoPagina($tamanoPagina){
+			$this->_tamanoPagina = $tamanoPagina;
 		}
 		public function getTotalElementos(){
 			return $this->_totalElementos;
@@ -43,25 +33,14 @@
 		private function setTotalElementos($totalElementos){
 			$this->_totalElementos = $totalElementos;
 		}
-		
-		// Otras funciones miembros 
-		
-		public function escribirParametrosUrl()
-		{
-			
+		public function getTotalPaginas(){
+			return intval(ceil($this->getTotalElementos() / $this->getTamanoPagina()));
 		}
-		public function escribirParametrosFormulario()
-		{
-			
+		public function getUrlObjetivo(){
+			return $this->_urlObjetivo;
 		}
-		public function leerParametrosRequest()
-		{
-			if( isset($_REQUEST['pag']) && ($pagina=$_REQUEST['pag']) != '' )
-			{
-				$this->setPagina($pagina);
-			} else {
-				$this->setPagina(1);
-			}
+		public function setUrlObjetivo($urlObjetivo){
+			$this->_urlObjetivo = $urlObjetivo;
 		}
 	}
 ?>

@@ -1,5 +1,6 @@
 <?php
 
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_BUSCAR);
 	$instancias = $GLOBALS['SigecostRequestVars']['instancias'];
 	
 ?>
@@ -42,8 +43,10 @@
 			<?php
 				if (is_array($instancias) && count($instancias) > 0)
 				{
-					$contador = 0;
+					$contador = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
+					
 			?>
+			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
 					<thead>
@@ -90,15 +93,7 @@
 					</tbody>
 				</table>
 			</div>
-			<ul class="pagination">
-				<li><a href="#">&laquo;</a></li>
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">&raquo;</a></li>
-			</ul>
+			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<?php
 				} else {
 			?>
