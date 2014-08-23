@@ -41,4 +41,7 @@
 		'endpoint_max_limit' => 250, /* opcional */
 	);
 	
+	/* Paginación */
+	// Tamaño por defecto de la página
+	$GLOBALS['SIGECOST_CFG']["tamanoPaginaPorDefecto"] = 4;
 ?>

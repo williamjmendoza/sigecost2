@@ -118,7 +118,7 @@
 							$instancia->getAplicacionPrograma()->getIri()."', sobreSistemaOperativo = '".$instancia->getSistemaOperativo()->getIri() .
 							"'). Detalles:\n" . join("\n", $errors));
 				
-					return $result['result'];
+				return $result['result'];
 				
 			} catch (Exception $e) {
 				error_log($e, 0);
@@ -160,9 +160,9 @@
 						'No se pudo obtener el número de la siguiente secuencia para la instancia de la clase \'' .
 						SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO.'\'');
 					
-					// Construir el fragmento de la nueva instancia concatenando el framento de la clase "SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO"
-					// con el el caracater underscore "_" y el número de secuencia obtenido "$secuencia"
-					$fragmentoIriInstancia = SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO . '_' . $secuencia;
+				// Construir el fragmento de la nueva instancia concatenando el framento de la clase "SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO"
+				// con el el caracater underscore "_" y el número de secuencia obtenido "$secuencia"
+				$fragmentoIriInstancia = SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO . '_' . $secuencia;
 					
 				// Guardar la nueva instancia
 				$query = '
@@ -185,7 +185,7 @@
 					throw new Exception("Error al guardar la instancia de soporte técnico para la desinstalación de una aplicación gráfica digital, dibujo y diseño. Detalles:\n" .
 							join("\n", $errors));
 				
-					return SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia;
+				return SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia;
 				
 			} catch (Exception $e) {
 				error_log($e, 0);

@@ -62,6 +62,114 @@
 			}
 		}
 		
+		public static function existeInstancia(EntidadInstanciaSTAplicacionOfimaticaCorregirCierreInesperado $instancia)
+		{
+			$preMsg = 'Error al verificar la existencia de una instancia de soporte técnico para corregir el cierre inesperado de una aplicación ofimática. ';
+			
+			try
+			{
+				if ($instancia === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
+			
+				if($instancia->getUrlSoporteTecnico() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getUrlSoporteTecnico()\' está vacío.');
+			
+				if($instancia->getAplicacionPrograma() === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getAplicacionPrograma()\' es nulo.');
+			
+				if($instancia->getAplicacionPrograma()->getIri() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getAplicacionPrograma()->getIri()\' está vacío.');
+			
+				// Verificar si existe una instancia de soporte técnico para corregir el cierre inesperado de una aplicación ofimática,
+				// con el mismo url de soporte técnico y con la misma aplicación; que la instancia pasada por parámetros
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+				
+						ASK
+						{
+							_:instanciaST rdf:type :'.SIGECOST_FRAGMENTO_S_T_CORREGIR_CIERRE_INESPERADO.' .
+							_:instanciaST :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							_:instanciaST :aplicacionOfimatica <'.$instancia->getAplicacionPrograma()->getIri().'> .
+						}
+				';
+				
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception("Error al consultar la existencia de la instancia de soporte técnico para corregir el cierre inesperado de una aplicación" .
+							" ofimática (uRLSoporteTecnico = '" . $instancia->getUrlSoporteTecnico() . "', aplicacionOfimatica = '" .
+							$instancia->getAplicacionPrograma()->getIri() . "'). Detalles:\n" . join("\n", $errors));
+				
+				return $result['result'];
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return null;
+			}
+		}
+		
+		public static function guardarInstancia(EntidadInstanciaSTAplicacionOfimaticaCorregirCierreInesperado $instancia)
+		{
+			$preMsg = 'Error al guardar la instancia de soporte técnico para corregir el cierre inesperado de una aplicación ofimática.';
+			
+			try
+			{
+				if ($instancia === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
+			
+				if($instancia->getUrlSoporteTecnico() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getUrlSoporteTecnico()\' está vacío.');
+			
+				if($instancia->getAplicacionPrograma() === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getAplicacionPrograma()\' es nulo.');
+			
+				if($instancia->getAplicacionPrograma()->getIri() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getAplicacionPrograma()->getIri()\' está vacío.');
+			
+				// Consultar el número de secuencia para la siguiente instancia de soporte técnico para corregir el cierre inesperado de una aplicación ofimática, a crear.
+				$secuencia = ModeloGeneral::getSiguienteSecuenciaInstancia(SIGECOST_FRAGMENTO_S_T_CORREGIR_CIERRE_INESPERADO);
+				
+				// Validar si hubo errores obteniendo el siguiente número de instancia
+				if($secuencia === false)
+					throw new Exception('Error al guardar la instancia de soporte técnico para corregir el cierre inesperado de una aplicación ofimática. ' .
+						'No se pudo obtener el número de la siguiente secuencia para la instancia de la clase \'' .
+						SIGECOST_FRAGMENTO_S_T_CORREGIR_CIERRE_INESPERADO.'\'');
+				
+				// Construir el fragmento de la nueva instancia concatenando el framento de la clase "SIGECOST_FRAGMENTO_S_T_CORREGIR_CIERRE_INESPERADO"
+				// con el el caracater underscore "_" y el número de secuencia obtenido "$secuencia"
+				$fragmentoIriInstancia = SIGECOST_FRAGMENTO_S_T_CORREGIR_CIERRE_INESPERADO . '_' . $secuencia;
+				
+				// Guardar la nueva instancia
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+			
+						INSERT INTO <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						{
+							:'.$fragmentoIriInstancia.' rdf:type :'.SIGECOST_FRAGMENTO_S_T_CORREGIR_CIERRE_INESPERADO.' .
+							:'.$fragmentoIriInstancia.' :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							:'.$fragmentoIriInstancia.' :aplicacionOfimatica <'.$instancia->getAplicacionPrograma()->getIri().'> .
+						}
+				';
+				
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception("Error al guardar la instancia de soporte técnico para corregir el cierre inesperado de una aplicación ofimática. Detalles:\n" .
+							join("\n", $errors));
+				
+				return SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia;
+			
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+				
+		}
+		
 		public static function llenarInstancia($row)
 		{
 			try {
@@ -90,7 +198,7 @@
 		
 		public static function obtenerInstanciaPorIri($iri)
 		{
-			$preMsg = 'Error al obtener una instancia de soporte técnico para la desinstalación de una aplicación gráfica digital, dibujo y diseño, dado el iri.';
+			$preMsg = 'Error al obtener una instancia de soporte técnico  para corregir el cierre inesperado de una aplicación ofimática, dado el iri.';
 		
 			try
 			{

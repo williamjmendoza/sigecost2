@@ -55,7 +55,6 @@
 						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
 					
 					// Guardar la instancia de soporte técnico para la desinstalación de una aplicación gráfica digital, dibujo y diseño, en la base de datos
-					
 					$iriNuevaInstancia = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::guardarInstancia($form->getSoporteTecnico());
 					
 					// Verificar si ocurrio algún error mientras se guardaba la instancia
@@ -102,5 +101,4 @@
 	}
 	
 	new ControladorInstanciaSTAplicacionGDDDDesinstalacionAplicacion();
-	
 ?>

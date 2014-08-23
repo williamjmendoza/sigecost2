@@ -1,5 +1,6 @@
 <?php
 
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_BUSCAR);
 	$instancias = $GLOBALS['SigecostRequestVars']['instancias'];
 	
 ?>
@@ -42,16 +43,18 @@
 			<?php
 				if (is_array($instancias) && count($instancias) > 0)
 				{
-					$contador = 0;
+					$contador = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
+					
 			?>
+			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
 					<thead>
 						<tr>
 							<th rowspan="2">#</th>
-							<th rowspan="2">Url soporte t&eacute;cnico</th>
 							<th colspan="2">Impresora</th>
 							<th colspan="2">Sistema operativo</th>
+							<th rowspan="2">Url soporte t&eacute;cnico</th>
 							<th rowspan="2">Opciones</th>
 						</tr>
 						<tr>
@@ -68,11 +71,11 @@
 			?>
 						<tr>
 							<td><?php echo (++$contador) ?></td>
-							<td><?php echo $instancia->getUrlSoporteTecnico() ?></td>
 							<td><?php echo $instancia->getEquipoReproduccion()->getMarca() ?> </td>
 							<td><?php echo $instancia->getEquipoReproduccion()->getModelo() ?></td>
 							<td><?php echo $instancia->getSistemaOperativo()->getNombre() ?></td>
 							<td><?php echo $instancia->getSistemaOperativo()->getVersion() ?></td>
+							<td><?php echo $instancia->getUrlSoporteTecnico() ?></td>
 							<td>
 								<form class="form-horizontal" role="form" action="instalacionImpresora.php" method="post">
 									<div style="display:none;">
@@ -90,15 +93,7 @@
 					</tbody>
 				</table>
 			</div>
-			<ul class="pagination">
-				<li><a href="#">&laquo;</a></li>
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">&raquo;</a></li>
-			</ul>
+			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<?php
 				} else {
 			?>

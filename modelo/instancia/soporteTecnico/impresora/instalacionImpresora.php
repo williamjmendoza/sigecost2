@@ -45,23 +45,14 @@
 							' ) . '
 						WHERE
 						{
-							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
-							OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
-							?iri :enImpresora ?iriEquipoReproduccion .
-							?iri :sobreSistemaOperativo ?iriSistemaOperativo .
-							?iriEquipoReproduccion rdf:type :'.SIGECOST_FRAGMENTO_IMPRESORA.' .
-							?iriEquipoReproduccion :marcaEquipoReproduccion ?marcaEquipoReproduccion .
-							?iriEquipoReproduccion :modeloEquipoReproduccion ?modeloEquipoReproduccion .
-							?iriSistemaOperativo rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
-							?iriSistemaOperativo :nombreSistemaOperativo ?nombreSistemaOperativo .
-							?iriSistemaOperativo :versionSistemaOperativo ?versionSistemaOperativo .
+							'.self::buscarInstanciasSubQuery().'
 						}
 						ORDER BY
-							?urlSoporteTecnico
 							?marcaEquipoReproduccion
 							?modeloEquipoReproduccion
 							?nombreSistemaOperativo
 							?versionSistemaOperativo
+							?urlSoporteTecnico
 						'.$desplazamiento.'
 						'.$limite.'
 				';
@@ -90,6 +81,53 @@
 				error_log($e, 0);
 				return false;
 			}
+			
+		}
+		
+		public static function buscarInstanciasTotalElementos(array $parametros = null)
+		{
+			$preMsg = 'Error al buscar el contador de las instancias de soporte técnico en impresoras para la instalación de impresora.';
+			
+			// Buscar la cantidad de instancias de soporte técnico en impresora para la instalación de impresora
+			$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+	
+					SELECT
+						(COUNT(?iri) AS ?totalElementos)
+					WHERE
+					{
+						'.self::buscarInstanciasSubQuery().'
+					}
+			';
+			
+			$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+			
+			if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+				throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+			
+			if (is_array($rows) && count($rows) > 0){
+				reset($rows);
+				return current($rows)['totalElementos'];
+			}
+			else return false;
+		}
+		
+		public static function buscarInstanciasSubQuery(array $parametros = null)
+		{
+			return 
+			'
+				?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
+				OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
+				?iri :enImpresora ?iriEquipoReproduccion .
+				?iri :sobreSistemaOperativo ?iriSistemaOperativo .
+				?iriEquipoReproduccion rdf:type :'.SIGECOST_FRAGMENTO_IMPRESORA.' .
+				?iriEquipoReproduccion :marcaEquipoReproduccion ?marcaEquipoReproduccion .
+				?iriEquipoReproduccion :modeloEquipoReproduccion ?modeloEquipoReproduccion .
+				?iriSistemaOperativo rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
+				?iriSistemaOperativo :nombreSistemaOperativo ?nombreSistemaOperativo .
+				?iriSistemaOperativo :versionSistemaOperativo ?versionSistemaOperativo .
+			';
 			
 		}
 		

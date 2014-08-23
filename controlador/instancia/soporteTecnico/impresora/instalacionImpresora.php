@@ -3,9 +3,7 @@
 
 	// Controladores
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/impresora/impresora.php' );
-	
-	// Libs
-	require_once ( SIGECOST_PATH_LIB . '/paginacion.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/paginacion.php' );
 	
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/impresora.php' );
@@ -14,31 +12,43 @@
 	
 	class ControladorInstanciaSTImpresoraInstalacionImpresora extends ControladorInstanciaSTImpresora
 	{
+		use ControladorTraitPaginacion;
+		
 		public function buscar()
 		{
-			$contador = 0;
+			// Obtener el formulario
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_BUSCAR);
 			
-			$parametros = array(
-				'desplazamiento' => 4,
-				'limite' => 10
-			);
+			// Obtener la cantidad total de elementos de instancias que se obtendrán en la bśuqueda
+			$totalElementos = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstanciasTotalElementos();
 			
+			// Verificar que no hubo errores consultando el número total de elementos para esta búsqueda
+			if($totalElementos !== false)
+			{
+				// Configurar el objeto de paginación
+				$form->setPaginacion(new EntidadPaginacion($totalElementos));  // EntidadPaginacion(<Tamaño página>, <Total elementos>)
+				$this->__validarParametrosPaginacion($form);
+				$form->getPaginacion()->setUrlObjetivo("instalacionImpresora.php?accion=buscar");
+			}
+			
+			// Realizar la consulta de la búsqueda estableciendo los parámetros para la navegación
+			$parametros = array();
+			// Establecer los parámetros de la navegación para la consulta de la búsqueda 
+			if($totalElementos !== false)
+			{
+				$parametros = array(
+					'desplazamiento' => $form->getPaginacion()->getDesplazamiento(),
+					'limite' => $form->getPaginacion()->getTamanoPagina()
+				);
+			}
+			// Realizar la consulta de la búsuqeda
 			$instancias = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias($parametros);
 			
-			$contador = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias(array('contar' => true));
 			
-			$paginacion = new LibPaginacion(10, 50);
-			$paginacion->leerParametrosRequest();
 			
-			echo "<pre>";
-			print_r($paginacion);
-			echo "</pre>";
-			
-			echo "<pre>";
-			print_r($contador);
-			echo "</pre>";
 				
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
+			$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;
 		
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/instalacionImpresoraBuscar.php' );
 		}
