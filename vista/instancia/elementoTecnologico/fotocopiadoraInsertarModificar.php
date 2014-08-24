@@ -1,37 +1,37 @@
 <?php
-	
+
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_FOTOCOPIADORA_INSERTAR_MODIFICAR);
 	$equipoReproduccion = $form->getEquipoReproduccion();
-	
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
 
 	<head>
-	
+
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
-	
+
 	</head>
-	
+
 	<body>
-	
+
 		<?php require ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
-		
+
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
-				<li class="active"><a href="fotocopiadora.php?accion=insertar">Fotocopiadora</a></li>
+				<li class="active"><a href="fotocopiadora.php?accion=insertar">Insertar</a></li>
 				<li><a href="fotocopiadora.php?accion=Buscar">Buscar</a></li>
 			</ul>
 		</div>
-		
+
 		<?php include( SIGECOST_PATH_VISTA . '/mensajes.php');?>
-		
+
 		<div class="container">
-		
+
 			<div class="page-header">
 				<h1>Instancia del elemento tecnol&oacute;gico fotocopiadora</h1>
 			</div>
-			
+
 			<form class="form-horizontal" role="form" method="post">
 				<div style="display:none;">
 					<input type="hidden" name="accion" value="guardar">
@@ -59,11 +59,11 @@
 					</div>
 				</div>
 			</form>
-		
+
 		</div>
-		
+
 		<?php require ( SIGECOST_PATH_VISTA . '/general/footer.php' ); ?>
-			
+
 	</body>
 
 </html>
