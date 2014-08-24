@@ -16,11 +16,13 @@
 	define('FORM_INSTANCIA_ST_APLICACION_G_D_D_D_DESINSTALACION_APLICACION_INSERTAR_MODIFICAR', 14);
 	define('FORM_INSTANCIA_ST_APLICACION_OFIMATICA_CORREGIR_CIERRE_INESPERADO_INSERTAR_MODIFICAR', 15);
 	define('FORM_INSTANCIA_ST_APLICACION_OFIMATICA_DESINSTALACION_APLICACION_OFIMATICA_INSERTAR_MODIFICAR', 16);
-	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 17);
-	define('FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_INSERTAR_MODIFICAR', 18);
-	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_BUSCAR', 19);
-	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 20);
-	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 21);
+	define('FORM_INSTANCIA_ST_APLICACION_OFIMATICA_INSTALACION_APLICACION_OFIMATICA_BUSCAR', 17);
+	define('FORM_INSTANCIA_ST_APLICACION_OFIMATICA_INSTALACION_APLICACION_OFIMATICA_INSERTAR_MODIFICAR', 18);
+	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 19);
+	define('FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_INSERTAR_MODIFICAR', 20);
+	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_BUSCAR', 21);
+	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 22);
+	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 23);
 
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 
@@ -101,9 +103,19 @@
 			'GlobalName' => 'ClassFormularioInstanciaSTAplicacionOfimaticaCorregirCierreInesperado'
 		),
 		FORM_INSTANCIA_ST_APLICACION_OFIMATICA_DESINSTALACION_APLICACION_OFIMATICA_INSERTAR_MODIFICAR => array(
-			'File' => 'instancia/soporteTecnico/aplicacionGDDD/desinstalacionAplicacion.php',
-			'ClassName' => 'FormularioInstanciaSTAplicacionGDDDDesinstalacionAplicacion',
-			'GlobalName' => 'ClassFormularioInstanciaSTAplicacionGDDDDesinstalacionAplicacion'
+			'File' => 'instancia/soporteTecnico/aplicacionOfimatica/desinstalacionAplicacionOfimatica.php',
+			'ClassName' => 'FormularioInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica',
+			'GlobalName' => 'ClassFormularioInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica'
+		),
+		FORM_INSTANCIA_ST_APLICACION_OFIMATICA_INSTALACION_APLICACION_OFIMATICA_BUSCAR => array(
+			'File' => 'instancia/soporteTecnico/aplicacionOfimatica/instalacionAplicacionOfimaticaBuscar.php',
+			'ClassName' => 'FormularioInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimaticaBuscar',
+			'GlobalName' => 'ClassFormularioInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimaticaBuscar'
+		),
+		FORM_INSTANCIA_ST_APLICACION_OFIMATICA_INSTALACION_APLICACION_OFIMATICA_INSERTAR_MODIFICAR => array(
+			'File' => 'instancia/soporteTecnico/aplicacionOfimatica/instalacionAplicacionOfimatica.php',
+			'ClassName' => 'FormularioInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimatica',
+			'GlobalName' => 'ClassFormularioInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimatica'
 		),
 		FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR => array(
 			'File' => 'instancia/soporteTecnico/impresora/corregirImpresionManchada.php',

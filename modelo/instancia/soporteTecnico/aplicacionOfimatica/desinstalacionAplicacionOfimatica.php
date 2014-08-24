@@ -70,7 +70,7 @@
 				return false;
 			}
 		}
-		public static function existeInstancia($instancia)
+		public static function existeInstancia(EntidadInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica $instancia)
 		{
 			$preMsg = 'Error al verificar la existencia de una instancia de soporte técnico para la desinstalación de una aplicación ofimática.';
 
@@ -127,7 +127,7 @@
 		}
 
 		// Guarda una nueva instancia de soporte técnico para la desinstalación de una aplicacion ofimática, y retorna su iri
-		public static function guardarInstancia($instancia)
+		public static function guardarInstancia(EntidadInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica $instancia)
 		{
 			$preMsg = 'Error al guardar la instancia de soporte técnico para la desinstalación de una aplicación ofimática.';
 
