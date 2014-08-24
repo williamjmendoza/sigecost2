@@ -76,7 +76,7 @@
 							<td><?php echo $instancia->getSistemaOperativo()->getNombre() ?></td>
 							<td><?php echo $instancia->getSistemaOperativo()->getVersion() ?></td>
 							<td>
-								<form class="form-horizontal" role="form" action="desinstalacionAplicacion.php" method="post">
+								<form class="form-horizontal" role="form" action="desinstalacionAplicacionOfimatica.php" method="post">
 									<div style="display:none;">
 										<input type="hidden" name="accion" value="">
 										<input type="hidden" name="iri" value="<?php echo $instancia->getIri() ?>">

@@ -48,6 +48,9 @@
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/desinstalacionAplicacionOfimatica.php?accion=insertar">
 							Desinstalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica
 						</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/instalacionAplicacionOfimatica.php?accion=insertar">
+							Instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica
+						</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/corregirCierreInesperado.php?accion=insertar">
 							Corregir cierre inesperado de aplicaci&oacute;n ofim&aacute;tica
 						</a></li>
