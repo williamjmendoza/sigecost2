@@ -45,6 +45,9 @@
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionGDDD/desinstalacionAplicacion.php?accion=insertar">
 							Desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o
 						</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionGDDD/instalacionAplicacionGDDD.php?accion=insertar">
+							Instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o
+						</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/desinstalacionAplicacionOfimatica.php?accion=insertar">
 							Desinstalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica
 						</a></li>
