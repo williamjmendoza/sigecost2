@@ -3,11 +3,13 @@
 	{
 		private $_paginaActual = 0;
 		private $_tamanoPagina = 0;
+		private $_tamanoVentana = 0;
 		private $_totalElementos = 0;
 		private $_urlObjetivo = "#";
 		
 		public function __construct($totalElementos)
 		{
+			$this->setTamanoVentana(GetConfig("tamanoVentana"));
 			$this->setTotalElementos($totalElementos);
 		}
 		
@@ -26,6 +28,12 @@
 		}
 		public function setTamanoPagina($tamanoPagina){
 			$this->_tamanoPagina = $tamanoPagina;
+		}
+		public function getTamanoVentana(){
+			return $this->_tamanoVentana;
+		}
+		public function setTamanoVentana($tamanoVentana){
+			$this->_tamanoVentana = $tamanoVentana;
 		}
 		public function getTotalElementos(){
 			return $this->_totalElementos;
