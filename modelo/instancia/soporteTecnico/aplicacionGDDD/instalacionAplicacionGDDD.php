@@ -13,7 +13,6 @@
 		{
 			$preMsg = 'Error al buscar las instancias de soporte técnico para la instalación de aplicación gráfica digital, dibujo y diseño..';
 
-			$contar = false;
 			$instancias = array();
 			$limite = '';
 			$desplazamiento = '';
@@ -21,7 +20,6 @@
 			try
 			{
 				if($parametros !== null && count($parametros) > 0){
-					if(isset($parametros['contar']) && $parametros['contar'] === true) $contar = true;
 					if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
 					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
 				}
@@ -33,7 +31,6 @@
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 						SELECT
-							' . ( $contar ? '(COUNT(?iri) AS ?contador)' : '
 							?iri
 							?urlSoporteTecnico
 							?iriAplicacion
@@ -42,7 +39,6 @@
 							?iriSistemaOperativo
 							?nombreSistemaOperativo
 							?versionSistemaOperativo
-							' ) . '
 						WHERE
 						{
 							'.self::buscarInstanciasSubQuery().'
@@ -62,21 +58,15 @@
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
 
-				if($contar)
-				{
-					if (is_array($rows) && count($rows) > 0){
-						reset($rows);
-						return current($rows)['contador'];
+				
+				if (is_array($rows) && count($rows) > 0){
+					foreach ($rows AS $row){
+						$instancias[$row['iri']] = self::llenarInstancia($row);
 					}
-					else return null;
-				} else {
-					if (is_array($rows) && count($rows) > 0){
-						foreach ($rows AS $row){
-							$instancias[$row['iri']] = self::llenarInstancia($row);
-						}
-					}
-					return $instancias;
 				}
+				
+				return $instancias;
+			
 			} catch (Exception $e) {
 				error_log($e, 0);
 				return false;
