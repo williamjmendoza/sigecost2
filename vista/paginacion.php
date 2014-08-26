@@ -28,7 +28,30 @@
 	<?php	
 		}
 	?>
-	
+	<?php
+		if($paginaInicial > 1)
+		{
+	?>
+	<li>
+		<a href="<?php echo $paginacion->getUrlObjetivo() . "&pag=1" ?>">1</a>
+	</li>
+	<?php
+		}
+		if($paginaInicial > 2)
+		{
+			if ($paginaInicial == 3){
+	?>
+	<li>
+		<a href="<?php echo $paginacion->getUrlObjetivo() . "&pag=2" ?>">2</a>
+	</li>
+	<?php
+			} else {
+	?>
+	<li class="disabled"><a href="<?php echo $paginacion->getUrlObjetivo() . "#" ?>">...</a></li>
+	<?php			
+			}
+		}
+	?>
 	<?php
 		for($i = $paginaInicial; $i <= $paginaFinal; $i++)
 		{
@@ -47,6 +70,33 @@
 	</li>
 	<?php
 			}
+		}
+		
+		if($paginaFinal < ($paginacion->getTotalPaginas()-1) )
+		{
+			if($paginaFinal == ($paginacion->getTotalPaginas()-2))
+			{
+	?>
+	<li>
+		<a href="<?php echo $paginacion->getUrlObjetivo() . "&pag=" . ($paginacion->getTotalPaginas()-1) ?>">
+			<?php echo ($paginacion->getTotalPaginas()-1) ?>
+		</a>
+	</li>
+	<?php
+			} else {
+	?>
+	<li class="disabled"><a href="<?php echo $paginacion->getUrlObjetivo() . "#" ?>">...</a></li>
+	<?php
+			}
+		}
+		
+		if($paginaFinal < $paginacion->getTotalPaginas())
+		{
+	?>
+	<li>
+		<a href="<?php echo $paginacion->getUrlObjetivo() . "&pag=" . $paginacion->getTotalPaginas() ?>"><?php echo $paginacion->getTotalPaginas() ?></a>
+	</li>
+	<?php
 		}
 		
 		if ($paginacion->getPaginaActual() < $paginacion->getTotalPaginas())
