@@ -47,7 +47,7 @@
 	<?php
 			} else {
 	?>
-	<li class="disabled"><a href="<?php echo $paginacion->getUrlObjetivo() . "#" ?>">...</a></li>
+	<li class="disabled"><a href="#">...</a></li>
 	<?php			
 			}
 		}
@@ -85,7 +85,7 @@
 	<?php
 			} else {
 	?>
-	<li class="disabled"><a href="<?php echo $paginacion->getUrlObjetivo() . "#" ?>">...</a></li>
+	<li class="disabled"><a href="#">...</a></li>
 	<?php
 			}
 		}
