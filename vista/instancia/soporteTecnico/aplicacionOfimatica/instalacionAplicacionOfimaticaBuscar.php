@@ -46,7 +46,6 @@
 					$contador = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
 
 			?>
-			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
 					<thead>

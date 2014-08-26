@@ -41,15 +41,6 @@
 					<input type="hidden" name="accion" value="guardar">
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="urlSoporteTecnico">Url soporte t&eacute;cnico:</label>
-					<div class="col-sm-7">
-						<input
-							type="text" class="form-control" id="urlSoporteTecnico" name="urlSoporteTecnico" placeholder="Introduzca el url de S.T."
-							value="<?php echo $instancia != null ? $instancia->getUrlSoporteTecnico() : "" ?>"
-						>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label col-sm-3" for="iriAplicacionPrograma">En aplicaci&oacute;n de programa:</label>
 					<div class="col-sm-7">
 						<select class="form-control" id="iriAplicacionPrograma"  name="iriAplicacionPrograma">
@@ -70,6 +61,15 @@
 								}
 							?>
 						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="urlSoporteTecnico">Url soporte t&eacute;cnico:</label>
+					<div class="col-sm-7">
+						<input
+							type="text" class="form-control" id="urlSoporteTecnico" name="urlSoporteTecnico" placeholder="Introduzca el url de S.T."
+							value="<?php echo $instancia != null ? $instancia->getUrlSoporteTecnico() : "" ?>"
+						>
 					</div>
 				</div>
 				<div class="form-group">

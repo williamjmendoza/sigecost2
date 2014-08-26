@@ -36,12 +36,6 @@
 			
 			<div class="form-horizontal" role="form">
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="urlSoporteTecnico">Url soporte t&eacute;cnico:</label>
-					<div class="col-sm-7">
-						<p class="form-control-static"><?php echo $instancia != null ? $instancia->getUrlSoporteTecnico() : "" ?></p>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label col-sm-3" for="iriEquipoReproduccion">En impresora:</label>
 					<div class="col-sm-7">
 						<p class="form-control-static">
@@ -55,6 +49,12 @@
 						<p class="form-control-static">
 							<?php echo $instanciaSistemaOperativo != null ? $instanciaSistemaOperativo->getNombre() . ' - ' . $instanciaSistemaOperativo->getVersion() : "" ?>
 						</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="urlSoporteTecnico">Url soporte t&eacute;cnico:</label>
+					<div class="col-sm-7">
+						<p class="form-control-static"><?php echo $instancia != null ? $instancia->getUrlSoporteTecnico() : "" ?></p>
 					</div>
 				</div>
 			</div>

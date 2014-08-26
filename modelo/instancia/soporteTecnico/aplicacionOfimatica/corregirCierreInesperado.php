@@ -37,9 +37,9 @@
 							?iriAplicacion :versionAplicacionPrograma ?versionAplicacion .
 						}
 						ORDER BY
-							?urlSoporteTecnico
 							?nombreAplicacion
 							?versionAplicacion
+							?urlSoporteTecnico
 				';
 				
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');

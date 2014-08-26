@@ -43,6 +43,6 @@
 	
 	/* Paginación */
 	// Tamaño por defecto de la página
-	$GLOBALS['SIGECOST_CFG']["tamanoPaginaPorDefecto"] = 10;
+	$GLOBALS['SIGECOST_CFG']["tamanoPaginaPorDefecto"] = 1;
 	$GLOBALS['SIGECOST_CFG']["tamanoVentana"] = 5;
 ?>

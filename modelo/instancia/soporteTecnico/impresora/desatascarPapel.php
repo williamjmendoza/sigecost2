@@ -33,7 +33,9 @@
 							?iriEquipoReproduccion :modeloEquipoReproduccion ?modeloEquipoReproduccion .
 						}
 						ORDER BY
-							?urlSoporteTecnico ?marcaEquipoReproduccion ?modeloEquipoReproduccion
+							?marcaEquipoReproduccion
+							?modeloEquipoReproduccion
+							?urlSoporteTecnico
 				';
 				
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');

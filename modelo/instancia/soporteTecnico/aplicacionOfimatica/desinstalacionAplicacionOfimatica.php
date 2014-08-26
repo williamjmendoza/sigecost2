@@ -44,11 +44,11 @@
 							?iriSistemaOperativo :versionSistemaOperativo ?versionSistemaOperativo .
 						}
 						ORDER BY
-							?urlSoporteTecnico
 							?nombreAplicacion
 							?versionAplicacion
 							?nombreSistemaOperativo
 							?versionSistemaOperativo
+							?urlSoporteTecnico
 				';
 
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');

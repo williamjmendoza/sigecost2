@@ -51,8 +51,8 @@
 					<thead>
 						<tr>
 							<th rowspan="2">#</th>
-							<th rowspan="2">Url soporte t&eacute;cnico</th>
 							<th colspan="2">Aplicaci&oacute;n</th>
+							<th rowspan="2">Url soporte t&eacute;cnico</th>
 							<th rowspan="2">Opciones</th>
 						</tr>
 						<tr>
@@ -67,9 +67,9 @@
 			?>
 						<tr>
 							<td><?php echo (++$contador) ?></td>
-							<td><?php echo $instancia->getUrlSoporteTecnico() ?></td>
 							<td><?php echo $instancia->getAplicacionPrograma()->getNombre() ?> </td>
 							<td><?php echo $instancia->getAplicacionPrograma()->getVersion() ?></td>
+							<td><?php echo $instancia->getUrlSoporteTecnico() ?></td>
 							<td>
 								<form class="form-horizontal" role="form" action="corregirCierreInesperado.php" method="post">
 									<div style="display:none;">
