@@ -14,6 +14,29 @@
 	{
 		use ControladorTraitPaginacion;
 		
+		public function actualizar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+				
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea actualizar.");
+				
+				// Validar, obtener y guardar todos los inputs desde el formulario
+				$this->__validarIriEquipoReproduccion($form);
+				$this->__validarIriSistemaOperativo($form);
+				$this->__validarUrlSoporteTecnico($form);
+				
+				$this->__desplegarFormulario();
+				
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->__desplegarFormulario();
+			}
+		}
+		
 		public function buscar()
 		{
 			// Obtener el formulario
@@ -43,9 +66,6 @@
 			}
 			// Realizar la consulta de la búsuqeda
 			$instancias = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias($parametros);
-			
-			
-			
 				
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
 			$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;
@@ -108,6 +128,29 @@
 		public function insertar()
 		{
 			$this->__desplegarFormulario();
+		}
+		
+		public function modificar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+				
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea modificar.");
+				
+				if( ($instancia = ModeloInstanciaSTImpresoraInstalacionImpresora::obtenerInstanciaPorIri($iri)) === null )
+					throw new Exception("La instancia no pudo ser cargada.");
+				
+				$form->setSoporteTecnico($instancia);
+				
+				$this->__desplegarFormulario();
+				
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->__desplegarFormulario();
+			}
 		}
 		
 		private function __desplegarDetalles($iriInstancia)
