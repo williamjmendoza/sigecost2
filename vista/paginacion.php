@@ -1,16 +1,21 @@
 <?php
+
 	$formPaginacion = $GLOBALS['SigecostRequestVars']['formPaginacion'];
-	$paginacion = $formPaginacion->getPaginacion();
+	$paginacion = $formPaginacion != null ? $formPaginacion->getPaginacion() : null;
 	
-	$paginaInicial = ($paginaInicial = $paginacion->getPaginaActual() - intval(floor($paginacion->getTamanoVentana()/2),10)) < 1 ? 1 : $paginaInicial;
+	if($paginacion != null && $paginacion->getTotalPaginas() > 1)
+	{
 	
-	$paginaFinal = $paginaFinal = $paginaInicial + $paginacion->getTamanoVentana() - 1;
-	$paginaFinal = ($paginaFinal > $paginacion->getTotalPaginas()) ? $paginacion->getTotalPaginas() : $paginaFinal;
-	
-	$paginaInicial = (($paginaFinal - $paginaInicial + 1) < $paginacion->getTamanoVentana())
-		? $paginaFinal - $paginacion->getTamanoVentana() + 1 : $paginaInicial;
-	
-	$paginaInicial = ($paginaInicial < 1) ? 1 : $paginaInicial;
+		$paginaInicial = ($paginaInicial = $paginacion->getPaginaActual() - intval(floor($paginacion->getTamanoVentana()/2),10)) < 1
+			? 1 : $paginaInicial;
+		
+		$paginaFinal = $paginaFinal = $paginaInicial + $paginacion->getTamanoVentana() - 1;
+		$paginaFinal = ($paginaFinal > $paginacion->getTotalPaginas()) ? $paginacion->getTotalPaginas() : $paginaFinal;
+		
+		$paginaInicial = (($paginaFinal - $paginaInicial + 1) < $paginacion->getTamanoVentana())
+			? $paginaFinal - $paginacion->getTamanoVentana() + 1 : $paginaInicial;
+		
+		$paginaInicial = ($paginaInicial < 1) ? 1 : $paginaInicial;
 	
 ?>
 <div class="text-center">
@@ -112,3 +117,6 @@
 		?>
 	</ul>
 </div>
+<?php 
+	}
+?>
