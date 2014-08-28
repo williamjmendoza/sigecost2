@@ -57,6 +57,9 @@
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/corregirCierreInesperado.php?accion=insertar">
 							Corregir cierre inesperado de aplicaci&oacute;n ofim&aacute;tica
 						</a></li>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFD.php?accion=insertar">
+							Restablecer barra herramientas funci&oacute;n formato dibujo de aplicaci&oacute;n ofim&aacute;tica
+						</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/corregirImpresionManchada.php?accion=insertar">
 							Corregir impresi&oacute;n manchada
 						</a></li>
