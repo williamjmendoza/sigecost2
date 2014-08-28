@@ -4,6 +4,8 @@
 	// Controladores
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/aplicacionOfimatica/aplicacionOfimatica.php' );
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/sobreSistemaOperativo.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/paginacion.php' );
+
 
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/aplicacionOfimatica.php' );
@@ -13,12 +15,40 @@
 	class ControladorInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica extends ControladorInstanciaSTAplicacionOfimatica
 	{
 		use ControladorTraitInstanciaSTSobreSistemaOperativo;
+		use ControladorTraitPaginacion;
 
 		public function buscar()
 		{
-			$instancias = ModeloInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica::buscarInstancias();
+			// Obtener el formulario
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_OFIMATICA_DESINSTALACION_APLICACION_OFIMATICA_BUSCAR);
+
+			// Obtener la cantidad total de elementos de instancias que se obtendrán en la bśuqueda
+			$totalElementos = ModeloInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica::buscarInstanciasTotalElementos();
+
+			// Verificar que no hubo errores consultando el número total de elementos para esta búsqueda
+			if($totalElementos !== false)
+			{
+				// Configurar el objeto de paginación
+				$form->setPaginacion(new EntidadPaginacion($totalElementos));  // EntidadPaginacion(<Tamaño página>, <Total elementos>)
+				$this->__validarParametrosPaginacion($form);
+				$form->getPaginacion()->setUrlObjetivo("desinstalacionAplicacionOfimatica.php?accion=buscar");
+			}
+
+			// Realizar la consulta de la búsqueda estableciendo los parámetros para la navegación
+			$parametros = array();
+			// Establecer los parámetros de la navegación para la consulta de la búsqueda
+			if($totalElementos !== false)
+			{
+				$parametros = array(
+						'desplazamiento' => $form->getPaginacion()->getDesplazamiento(),
+						'limite' => $form->getPaginacion()->getTamanoPagina()
+				);
+			}
+
+			$instancias = ModeloInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica::buscarInstancias($parametros);
 
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
+			$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;
 
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/desinstalacionAplicacionOfimaticaBuscar.php' );
 		}
@@ -97,6 +127,18 @@
 			$GLOBALS['SigecostRequestVars']['sistemasOperativos'] = $sistemasOperativos;
 
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/desinstalacionAplicacionOfimaticaInsertarModificar.php' );
+		}
+
+		// Obtener y validar el iri de la instancia de sistema operativo
+		private function __validarIriSistemaOperativo(FormularioInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica $form)
+		{
+			if(!isset($_POST['iriSistemaOperativo']) || ($iriSistemaOperativo=trim($_POST['iriSistemaOperativo'])) == ''
+					|| $iriSistemaOperativo == "0"
+			){
+				$GLOBALS['SigecostErrors']['general'][] = 'Debe seleccionar un sistema operativo.';
+			} else {
+				$form->getSoporteTecnico()->getSistemaOperativo()->setIri($iriSistemaOperativo);
+			}
 		}
 	}
 

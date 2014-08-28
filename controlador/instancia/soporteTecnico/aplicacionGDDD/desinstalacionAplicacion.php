@@ -46,7 +46,7 @@
 				);
 			}
 			// Realizar la consulta de la búsuqeda
-			$instancias = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::buscarInstancias();
+			$instancias = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::buscarInstancias($parametros);
 
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
 			$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;
