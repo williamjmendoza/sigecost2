@@ -33,22 +33,27 @@
 				
 				if(count($GLOBALS['SigecostErrors']['general']) == 0)
 				{
-					// Actualiza la instancia de soporte técnico en impresora para instalación de impresora, en la base de datos
+					// Consultar si existe una instancia de soporte técnico en impresora para instalación de impresora, con las mismas características
+					if(($existeInstancia = ModeloInstanciaSTImpresoraInstalacionImpresora::existeInstancia($form->getSoporteTecnico())) === null)
+						throw new Exception("La instancia no pudo ser actualizada.");
+						
+					// Validar si existe una instancia de soporte técnico en impresora para la instalación de impresora, con las mismas características
+					if ($existeInstancia === true)
+						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					
+					// Actualizar la instancia de soporte técnico en impresora para instalación de impresora, en la base de datos
 					$resultado = ModeloInstanciaSTImpresoraInstalacionImpresora::actualizarInstancia($form->getSoporteTecnico());
 					
 					if($resultado === false)
-						throw new Exception("No se pudo actualizar la instancia");
+						throw new Exception("La instancia no pudo ser actualizada");
 					
 					$GLOBALS['SigecostErrors']['general'] = "Instancia actualizada satisfactoriamente";
 					
 					$this->__desplegarDetalles($iri);
 					
-					return;
-					
+				} else {
+					$this->__desplegarFormulario();
 				}
-				
-				$this->__desplegarFormulario();
-				
 			} catch (Exception $e){
 				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
 				$this->__desplegarFormulario();
@@ -140,7 +145,6 @@
 			} else {
 				$this->__desplegarFormulario();
 			}
-				
 		}
 		
 		public function insertar()

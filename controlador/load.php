@@ -1,9 +1,13 @@
 <?php
 
-	echo "No hace nada";
-	echo exit;
+	//echo "No hace nada";
+	//echo exit;
 
 	require_once (dirname(__FILE__) . "/../init.php");
+	
+	$store->drop();
+	
+	$store->setUp();
 	
 	$store->query('LOAD <http://localhost/sigecost2/controlador/soporte_tecnico.owl>');
 	

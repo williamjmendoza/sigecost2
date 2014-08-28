@@ -43,32 +43,47 @@
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-				
-						DELETE FROM <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+								
+						DELETE FROM <'.SIGECOST_IRI_GRAFO.'>
 						{
-							?iri :enImpresora _:enImpresora .
-							?iri :sobreSistemaOperativo _:sobreSistemaOperativo .
+							?iri :enImpresora ?iriEquipoReproduccion .
+							?iri :sobreSistemaOperativo ?iriSistemaOperativo .
+							?iri :uRLSoporteTecnico ?urlSoporteTecnico .
 						}
 						WHERE
 						{
 							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
+							?iri :enImpresora ?iriEquipoReproduccion .
+							?iri :sobreSistemaOperativo ?iriSistemaOperativo .
+							OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
 							FILTER (?iri = <'.$instancia->getIri().'>) .
 						}
 				';
 				
 				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 				
-				echo "<pre>";
-				var_dump($result);
-				echo "</pre>";
-				
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
-					throw new Exception($preMsg . " Detalles:\n" . join("\n", $errors));
+					throw new Exception($preMsg . " No se pudieron eliminar los datos anteriores de la instancia. Detalles:\n" . join("\n", $errors));
+
+				// Borrar
+				error_log(print_r($query, true));
+				error_log(print_r($result, true));
+			
 				
-				return true;
+				if($result["result"]["t_count"] == 0) {
+					// Excepción porque no se pudieron borrar los datos anteriores de la instancia, para que se ejecute el Rollback
+					throw new Exception($preMsg . ' Detalles: No se eliminó ningún registro.');
+				}
 				
-				// Excepción porque no se pudieron borrar los datos anteriores de la instancia, para que se ejecute el Rollback
+				/*
+				// Descomentar cuando se utilicen transacciones
+				if($result["result"]["t_count"] != 2 && $result["result"]["t_count"] != 3) {
+					// Excepción porque no se pudieron borrar los datos anteriores de la instancia, para que se ejecute el Rollback
+					throw new Exception($preMsg . ' Detalles: El número de registros eliminados es incorrecto.' .
+						'Número de registros eliminados: ' . $result["result"]["t_count"] . '.'
+					);
+				}
+				*/
 				
 				// Guardar los datos actualizados de la instancia
 				$query = '
@@ -76,22 +91,29 @@
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 				
-						INSERT INTO <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						INSERT INTO <'.SIGECOST_IRI_GRAFO.'>
 						{
-							?iri :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
-							?iri :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
-							?iri :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
-						}
-						WHERE
-						{
-							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
-							FILTER (?iri = <'.$instancia->getIri().'>) .
+							<'.$instancia->getIri().'> :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							<'.$instancia->getIri().'> :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
+							<'.$instancia->getIri().'> :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
 						}
 				';
 				
-				// Excepción porque no se pudieron guardar los datos actualizados de la instancia, para que se ejecute el Rollback
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				// Borrar
+				error_log(print_r($query, true));
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					// Excepción porque no se pudieron guardar los datos actualizados de la instancia, para que se ejecute el Rollback
+					throw new Exception($preMsg . " No se pudieron guardar los datos actualizados de la instancia. Detalles:\n" . join("\n", $errors));
+				
+				// Borrar
+				error_log(print_r($result, true));
 				
 				// Commit de la transacción
+				
+				return $instancia->getIri();
 				
 			} catch (Exception $e) {
 				// Rollback de la transacción
@@ -252,6 +274,10 @@
 				
 				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 				
+				// Borrar
+				error_log(print_r($query, true));
+				error_log(print_r($result, true));
+				
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception("Error al consultar la existencia de la instancia de soporte técnico en impresora para instalación" .
 						" de impresora (uRLSoporteTecnico = '" . $instancia->getUrlSoporteTecnico() . "', enImpresora = '" .
@@ -309,8 +335,8 @@
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-				
-						INSERT INTO <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+								
+						INSERT INTO <'.SIGECOST_IRI_GRAFO.'>
 						{
 							:'.$fragmentoIriInstancia.' rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
 							:'.$fragmentoIriInstancia.' :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .

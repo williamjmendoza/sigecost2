@@ -1,4 +1,7 @@
 <?php
+
+	define('SIGECOST_IRI_GRAFO', 'http://localhost/sigecost2/controlador/soporte_tecnico.owl');
+
 	// Iri de la ontología
 	define('SIGECOST_IRI_ONTOLOGIA', 'http://www.owl-ontologies.com/OntologySoporteTecnico.owl');
 	define('SIGECOST_IRI_ONTOLOGIA_NUMERAL', SIGECOST_IRI_ONTOLOGIA . '#');
