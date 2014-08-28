@@ -1,5 +1,6 @@
 <?php
 
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_OFIMATICA_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO_BUSCAR);
 	$instancias = $GLOBALS['SigecostRequestVars']['instancias'];
 
 ?>
@@ -44,7 +45,7 @@
 			<?php
 				if (is_array($instancias) && count($instancias) > 0)
 				{
-					$contador = 0;
+					$contador  = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
 			?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
@@ -87,6 +88,7 @@
 					</tbody>
 				</table>
 			</div>
+			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<?php
 				} else {
 			?>

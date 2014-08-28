@@ -3,6 +3,7 @@
 
 	// Controladores
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/aplicacionOfimatica/aplicacionOfimatica.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/paginacion.php' );
 
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/aplicacionOfimatica.php' );
@@ -10,12 +11,40 @@
 
 	class ControladorInstanciaSTAplicacionOfimaticaRestablecerBarraHerramientasFFD extends ControladorInstanciaSTAplicacionOfimatica
 	{
+		use ControladorTraitPaginacion;
+
 		public function buscar()
 		{
-			$instancias = ModeloInstanciaSTAplicacionOfimaticaRestablecerBarraHerramientasFFD::buscarInstancias();
+			// Obtener el formulario
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_OFIMATICA_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO_BUSCAR);
+
+			// Obtener la cantidad total de elementos de instancias que se obtendrán en la bśuqueda
+			$totalElementos = ModeloInstanciaSTAplicacionOfimaticaRestablecerBarraHerramientasFFD::buscarInstanciasTotalElementos();
+
+			// Verificar que no hubo errores consultando el número total de elementos para esta búsqueda
+			if($totalElementos !== false)
+			{
+				// Configurar el objeto de paginación
+				$form->setPaginacion(new EntidadPaginacion($totalElementos));  // EntidadPaginacion(<Tamaño página>, <Total elementos>)
+				$this->__validarParametrosPaginacion($form);
+				$form->getPaginacion()->setUrlObjetivo("restablecerBarraHerramientasFFD.php?accion=buscar");
+			}
+
+			// Realizar la consulta de la búsqueda estableciendo los parámetros para la navegación
+			$parametros = array();
+			// Establecer los parámetros de la navegación para la consulta de la búsqueda
+			if($totalElementos !== false)
+			{
+				$parametros = array(
+						'desplazamiento' => $form->getPaginacion()->getDesplazamiento(),
+						'limite' => $form->getPaginacion()->getTamanoPagina()
+				);
+			}
+
+			$instancias = ModeloInstanciaSTAplicacionOfimaticaRestablecerBarraHerramientasFFD::buscarInstancias($parametros);
 
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
-
+			$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFDBuscar.php' );
 		}
 

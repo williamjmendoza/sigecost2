@@ -14,9 +14,15 @@
 			$preMsg = 'Error al buscar las instancias de soporte técnico para restablecer barra herramientas funcion formato dibujo de una aplicación ofimática.';
 
 			$instancias = array();
+			$limite = '';
+			$desplazamiento = '';
 
 			try
 			{
+				if($parametros !== null && count($parametros) > 0){
+					if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
+					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
+				}
 				// Buscar las instancias de soporte técnico para restablecer barra herramientas funcion formato dibujo de una aplicación ofimática
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
@@ -30,17 +36,14 @@
 							?versionAplicacion
 						WHERE
 						{
-							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO.' .
-							OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
-							?iri :aplicacionOfimatica ?iriAplicacion .
-							?iriAplicacion rdf:type :'.SIGECOST_FRAGMENTO_APLICACION_OFIMATICA.' .
-							?iriAplicacion :nombreAplicacionPrograma ?nombreAplicacion .
-							?iriAplicacion :versionAplicacionPrograma ?versionAplicacion .
+							'.self::buscarInstanciasSubQuery().'
 						}
 						ORDER BY
 							?nombreAplicacion
 							?versionAplicacion
 							?urlSoporteTecnico
+						'.$desplazamiento.'
+						'.$limite.'
 				';
 
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
@@ -56,11 +59,52 @@
 
 				return $instancias;
 
-
 			} catch (Exception $e) {
 				error_log($e, 0);
 				return false;
 			}
+		}
+
+		public static function buscarInstanciasTotalElementos(array $parametros = null)
+		{
+			$preMsg = 'Error al buscar el contador de las instancias de soporte técnico en aplicacion ofimatica para restablecer barra herramientas funcion formato dibujo de aplicacion ofimatica.';
+
+			// Buscar la cantidad de instancias de soporte técnico en aplicacion ofimatica para restablecer barra herramientas funcion formato dibujo de aplicacion ofimatica
+			$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+					SELECT
+						(COUNT(?iri) AS ?totalElementos)
+					WHERE
+					{
+						'.self::buscarInstanciasSubQuery().'
+					}
+			';
+
+			$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+
+			if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+				throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+
+			if (is_array($rows) && count($rows) > 0){
+				reset($rows);
+				return current($rows)['totalElementos'];
+			}
+			else return false;
+		}
+
+		public static function buscarInstanciasSubQuery(array $parametros = null)
+		{
+			return
+			'
+				?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO.' .
+				OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
+				?iri :aplicacionOfimatica ?iriAplicacion .
+				?iriAplicacion rdf:type :'.SIGECOST_FRAGMENTO_APLICACION_OFIMATICA.' .
+				?iriAplicacion :nombreAplicacionPrograma ?nombreAplicacion .
+				?iriAplicacion :versionAplicacionPrograma ?versionAplicacion .
+			';
 		}
 
 		public static function existeInstancia(EntidadInstanciaSTAplicacionOfimaticaRestablecerBarraHerramientasFFD $instancia)
