@@ -24,10 +24,28 @@
 				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
 					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea actualizar.");
 				
+				$form->getSoporteTecnico()->setIri($iri);
+				
 				// Validar, obtener y guardar todos los inputs desde el formulario
 				$this->__validarIriEquipoReproduccion($form);
 				$this->__validarIriSistemaOperativo($form);
 				$this->__validarUrlSoporteTecnico($form);
+				
+				if(count($GLOBALS['SigecostErrors']['general']) == 0)
+				{
+					// Actualiza la instancia de soporte técnico en impresora para instalación de impresora, en la base de datos
+					$resultado = ModeloInstanciaSTImpresoraInstalacionImpresora::actualizarInstancia($form->getSoporteTecnico());
+					
+					if($resultado === false)
+						throw new Exception("No se pudo actualizar la instancia");
+					
+					$GLOBALS['SigecostErrors']['general'] = "Instancia actualizada satisfactoriamente";
+					
+					$this->__desplegarDetalles($iri);
+					
+					return;
+					
+				}
 				
 				$this->__desplegarFormulario();
 				

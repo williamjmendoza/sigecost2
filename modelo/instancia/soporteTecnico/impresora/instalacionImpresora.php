@@ -9,6 +9,96 @@
 
 	class ModeloInstanciaSTImpresoraInstalacionImpresora
 	{
+		// Actualiza una instancia de soporte técnico en impresora para la instalación de impresora, y retorna su iri
+		public static function actualizarInstancia(EntidadInstanciaSTImpresoraInstalacionImpresora $instancia)
+		{
+			$preMsg = 'Error al actualizar la instancia de soporte técnico en impresora para la instalación de impresora.';
+				
+			try
+			{
+				if ($instancia === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
+				
+				if($instancia->getIri() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getIri()\' está vacío.');
+				
+				if($instancia->getUrlSoporteTecnico() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getUrlSoporteTecnico()\' está vacío.');
+				
+				if($instancia->getEquipoReproduccion() === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()\' es nulo.');
+				
+				if($instancia->getEquipoReproduccion()->getIri() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()->getIri()\' está vacío.');
+				
+				if($instancia->getSistemaOperativo() === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getSistemaOperativo()\' es nulo.');
+				
+				if($instancia->getSistemaOperativo()->getIri() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getSistemaOperativo()->getIri()\' está vacío.');
+				
+				// Iniciar la transacción
+				
+				// Borrar los datos anteriores de la instancia
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+				
+						DELETE FROM <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						{
+							?iri :enImpresora _:enImpresora .
+							?iri :sobreSistemaOperativo _:sobreSistemaOperativo .
+						}
+						WHERE
+						{
+							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
+							FILTER (?iri = <'.$instancia->getIri().'>) .
+						}
+				';
+				
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				echo "<pre>";
+				var_dump($result);
+				echo "</pre>";
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . " Detalles:\n" . join("\n", $errors));
+				
+				return true;
+				
+				// Excepción porque no se pudieron borrar los datos anteriores de la instancia, para que se ejecute el Rollback
+				
+				// Guardar los datos actualizados de la instancia
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+				
+						INSERT INTO <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						{
+							?iri :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							?iri :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
+							?iri :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
+						}
+						WHERE
+						{
+							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
+							FILTER (?iri = <'.$instancia->getIri().'>) .
+						}
+				';
+				
+				// Excepción porque no se pudieron guardar los datos actualizados de la instancia, para que se ejecute el Rollback
+				
+				// Commit de la transacción
+				
+			} catch (Exception $e) {
+				// Rollback de la transacción
+				error_log($e, 0);
+				return false;
+			}
+		}
 		public static function buscarInstancias(array $parametros = null)
 		{
 			$preMsg = 'Error al buscar las instancias de soporte técnico en impresoras para la instalación de impresora.';
