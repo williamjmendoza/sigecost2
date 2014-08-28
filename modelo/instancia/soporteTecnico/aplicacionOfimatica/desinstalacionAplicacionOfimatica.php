@@ -13,9 +13,16 @@
 			$preMsg = 'Error al buscar las instancias de soporte técnico para la desinstalación de aplicación ofimática.';
 
 			$instancias = array();
+			$limite = '';
+			$desplazamiento = '';
 
 			try
 			{
+				if($parametros !== null && count($parametros) > 0){
+					if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
+					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
+				}
+
 				// Buscar las instancias de soporte técnico
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
@@ -32,16 +39,9 @@
 							?versionSistemaOperativo
 						WHERE
 						{
-							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_OFIMATICA.' .
-							OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
-							?iri :aplicacionOfimatica ?iriAplicacion .
-							?iri :sobreSistemaOperativo ?iriSistemaOperativo .
-							?iriAplicacion rdf:type :'.SIGECOST_FRAGMENTO_APLICACION_OFIMATICA.' .
-							?iriAplicacion :nombreAplicacionPrograma ?nombreAplicacion .
-							?iriAplicacion :versionAplicacionPrograma ?versionAplicacion .
-							?iriSistemaOperativo rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
-							?iriSistemaOperativo :nombreSistemaOperativo ?nombreSistemaOperativo .
-							?iriSistemaOperativo :versionSistemaOperativo ?versionSistemaOperativo .
+							'.self::buscarInstanciasSubQuery().'
+
+
 						}
 						ORDER BY
 							?nombreAplicacion
@@ -49,6 +49,8 @@
 							?nombreSistemaOperativo
 							?versionSistemaOperativo
 							?urlSoporteTecnico
+						'.$desplazamiento.'
+						'.$limite.'
 				';
 
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
@@ -70,6 +72,54 @@
 				return false;
 			}
 		}
+
+		public static function buscarInstanciasTotalElementos(array $parametros = null)
+		{
+			$preMsg = 'Error al buscar el contador de las instancias de soporte técnico en aplicacion ofimatica para la desinstalación de aplicacion ofimatica.';
+
+			// Buscar la cantidad de instancias de soporte técnico en aplicacion ofimatica para la desinstalación de aplicacion ofimatica
+			$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+					SELECT
+						(COUNT(?iri) AS ?totalElementos)
+					WHERE
+					{
+						'.self::buscarInstanciasSubQuery().'
+					}
+			';
+
+			$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+
+			if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+				throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+
+			if (is_array($rows) && count($rows) > 0){
+				reset($rows);
+				return current($rows)['totalElementos'];
+			}
+			else return false;
+		}
+
+		public static function buscarInstanciasSubQuery(array $parametros = null)
+		{
+			return
+			'
+				?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_OFIMATICA.' .
+				OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
+				?iri :aplicacionOfimatica ?iriAplicacion .
+				?iri :sobreSistemaOperativo ?iriSistemaOperativo .
+				?iriAplicacion rdf:type :'.SIGECOST_FRAGMENTO_APLICACION_OFIMATICA.' .
+				?iriAplicacion :nombreAplicacionPrograma ?nombreAplicacion .
+				?iriAplicacion :versionAplicacionPrograma ?versionAplicacion .
+				?iriSistemaOperativo rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
+				?iriSistemaOperativo :nombreSistemaOperativo ?nombreSistemaOperativo .
+				?iriSistemaOperativo :versionSistemaOperativo ?versionSistemaOperativo .
+			';
+
+		}
+
 		public static function existeInstancia(EntidadInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica $instancia)
 		{
 			$preMsg = 'Error al verificar la existencia de una instancia de soporte técnico para la desinstalación de una aplicación ofimática.';
