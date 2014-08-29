@@ -42,11 +42,13 @@
 			<?php
 				if (is_array($consumibles) && count($consumibles) > 0)
 				{
+					$contador = 0;
 			?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
 					<thead>
 						<tr>
+							<th>#</th>
 							<th>Especificacion</th>
 							<th>Tipo</th>
 							<th>Opciones</th>
@@ -58,6 +60,7 @@
 					{
 			?>
 						<tr>
+							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $consumible->getEspecificacion() ?> </td>
 							<td><?php echo $consumible->getTipo() ?></td>
 							<td>

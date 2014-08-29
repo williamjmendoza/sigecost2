@@ -29,7 +29,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico barra de Dibujo</h1>
+				<h1>Instancia del elemento tecnol&oacute;gico barra de dibujo</h1>
 			</div>
 
 			<div class="form-horizontal" role="form">

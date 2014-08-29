@@ -36,17 +36,19 @@
 		<div class="container">
 		
 			<div class="page-header">
-			<h1>Instancias del elemento tecnol&oacute;gico aplicaci&oacute;n gr&aacute;fica digital, dibujo y Dise&ntilde;o</h1>
+			<h1>Instancias del elemento tecnol&oacute;gico aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o</h1>
 			</div>
 			
 			<?php
 				if (is_array($aplicaciones) && count($aplicaciones) > 0)
 				{
+					$contador = 0;
 			?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
 					<thead>
 						<tr>
+							<th>#</th>
 							<th>Nombre</th>
 							<th>Versi&oacute;n</th>
 							<th>Opciones</th>
@@ -58,6 +60,7 @@
 					{
 			?>
 						<tr>
+							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $aplicacion->getNombre() ?> </td>
 							<td><?php echo $aplicacion->getVersion() ?></td>
 							<td>

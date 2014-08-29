@@ -42,11 +42,13 @@
 			<?php
 				if (is_array($sistemasOperativos) && count($sistemasOperativos) > 0)
 				{
+					$contador = 0;
 			?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
 					<thead>
 						<tr>
+							<th>#</th>
 							<th>Nombre</th>
 							<th>Versi&oacute;n</th>
 							<th>Opciones</th>
@@ -58,6 +60,7 @@
 					{
 			?>
 						<tr>
+							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $sistemaOperativo->getNombre() ?> </td>
 							<td><?php echo $sistemaOperativo->getVersion() ?></td>
 							<td>

@@ -29,7 +29,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico aplicaci&oacute;n gr&aacute;fica digital, dibujo y Dise&ntilde;o</h1>
+				<h1>Instancia del elemento tecnol&oacute;gico aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o</h1>
 			</div>
 			
 			<form class="form-horizontal" role="form" method="post" action="aplicacionGraficaDigitalDibujoDiseno.php">

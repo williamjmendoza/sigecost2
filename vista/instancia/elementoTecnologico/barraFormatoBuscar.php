@@ -26,8 +26,8 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
-				<li><a href="barraDibujo.php?accion=insertar">Insertar</a></li>
-				<li class="active"><a href="barraDibujo.php?accion=Buscar">Buscar</a></li>
+				<li><a href="barraFormato.php?accion=insertar">Insertar</a></li>
+				<li class="active"><a href="barraFormato.php?accion=Buscar">Buscar</a></li>
 			</ul>
 		</div>
 
@@ -36,17 +36,19 @@
 		<div class="container">
 
 			<div class="page-header">
-			<h1>Instancias del elemento tecnol&oacute;gico barra de dibujo</h1>
+			<h1>Instancias del elemento tecnol&oacute;gico barra de formato</h1>
 			</div>
 
 			<?php
 				if (is_array($barras) && count($barras) > 0)
 				{
+					$contador = 0;
 			?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
 					<thead>
 						<tr>
+							<th>#</th>
 							<th>Nombre</th>
 							<th>Versi&oacute;n</th>
 							<th>Opciones</th>
@@ -58,10 +60,11 @@
 					{
 			?>
 						<tr>
+							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $barra->getNombre() ?> </td>
 							<td><?php echo $barra->getVersion() ?></td>
 							<td>
-								<form class="form-horizontal" role="form" action="barraDibujo.php" method="post">
+								<form class="form-horizontal" role="form" action="barraFormato.php" method="post">
 									<div style="display:none;">
 										<input type="hidden" name="accion" value="">
 										<input type="hidden" name="iri" value="<?php echo $barra->getIri() ?>">
@@ -80,7 +83,7 @@
 			<?php
 				} else {
 			?>
-			<p>No existen barras de dibujo que mostrar.</p>
+			<p>No existen barras de formato que mostrar.</p>
 			<?php
 				}
 			?>

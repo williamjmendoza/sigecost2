@@ -42,11 +42,13 @@
 			<?php
 				if (is_array($portatiles) && count($portatiles) > 0)
 				{
+					$contador = 0;
 			?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
 					<thead>
 						<tr>
+							<th>#</th>
 							<th>Marca</th>
 							<th>Modelo</th>
 							<th>Opciones</th>
@@ -58,6 +60,7 @@
 					{
 			?>
 						<tr>
+							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $portatil->getMarca() ?> </td>
 							<td><?php echo $portatil->getModelo() ?></td>
 							<td>
