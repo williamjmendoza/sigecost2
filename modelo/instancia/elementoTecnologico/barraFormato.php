@@ -73,6 +73,10 @@
 
 				if($barra->getVersion() == "")
 					throw new Exception($preMsg . ' El parámetro \'$barra->getVersion()\' está vacío.');
+				
+				// Si $barra->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($barra->getIri() !== null && $barra->getIri() != '')
+					? 'FILTER (?instanciaBarra != <'.$barra->getIri().'>) .' : '';
 
 				// Verificar si existe una instancia de la barra de formato con el mismo nombre y versión,
 				// que la pasada por parámetros
@@ -83,9 +87,10 @@
 
 						ASK
 						{
-							_:instanciaBarra rdf:type :'.SIGECOST_FRAGMENTO_BARRA_FORMATO.' .
-							_:instanciaBarra :nombreAplicacionPrograma "'.$barra->getNombre().'"^^xsd:string .
-							_:instanciaBarra :versionAplicacionPrograma "'.$barra->getVersion().'"^^xsd:string .
+							?instanciaBarra rdf:type :'.SIGECOST_FRAGMENTO_BARRA_FORMATO.' .
+							?instanciaBarra :nombreAplicacionPrograma "'.$barra->getNombre().'"^^xsd:string .
+							?instanciaBarra :versionAplicacionPrograma "'.$barra->getVersion().'"^^xsd:string .
+							'.$filtro.'
 						}
 				';
 

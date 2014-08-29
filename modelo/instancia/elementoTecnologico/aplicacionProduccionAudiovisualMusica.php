@@ -74,6 +74,10 @@
 				if($aplicacion->getVersion() == "")
 					throw new Exception($preMsg . ' El parámetro \'$aplicacion->getVersion()\' está vacío.');
 				
+				// Si $aplicacion->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($aplicacion->getIri() !== null && $aplicacion->getIri() != '')
+					? 'FILTER (?instanciaAplicacion != <'.$aplicacion->getIri().'>) .' : '';
+				
 				// Verificar si existe una instancia de la aplicación aplicación producción audiovisual y musica con el mismo nombre y versión,
 				// que la pasada por parámetros
 				$query = '
@@ -83,9 +87,10 @@
 		
 						ASK
 						{
-							_:instanciaAplicacion rdf:type :'.SIGECOST_FRAGMENTO_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA.' .
-							_:instanciaAplicacion :nombreAplicacionPrograma "'.$aplicacion->getNombre().'"^^xsd:string .
-							_:instanciaAplicacion :versionAplicacionPrograma "'.$aplicacion->getVersion().'"^^xsd:string .
+							?instanciaAplicacion rdf:type :'.SIGECOST_FRAGMENTO_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA.' .
+							?instanciaAplicacion :nombreAplicacionPrograma "'.$aplicacion->getNombre().'"^^xsd:string .
+							?instanciaAplicacion :versionAplicacionPrograma "'.$aplicacion->getVersion().'"^^xsd:string .
+							'.$filtro.'
 						}
 				';
 				

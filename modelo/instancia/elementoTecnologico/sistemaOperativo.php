@@ -72,6 +72,10 @@
 		
 				if ($sistemaOperativo->getVersion() == "")
 					throw new Exception($preMsg . ' El parámetro \'$sistemaOperativo->getVersion()\' está vacío.');
+				
+				// Si $sistemaOperativo->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($sistemaOperativo->getIri() !== null && $sistemaOperativo->getIri() != '')
+					? 'FILTER (?instanciaSistemaOperativo != <'.$sistemaOperativo->getIri().'>) .' : '';
 		
 				// Verificar si existe un sistema operativo con el mismo nombre y versión, que el pasado por parámetros
 				$query = '
@@ -81,9 +85,10 @@
 		
 						ASK
 						{
-							_:instanciaSistemaOperativo rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
-							_:instanciaSistemaOperativo :nombreSistemaOperativo "'.$sistemaOperativo->getNombre().'"^^xsd:string .
-							_:instanciaSistemaOperativo :versionSistemaOperativo "'.$sistemaOperativo->getVersion().'"^^xsd:string .
+							?instanciaSistemaOperativo rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
+							?instanciaSistemaOperativo :nombreSistemaOperativo "'.$sistemaOperativo->getNombre().'"^^xsd:string .
+							?instanciaSistemaOperativo :versionSistemaOperativo "'.$sistemaOperativo->getVersion().'"^^xsd:string .
+							'.$filtro.'
 						}
 				';
 		
@@ -167,7 +172,7 @@
 		public static function llenarSistemaOperativo($row)
 		{
 			try {
-				$impresora = null;
+				$sistemaOperativo = null;
 		
 				if(!is_array($row))
 					throw new Exception('Error al intentar llenar la instancia de sistema operativo. '.

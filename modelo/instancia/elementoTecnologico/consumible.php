@@ -72,6 +72,10 @@
 		
 				if ($consumible->getTipo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$consumible->getTipo()\' está vacío.');
+				
+				// Si $consumible->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($consumible->getIri() !== null && $consumible->getIri() != '')
+					? 'FILTER (?instanciaConsumible != <'.$consumible->getIri().'>) .' : '';
 		
 				// Verificar si existe un consumible con la misma especificacion y tipo, que el pasado por parámetros
 				$query = '
@@ -81,9 +85,10 @@
 		
 						ASK
 						{
-							_:instanciaConsumible rdf:type :'.SIGECOST_FRAGMENTO_CONSUMIBLE.' .
-							_:instanciaConsumible :especificacionConsumible "'.$consumible->getEspecificacion().'"^^xsd:string .
-							_:instanciaConsumible :tipoConsumible "'.$consumible->getTipo().'"^^xsd:string .
+							?instanciaConsumible rdf:type :'.SIGECOST_FRAGMENTO_CONSUMIBLE.' .
+							?instanciaConsumible :especificacionConsumible "'.$consumible->getEspecificacion().'"^^xsd:string .
+							?instanciaConsumible :tipoConsumible "'.$consumible->getTipo().'"^^xsd:string .
+							'.$filtro.'
 						}
 				';
 		

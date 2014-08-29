@@ -72,6 +72,10 @@
 		
 				if ($escaner->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$escaner->getModelo()\' está vacío.');
+				
+				// Si $escaner->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($escaner->getIri() !== null && $escaner->getIri() != '')
+					? 'FILTER (?instanciaEscaner != <'.$escaner->getIri().'>) .' : '';
 		
 				// Verificar si existe un escaner con la misma marca y modelo, que la pasada por parámetros
 				$query = '
@@ -81,9 +85,10 @@
 		
 						ASK
 						{
-							_:instanciaEscaner rdf:type :'.SIGECOST_FRAGMENTO_ESCANER.' .
-							_:instanciaEscaner :marcaEquipoReproduccion "'.$escaner->getMarca().'"^^xsd:string .
-							_:instanciaEscaner :modeloEquipoReproduccion "'.$escaner->getModelo().'"^^xsd:string .
+							?instanciaEscaner rdf:type :'.SIGECOST_FRAGMENTO_ESCANER.' .
+							?instanciaEscaner :marcaEquipoReproduccion "'.$escaner->getMarca().'"^^xsd:string .
+							?instanciaEscaner :modeloEquipoReproduccion "'.$escaner->getModelo().'"^^xsd:string .
+							'.$filtro.'
 						}
 				';
 		

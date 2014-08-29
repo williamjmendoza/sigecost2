@@ -72,6 +72,10 @@
 		
 				if ($fotocopiadora->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$fotocopiadora->getModelo()\' está vacío.');
+				
+				// Si $fotocopiadora->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($fotocopiadora->getIri() !== null && $fotocopiadora->getIri() != '')
+					? 'FILTER (?instanciaFotocopiadora != <'.$fotocopiadora->getIri().'>) .' : '';
 		
 				// Verificar si existe una fotocopiadora con la misma marca y modelo, que la pasada por parámetros
 				$query = '
@@ -81,9 +85,10 @@
 		
 						ASK
 						{
-							_:instanciaFotocopiadora rdf:type :'.SIGECOST_FRAGMENTO_FOTOCOPIADORA.' .
-							_:instanciaFotocopiadora :marcaEquipoReproduccion "'.$fotocopiadora->getMarca().'"^^xsd:string .
-							_:instanciaFotocopiadora :modeloEquipoReproduccion "'.$fotocopiadora->getModelo().'"^^xsd:string .
+							?instanciaFotocopiadora rdf:type :'.SIGECOST_FRAGMENTO_FOTOCOPIADORA.' .
+							?instanciaFotocopiadora :marcaEquipoReproduccion "'.$fotocopiadora->getMarca().'"^^xsd:string .
+							?instanciaFotocopiadora :modeloEquipoReproduccion "'.$fotocopiadora->getModelo().'"^^xsd:string .
+							'.$filtro.'
 						}
 				';
 		

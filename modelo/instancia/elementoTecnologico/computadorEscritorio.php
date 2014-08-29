@@ -73,6 +73,10 @@
 
 				if ($computador->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$computador->getModelo()\' está vacío.');
+				
+				// Si $computador->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($computador->getIri() !== null && $computador->getIri() != '')
+					? 'FILTER (?instanciaComputador != <'.$computador->getIri().'>) .' : '';
 
 				// Verificar si existe una instancia de computador de escritorio con la misma marca y modelo, que la pasada por parámetros
 				$query = '
@@ -82,9 +86,10 @@
 
 						ASK
 						{
-							_:instanciaComputador rdf:type :'.SIGECOST_FRAGMENTO_COMPUTADOR_ESCRITORIO.' .
-							_:instanciaComputador :marcaEquipoComputacion "'.$computador->getMarca().'"^^xsd:string .
-							_:instanciaComputador :modeloEquipoComputacion "'.$computador->getModelo().'"^^xsd:string .
+							?instanciaComputador rdf:type :'.SIGECOST_FRAGMENTO_COMPUTADOR_ESCRITORIO.' .
+							?instanciaComputador :marcaEquipoComputacion "'.$computador->getMarca().'"^^xsd:string .
+							?instanciaComputador :modeloEquipoComputacion "'.$computador->getModelo().'"^^xsd:string .
+							'.$filtro.'
 						}
 				';
 

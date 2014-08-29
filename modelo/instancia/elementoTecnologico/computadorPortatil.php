@@ -73,6 +73,10 @@
 
 				if ($portatil->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$portatil->getModelo()\' está vacío.');
+				
+				// Si $portatil->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($portatil->getIri() !== null && $portatil->getIri() != '')
+					? 'FILTER (?instanciaPortatil != <'.$portatil->getIri().'>) .' : '';
 
 				// Verificar si existe una instancia de computador portatil con la misma marca y modelo, que la pasada por parámetros
 				$query = '
@@ -82,9 +86,10 @@
 
 						ASK
 						{
-							_:instanciaPortatil rdf:type :'.SIGECOST_FRAGMENTO_COMPUTADOR_PORTATIL.' .
-							_:instanciaPortatil :marcaEquipoComputacion "'.$portatil->getMarca().'"^^xsd:string .
-							_:instanciaPortatil :modeloEquipoComputacion "'.$portatil->getModelo().'"^^xsd:string .
+							?instanciaPortatil rdf:type :'.SIGECOST_FRAGMENTO_COMPUTADOR_PORTATIL.' .
+							?instanciaPortatil :marcaEquipoComputacion "'.$portatil->getMarca().'"^^xsd:string .
+							?instanciaPortatil :modeloEquipoComputacion "'.$portatil->getModelo().'"^^xsd:string .
+							'.$filtro.'
 						}
 				';
 

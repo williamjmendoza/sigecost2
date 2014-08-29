@@ -73,6 +73,10 @@
 		
 				if ($impresora->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$impresora->getModelo()\' está vacío.');
+				
+				// Si $impresora->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($impresora->getIri() !== null && $impresora->getIri() != '')
+					? 'FILTER (?instanciaImpresora != <'.$impresora->getIri().'>) .' : '';
 		
 				// Verificar si existe una instancia de impresora con la misma marca y modelo, que la pasada por parámetros
 				$query = '
@@ -82,9 +86,10 @@
 			
 						ASK
 						{
-							_:instanciaImpresora rdf:type :'.SIGECOST_FRAGMENTO_IMPRESORA.' .
-							_:instanciaImpresora :marcaEquipoReproduccion "'.$impresora->getMarca().'"^^xsd:string .
-							_:instanciaImpresora :modeloEquipoReproduccion "'.$impresora->getModelo().'"^^xsd:string .
+							?instanciaImpresora rdf:type :'.SIGECOST_FRAGMENTO_IMPRESORA.' .
+							?instanciaImpresora :marcaEquipoReproduccion "'.$impresora->getMarca().'"^^xsd:string .
+							?instanciaImpresora :modeloEquipoReproduccion "'.$impresora->getModelo().'"^^xsd:string .
+							'.$filtro.'
 						}
 				';
 		
