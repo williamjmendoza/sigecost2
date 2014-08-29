@@ -124,6 +124,9 @@
 
 				if($instancia->getAplicacionPrograma()->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getAplicacionPrograma()->getIri()\' está vacío.');
+				
+				// Si $instancia->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($instancia->getIri() !== null && $instancia->getIri() != '') ? 'FILTER (?instanciaST != <'.$instancia->getIri().'>) .' : '';
 
 				// Verificar si existe una instancia de soporte técnico para restablecer barra herramientas funcion formato dibujo de una aplicación ofimática,
 				// con el mismo url de soporte técnico y con la misma aplicación; que la instancia pasada por parámetros
@@ -134,9 +137,10 @@
 
 						ASK
 						{
-							_:instanciaST rdf:type :'.SIGECOST_FRAGMENTO_S_T_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO.' .
-							_:instanciaST :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
-							_:instanciaST :aplicacionOfimatica <'.$instancia->getAplicacionPrograma()->getIri().'> .
+							?instanciaST rdf:type :'.SIGECOST_FRAGMENTO_S_T_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO.' .
+							?instanciaST :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							?instanciaST :aplicacionOfimatica <'.$instancia->getAplicacionPrograma()->getIri().'> .
+							'.$filtro.'
 						}
 				';
 

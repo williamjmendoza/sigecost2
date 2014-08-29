@@ -11,7 +11,7 @@
 	{
 		public static function buscarInstancias(array $parametros = null)
 		{
-			$preMsg = 'Error al buscar las instancias de soporte técnico en impresoras para corregir impresión manchada.';
+			$preMsg = 'Error al buscar las instancias de soporte tï¿½cnico en impresoras para corregir impresiï¿½n manchada.';
 			$instancias = array();
 			$limite = '';
 			$desplazamiento = '';
@@ -23,7 +23,7 @@
 					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
 				}
 
-				// Buscar las instancias de soporte técnico en impresora para corregir impresión manchada
+				// Buscar las instancias de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -67,9 +67,9 @@
 
 		public static function buscarInstanciasTotalElementos(array $parametros = null)
 		{
-			$preMsg = 'Error al buscar el contador de las instancias de soporte técnico en impresoras para la Corregir Impresion Manchada.';
+			$preMsg = 'Error al buscar el contador de las instancias de soporte tï¿½cnico en impresoras para la Corregir Impresion Manchada.';
 
-			// Buscar la cantidad de instancias de soporte técnico en impresora para CorregirImpresionManchada de impresora
+			// Buscar la cantidad de instancias de soporte tï¿½cnico en impresora para CorregirImpresionManchada de impresora
 			$query = '
 					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 							PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -109,42 +109,46 @@
 
 		public static function existeInstancia(EntidadInstanciaSTImpresoraCorregirImpresionManchada $instancia)
 		{
-			$preMsg = 'Error al verificar la existencia de una instancia de soporte técnico en impresora para corregir impresión manchada.';
+			$preMsg = 'Error al verificar la existencia de una instancia de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada.';
 
 			try
 			{
 				if ($instancia === null)
-					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$instancia\' es nulo.');
 
 				if($instancia->getUrlSoporteTecnico() == "")
-					throw new Exception($preMsg . ' El parámetro \'$instancia->getUrlSoporteTecnico()\' está vacío.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$instancia->getUrlSoporteTecnico()\' estï¿½ vacï¿½o.');
 
 				if($instancia->getEquipoReproduccion() === null)
-					throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()\' es nulo.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$instancia->getEquipoReproduccion()\' es nulo.');
 
 				if($instancia->getEquipoReproduccion()->getIri() == "")
-					throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()->getIri()\' está vacío.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$instancia->getEquipoReproduccion()->getIri()\' estï¿½ vacï¿½o.');
+				
+				// Si $instancia->getIri() estÃ¡ presente, dicho iri de instancia serÃ¡ igniorado en la verificaciÃ³n
+				$filtro = ($instancia->getIri() !== null && $instancia->getIri() != '') ? 'FILTER (?instanciaST != <'.$instancia->getIri().'>) .' : '';
 
-				// Verificar si existe una instancia de soporte técnico en impresora para corregir impresión manchada
-				// con el mismo url de soporte técnico y la misma impresora, que la instancia pasada por parámetros
+				// Verificar si existe una instancia de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada
+				// con el mismo url de soporte tï¿½cnico y la misma impresora, que la instancia pasada por parï¿½metros
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-						ASK
+						ASK_
 						{
-							_:instanciaST rdf:type :'.SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA.' .
-							_:instanciaST :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
-							_:instanciaST :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
+							?instanciaST rdf:type :'.SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA.' .
+							?instanciaST :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							?instanciaST :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
+							'.$filtro.'
 						}
 				';
 
 				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
-					throw new Exception("Error al consultar la existencia de la instancia de soporte técnico en impresora para corregir" .
-						" impresión manchada (uRLSoporteTecnico = '" . $instancia->getUrlSoporteTecnico() . "', enImpresion = '" .
+					throw new Exception("Error al consultar la existencia de la instancia de soporte tï¿½cnico en impresora para corregir" .
+						" impresiï¿½n manchada (uRLSoporteTecnico = '" . $instancia->getUrlSoporteTecnico() . "', enImpresion = '" .
 						$instancia->getEquipoReproduccion()->getIri()."'). Detalles:\n" . join("\n", $errors));
 
 				return $result['result'];
@@ -155,36 +159,36 @@
 			}
 		}
 
-		// Guarda una nueva instancia de soporte técnico en impresora para corregir impresión manchada, y retorna su iri
+		// Guarda una nueva instancia de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada, y retorna su iri
 		public static function guardarInstancia(EntidadInstanciaSTImpresoraCorregirImpresionManchada $instancia)
 		{
-			$preMsg = 'Error al guardar la instancia de soporte técnico en impresora para corregir impresión manchada.';
+			$preMsg = 'Error al guardar la instancia de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada.';
 
 			try
 			{
 				if ($instancia === null)
-					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$instancia\' es nulo.');
 
 				if($instancia->getUrlSoporteTecnico() == "")
-					throw new Exception($preMsg . ' El parámetro \'$instancia->getUrlSoporteTecnico()\' está vacío.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$instancia->getUrlSoporteTecnico()\' estï¿½ vacï¿½o.');
 
 				if($instancia->getEquipoReproduccion() === null)
-					throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()\' es nulo.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$instancia->getEquipoReproduccion()\' es nulo.');
 
 				if($instancia->getEquipoReproduccion()->getIri() == "")
-					throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()->getIri()\' está vacío.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$instancia->getEquipoReproduccion()->getIri()\' estï¿½ vacï¿½o.');
 
-				// Consultar el número de secuencia para la siguiente instancia de soporte técnico en impresora para corregir impresión manchada a crear.
+				// Consultar el nï¿½mero de secuencia para la siguiente instancia de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada a crear.
 				$secuencia = ModeloGeneral::getSiguienteSecuenciaInstancia(SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA);
 
-				// Validar si hubo errores obteniendo el siguiente número de instancia
+				// Validar si hubo errores obteniendo el siguiente nï¿½mero de instancia
 				if($secuencia === false)
-					throw new Exception('Error al guardar la instancia de soporte técnico en impresora para corregir impresión manchada. ' .
-						'No se pudo obtener el número de la siguiente secuencia para la instancia de la clase \'' .
+					throw new Exception('Error al guardar la instancia de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada. ' .
+						'No se pudo obtener el nï¿½mero de la siguiente secuencia para la instancia de la clase \'' .
 						SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA.'\'');
 
 				// Construir el fragmento de la nueva instancia de concatenando el framento de la clase "SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA"
-				// con el el caracater underscore "_" y el número de secuencia obtenido "$secuencia"
+				// con el el caracater underscore "_" y el nï¿½mero de secuencia obtenido "$secuencia"
 				$fragmentoIriInstancia = SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA . '_' . $secuencia;
 
 				// Guardar la nueva instancia
@@ -204,7 +208,7 @@
 				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
-					throw new Exception("Error al guardar la instancia de soporte técnico en impresora para corregir impresión manchada. Detalles:\n" .
+					throw new Exception("Error al guardar la instancia de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada. Detalles:\n" .
 						join("\n", $errors));
 
 				return SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia;
@@ -221,8 +225,8 @@
 				$impresora = null;
 
 				if(!is_array($row))
-					throw new Exception('Error al intentar llenar la instancia de soporte técnico en impresora para corregir impresión manchada. '.
-						'Detalles: el parámetro \'$row\' no es un arreglo.');
+					throw new Exception('Error al intentar llenar la instancia de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada. '.
+						'Detalles: el parï¿½metro \'$row\' no es un arreglo.');
 
 				$instancia = new EntidadInstanciaSTImpresoraCorregirImpresionManchada();
 				$instancia->setIri($row['iri']);
@@ -244,15 +248,15 @@
 
 		public static function obtenerInstanciaPorIri($iri)
 		{
-			$preMsg = 'Error al obtener una instancia de soporte técnico en impresora para corregir impresión manchada, dado el iri.';
+			$preMsg = 'Error al obtener una instancia de soporte tï¿½cnico en impresora para corregir impresiï¿½n manchada, dado el iri.';
 
 			try
 			{
 				if ($iri === null)
-					throw new Exception($preMsg . ' El parámetro \'$iri\' es nulo.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$iri\' es nulo.');
 
 				if (($iri=trim($iri)) == "")
-					throw new Exception($preMsg . ' El parámetro \'$iri\' está vacío.');
+					throw new Exception($preMsg . ' El parï¿½metro \'$iri\' estï¿½ vacï¿½o.');
 
 				// Obtener la instancia dado el iri
 				$query = '

@@ -141,6 +141,9 @@
 
 				if($instancia->getSistemaOperativo()->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getSistemaOperativo()->getIri()\' está vacío.');
+				
+				// Si $instancia->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($instancia->getIri() !== null && $instancia->getIri() != '') ? 'FILTER (?instanciaST != <'.$instancia->getIri().'>) .' : '';
 
 				// Verificar si existe una instancia de soporte técnico para la desinstalación de una aplicación gráfica digital, dibujo y diseño;
 				// con el mismo url de soporte técnico, con la misma aplicación y el mismo sistema operativo; que la instancia pasada por parámetros
@@ -151,10 +154,11 @@
 
 						ASK
 						{
-							_:instanciaST rdf:type :'.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO.' .
-							_:instanciaST :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
-							_:instanciaST :aplicacionGraficaDigitalDibujoDiseno <'.$instancia->getAplicacionPrograma()->getIri().'> .
-							_:instanciaST :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
+							?instanciaST rdf:type :'.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO.' .
+							?instanciaST :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							?instanciaST :aplicacionGraficaDigitalDibujoDiseno <'.$instancia->getAplicacionPrograma()->getIri().'> .
+							?instanciaST :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
+							'.$filtro.'
 						}
 				';
 
