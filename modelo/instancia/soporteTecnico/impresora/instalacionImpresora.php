@@ -64,11 +64,6 @@
 				
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception($preMsg . " No se pudieron eliminar los datos anteriores de la instancia. Detalles:\n" . join("\n", $errors));
-
-				// Borrar
-				error_log(print_r($query, true));
-				error_log(print_r($result, true));
-			
 				
 				if($result["result"]["t_count"] == 0) {
 					// Excepción porque no se pudieron borrar los datos anteriores de la instancia, para que se ejecute el Rollback
@@ -101,15 +96,9 @@
 				
 				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 				
-				// Borrar
-				error_log(print_r($query, true));
-				
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					// Excepción porque no se pudieron guardar los datos actualizados de la instancia, para que se ejecute el Rollback
 					throw new Exception($preMsg . " No se pudieron guardar los datos actualizados de la instancia. Detalles:\n" . join("\n", $errors));
-				
-				// Borrar
-				error_log(print_r($result, true));
 				
 				// Commit de la transacción
 				
@@ -255,6 +244,8 @@
 				if($instancia->getSistemaOperativo()->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getSistemaOperativo()->getIri()\' está vacío.');
 				
+				// Si $instancia->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				$filtro = ($instancia->getIri() !== null && $instancia->getIri() != '') ? 'FILTER (?instanciaST != <'.$instancia->getIri().'>) .' : '';
 
 				// Verificar si existe una instancia de soporte técnico en impresora para la instalación de impresora
 				// con el mismo url de soporte técnico, la misma impresora y el mismo sistema operativo; que la instancia pasada por parámetros
@@ -265,18 +256,15 @@
 				
 						ASK
 						{
-							_:instanciaST rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
-							_:instanciaST :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
-							_:instanciaST :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
-							_:instanciaST :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
+							?instanciaST rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
+							?instanciaST :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							?instanciaST :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
+							?instanciaST :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
+							'.$filtro.'
 						}
 				';
 				
 				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
-				
-				// Borrar
-				error_log(print_r($query, true));
-				error_log(print_r($result, true));
 				
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception("Error al consultar la existencia de la instancia de soporte técnico en impresora para instalación" .
