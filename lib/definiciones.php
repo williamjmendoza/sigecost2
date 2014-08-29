@@ -1,6 +1,15 @@
 <?php
-
-	define('SIGECOST_IRI_GRAFO', 'http://localhost/sigecost2/controlador/soporte_tecnico.owl');
+	// Iri del grafo por defecto. El grafo por defecto puede ser verificado ejecutando el siguiente query
+	// en la base de datos de la ontología:
+	/*	SELECT DISTINCT
+			onto_st.st_id2val.val AS iri_grafo_por_defecto
+		FROM
+			onto_st.st_g2t
+			INNER JOIN onto_st.st_id2val ON (onto_st.st_id2val.id = onto_st.st_g2t.g)
+		WHERE
+			onto_st.st_g2t.g = 1 
+	*/
+	define('SIGECOST_IRI_GRAFO_POR_DEFECTO', 'http://localhost/sigecost2/controlador/soporte_tecnico.owl');
 
 	// Iri de la ontología
 	define('SIGECOST_IRI_ONTOLOGIA', 'http://www.owl-ontologies.com/OntologySoporteTecnico.owl');

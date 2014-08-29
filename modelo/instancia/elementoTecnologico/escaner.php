@@ -142,7 +142,7 @@
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		
-						INSERT INTO <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
 						{
 							:'.$fragmentoIriInstancia.' rdf:type :'.SIGECOST_FRAGMENTO_ESCANER.' .
 							:'.$fragmentoIriInstancia.' :marcaEquipoReproduccion "'.$escaner->getMarca().'"^^xsd:string .		

@@ -44,7 +44,7 @@
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 								
-						DELETE FROM <'.SIGECOST_IRI_GRAFO.'>
+						DELETE FROM <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
 						{
 							?iri :enImpresora ?iriEquipoReproduccion .
 							?iri :sobreSistemaOperativo ?iriSistemaOperativo .
@@ -86,7 +86,7 @@
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 				
-						INSERT INTO <'.SIGECOST_IRI_GRAFO.'>
+						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
 						{
 							<'.$instancia->getIri().'> :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
 							<'.$instancia->getIri().'> :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
@@ -324,7 +324,7 @@
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 								
-						INSERT INTO <'.SIGECOST_IRI_GRAFO.'>
+						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
 						{
 							:'.$fragmentoIriInstancia.' rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
 							:'.$fragmentoIriInstancia.' :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
