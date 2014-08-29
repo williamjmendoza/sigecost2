@@ -74,7 +74,7 @@
 				if($aplicacion->getVersion() == "")
 					throw new Exception($preMsg . ' El parámetro \'$aplicacion->getVersion()\' está vacío.');
 				
-				// Si $aplicacion->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $aplicacion->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($aplicacion->getIri() !== null && $aplicacion->getIri() != '')
 					? 'FILTER (?instanciaAplicacion != <'.$aplicacion->getIri().'>) .' : '';
 				

@@ -74,7 +74,7 @@
 				if($barra->getVersion() == "")
 					throw new Exception($preMsg . ' El parámetro \'$barra->getVersion()\' está vacío.');
 				
-				// Si $barra->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $barra->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($barra->getIri() !== null && $barra->getIri() != '')
 					? 'FILTER (?instanciaBarra != <'.$barra->getIri().'>) .' : '';
 

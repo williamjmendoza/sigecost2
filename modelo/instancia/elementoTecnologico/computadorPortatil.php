@@ -74,7 +74,7 @@
 				if ($portatil->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$portatil->getModelo()\' está vacío.');
 				
-				// Si $portatil->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $portatil->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($portatil->getIri() !== null && $portatil->getIri() != '')
 					? 'FILTER (?instanciaPortatil != <'.$portatil->getIri().'>) .' : '';
 

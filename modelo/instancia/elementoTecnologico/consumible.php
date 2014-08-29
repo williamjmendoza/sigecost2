@@ -73,7 +73,7 @@
 				if ($consumible->getTipo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$consumible->getTipo()\' está vacío.');
 				
-				// Si $consumible->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $consumible->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($consumible->getIri() !== null && $consumible->getIri() != '')
 					? 'FILTER (?instanciaConsumible != <'.$consumible->getIri().'>) .' : '';
 		

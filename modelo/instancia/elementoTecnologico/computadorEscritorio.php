@@ -74,7 +74,7 @@
 				if ($computador->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$computador->getModelo()\' está vacío.');
 				
-				// Si $computador->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $computador->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($computador->getIri() !== null && $computador->getIri() != '')
 					? 'FILTER (?instanciaComputador != <'.$computador->getIri().'>) .' : '';
 

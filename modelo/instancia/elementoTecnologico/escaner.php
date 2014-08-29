@@ -73,7 +73,7 @@
 				if ($escaner->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$escaner->getModelo()\' está vacío.');
 				
-				// Si $escaner->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $escaner->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($escaner->getIri() !== null && $escaner->getIri() != '')
 					? 'FILTER (?instanciaEscaner != <'.$escaner->getIri().'>) .' : '';
 		

@@ -74,7 +74,7 @@
 				if ($impresora->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$impresora->getModelo()\' está vacío.');
 				
-				// Si $impresora->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $impresora->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($impresora->getIri() !== null && $impresora->getIri() != '')
 					? 'FILTER (?instanciaImpresora != <'.$impresora->getIri().'>) .' : '';
 		

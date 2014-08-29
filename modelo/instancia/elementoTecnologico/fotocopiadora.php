@@ -73,7 +73,7 @@
 				if ($fotocopiadora->getModelo() == "")
 					throw new Exception($preMsg . ' El parámetro \'$fotocopiadora->getModelo()\' está vacío.');
 				
-				// Si $fotocopiadora->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $fotocopiadora->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($fotocopiadora->getIri() !== null && $fotocopiadora->getIri() != '')
 					? 'FILTER (?instanciaFotocopiadora != <'.$fotocopiadora->getIri().'>) .' : '';
 		

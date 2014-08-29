@@ -127,7 +127,7 @@
 				if($instancia->getAplicacionPrograma()->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getAplicacionPrograma()->getIri()\' está vacío.');
 				
-				// Si $instancia->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $instancia->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($instancia->getIri() !== null && $instancia->getIri() != '') ? 'FILTER (?instanciaST != <'.$instancia->getIri().'>) .' : '';
 
 				// Verificar si existe una instancia de soporte técnico para corregir el cierre inesperado de una aplicación ofimática,

@@ -73,7 +73,7 @@
 				if ($sistemaOperativo->getVersion() == "")
 					throw new Exception($preMsg . ' El parámetro \'$sistemaOperativo->getVersion()\' está vacío.');
 				
-				// Si $sistemaOperativo->getIri() está presente, dicho iri de instancia será igniorado en la verificación
+				// Si $sistemaOperativo->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($sistemaOperativo->getIri() !== null && $sistemaOperativo->getIri() != '')
 					? 'FILTER (?instanciaSistemaOperativo != <'.$sistemaOperativo->getIri().'>) .' : '';
 		
