@@ -28,9 +28,10 @@
 	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR', 26);
 	define('FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_BUSCAR', 27);
 	define('FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_INSERTAR_MODIFICAR', 28);
-	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_BUSCAR', 29);
-	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 30);
-	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 31);
+	define('FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_BUSCAR', 29);
+	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_BUSCAR', 30);
+	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 31);
+	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 32);
 
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 
@@ -174,6 +175,11 @@
 			'File' => 'instancia/soporteTecnico/impresora/desatascarPapel.php',
 			'ClassName' => 'FormularioInstanciaSTImpresoraDesatascarPapel',
 			'GlobalName' => 'ClassFormularioInstanciaSTImpresoraDesatascarPapel'
+		),
+		FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_BUSCAR => array(
+			'File' => 'instancia/soporteTecnico/impresora/desatascarPapelBuscar.php',
+			'ClassName' => 'FormularioInstanciaSTImpresoraDesatascarPapelBuscar',
+			'GlobalName' => 'ClassFormularioInstanciaSTImpresoraDesatascarPapelBuscar'
 		),
 		FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_BUSCAR => array(
 			'File' => 'instancia/soporteTecnico/impresora/instalacionImpresoraBuscar.php',
