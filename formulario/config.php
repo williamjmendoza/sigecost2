@@ -35,6 +35,7 @@
 	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_BUSCAR', 33);
 	define('FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_BUSCAR', 34);
 	define('FORM_INSTANCIA_ET_APLICACION_OFIMATICA_BUSCAR', 35);
+	define('FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA_BUSCAR', 36);
 
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 
@@ -213,6 +214,11 @@
 			'File' => 'instancia/elementoTecnologico/aplicacionOfimaticaBuscar.php',
 			'ClassName' => 'FormularioInstanciaETAplicacionOfimaticaBuscar',
 			'GlobalName' => 'ClassFormularioInstanciaETAplicacionOfimaticaBuscar'
+		),
+		FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA_BUSCAR => array(
+			'File' => 'instancia/elementoTecnologico/aplicacionProduccionAudiovisualMusicaBuscar.php',
+			'ClassName' => 'FormularioInstanciaETAplicacionProduccionAudiovisualMusicaBuscar',
+			'GlobalName' => 'ClassFormularioInstanciaETAplicacionProduccionAudiovisualMusicaBuscar'
 		),
 	);
 
