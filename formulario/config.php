@@ -36,6 +36,7 @@
 	define('FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_BUSCAR', 34);
 	define('FORM_INSTANCIA_ET_APLICACION_OFIMATICA_BUSCAR', 35);
 	define('FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA_BUSCAR', 36);
+	define('FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO_BUSCAR', 37);
 
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 
@@ -219,6 +220,11 @@
 			'File' => 'instancia/elementoTecnologico/aplicacionProduccionAudiovisualMusicaBuscar.php',
 			'ClassName' => 'FormularioInstanciaETAplicacionProduccionAudiovisualMusicaBuscar',
 			'GlobalName' => 'ClassFormularioInstanciaETAplicacionProduccionAudiovisualMusicaBuscar'
+		),
+		FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO_BUSCAR  => array(
+			'File' => 'instancia/elementoTecnologico/aplicacionReproduccionSonidoVideoBuscar.php',
+			'ClassName' => 'FormularioInstanciaETAplicacionReproduccionSonidoVideoBuscar',
+			'GlobalName' => 'ClassFormularioInstanciaETAplicacionReproduccionSonidoVideoBuscar'
 		),
 	);
 
