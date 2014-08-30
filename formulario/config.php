@@ -33,6 +33,7 @@
 	define('FORM_INSTANCIA_ST_IMPRESORA_INSTALACION_IMPRESORA_INSERTAR_MODIFICAR', 31);
 	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR', 32);
 	define('FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_BUSCAR', 33);
+	define('FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_BUSCAR', 34);
 
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 
@@ -201,6 +202,11 @@
 			'File' => 'instancia/soporteTecnico/impresora/repararImpresionCorridaBuscar.php',
 			'ClassName' => 'FormularioInstanciaSTImpresoraRepararImpresionCorridaBuscar',
 			'GlobalName' => 'ClassFormularioInstanciaSTImpresoraRepararImpresionCorridaBuscar'
+		),
+		FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_BUSCAR => array(
+			'File' => 'instancia/elementoTecnologico/aplicacionGraficaDigitalDibujoDisenoBuscar.php',
+			'ClassName' => 'FormularioInstanciaETAplicacionGraficaDigitalDibujoDisenoBuscar',
+			'GlobalName' => 'ClassFormularioInstanciaETAplicacionGraficaDigitalDibujoDisenoBuscar'
 		),
 	);
 

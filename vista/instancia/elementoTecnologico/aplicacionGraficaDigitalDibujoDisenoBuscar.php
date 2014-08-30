@@ -1,48 +1,50 @@
 <?php
 
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_BUSCAR);
 	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
-	
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
 
 	<head>
-	
+
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
-		
+
     	<script type="text/javascript">
-    	
+
 			function setAccion(accion) {
 				$('input[type="hidden"][name="accion"]').val(accion);
 			}
-			
+
     	</script>
-	
+
 	</head>
-	
+
 	<body>
-	
+
 		<?php require ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
-		
+
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
 				<li><a href="aplicacionGraficaDigitalDibujoDiseno.php?accion=insertar">Insertar</a></li>
 				<li class="active"><a href="aplicacionGraficaDigitalDibujoDiseno.php?accion=Buscar">Buscar</a></li>
 			</ul>
 		</div>
-		
+
 		<?php include( SIGECOST_PATH_VISTA . '/mensajes.php');?>
-		
+
 		<div class="container">
-		
+
 			<div class="page-header">
 			<h1>Instancias del elemento tecnol&oacute;gico aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o</h1>
 			</div>
-			
+
 			<?php
 				if (is_array($aplicaciones) && count($aplicaciones) > 0)
 				{
-					$contador = 0;
+					$contador = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
+
 			?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
@@ -73,13 +75,14 @@
 									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Ver detalles</button>
 								</form>
 							</td>
-						</tr>	
+						</tr>
 			<?php
 					}
 			?>
 					</tbody>
 				</table>
 			</div>
+			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<?php
 				} else {
 			?>
@@ -87,11 +90,11 @@
 			<?php
 				}
 			?>
-		
+
 		</div>
-		
+
 		<?php require ( SIGECOST_PATH_VISTA . '/general/footer.php' ); ?>
-			
+
 	</body>
 
 </html>
