@@ -1,5 +1,6 @@
 <?php
 
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_BARRA_DIBUJO_BUSCAR);
 	$barras = $GLOBALS['SigecostRequestVars']['barras'];
 
 ?>
@@ -42,7 +43,7 @@
 			<?php
 				if (is_array($barras) && count($barras) > 0)
 				{
-					$contador = 0;
+					$contador = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
 			?>
 			<div class="table-responsive">
 				<table class="table table table-hover table-responsive">
@@ -80,6 +81,7 @@
 					</tbody>
 				</table>
 			</div>
+			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<?php
 				} else {
 			?>
