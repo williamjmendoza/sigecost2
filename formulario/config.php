@@ -42,6 +42,7 @@
 	define('FORM_INSTANCIA_ET_COMPUTADOR_ESCRITORIO_BUSCAR', 40);
 	define('FORM_INSTANCIA_ET_COMPUTADOR_PORTATIL_BUSCAR', 41);
 	define('FORM_INSTANCIA_ET_CONSUMIBLE_BUSCAR', 42);
+	define('FORM_INSTANCIA_ET_ESCANER_BUSCAR', 43);
 
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 
@@ -255,6 +256,11 @@
 			'File' => 'instancia/elementoTecnologico/consumibleBuscar.php',
 			'ClassName' => 'FormularioInstanciaETConsumibleBuscar',
 			'GlobalName' => 'ClassFormularioInstanciaETConsumibleBuscar'
+		),
+		FORM_INSTANCIA_ET_ESCANER_BUSCAR => array(
+			'File' => 'instancia/elementoTecnologico/escanerBuscar.php',
+			'ClassName' => 'FormularioInstanciaETEscanerBuscar',
+			'GlobalName' => 'ClassFormularioInstanciaETEscanerBuscar'
 		),
 	);
 
