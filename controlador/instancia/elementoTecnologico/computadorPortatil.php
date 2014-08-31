@@ -4,17 +4,47 @@
 
 	// Controladores
 	require_once( SIGECOST_PATH_CONTROLADOR . '/instancia/elementoTecnologico/equipoComputacion.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/paginacion.php' );
 
 	// Modelos
 	require_once( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/computadorPortatil.php' );
 
 	class ControladorInstanciaETComputadorPortatil extends ControladorInstanciaETEquipoComputacion
 	{
+		use ControladorTraitPaginacion;
+
 		public function buscar()
 		{
-			$portatiles = ModeloInstanciaETcomputadorPortatil::buscarPortatiles();
+			// Obtener el formulario
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_COMPUTADOR_PORTATIL_BUSCAR);
+
+			// Obtener la cantidad total de elementos de instancias que se obtendrán en la bśuqueda
+			$totalElementos = ModeloInstanciaETcomputadorPortatil::buscarInstanciasTotalElementos();
+
+			// Verificar que no hubo errores consultando el número total de elementos para esta búsqueda
+			if($totalElementos !== false)
+			{
+				// Configurar el objeto de paginación
+				$form->setPaginacion(new EntidadPaginacion($totalElementos));  // EntidadPaginacion(<Tamaño página>, <Total elementos>)
+				$this->__validarParametrosPaginacion($form);
+				$form->getPaginacion()->setUrlObjetivo("computadorPortatil.php?accion=buscar");
+			}
+
+			// Realizar la consulta de la búsqueda estableciendo los parámetros para la navegación
+			$parametros = array();
+			// Establecer los parámetros de la navegación para la consulta de la búsqueda
+			if($totalElementos !== false)
+			{
+				$parametros = array(
+						'desplazamiento' => $form->getPaginacion()->getDesplazamiento(),
+						'limite' => $form->getPaginacion()->getTamanoPagina()
+				);
+			}
+
+			$portatiles = ModeloInstanciaETcomputadorPortatil::buscarPortatiles($parametros);
 
 			$GLOBALS['SigecostRequestVars']['portatiles'] = $portatiles;
+			$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;
 
 			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/computadorPortatilBuscar.php' );
 		}
@@ -87,6 +117,9 @@
 
 		private function __desplegarFormulario()
 		{
+			$portatiles = ModeloInstanciaETcomputadorPortatil::obtenerTodasComputadorasPortatil();
+			$GLOBALS['SigecostRequestVars']['portatiles'] = $portatiles;
+
 			require ( SIGECOST_PATH_VISTA . '/instancia/elementoTecnologico/computadorPortatilInsertarModificar.php' );
 		}
 	}
