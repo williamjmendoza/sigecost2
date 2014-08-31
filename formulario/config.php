@@ -45,6 +45,7 @@
 	define('FORM_INSTANCIA_ET_ESCANER_BUSCAR', 43);
 	define('FORM_INSTANCIA_ET_FOTOCOPIADORA_BUSCAR', 44);
 	define('FORM_INSTANCIA_ET_IMPRESORA_BUSCAR', 45);
+	define('FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_BUSCAR', 46);
 
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 
@@ -273,6 +274,11 @@
 			'File' => 'instancia/elementoTecnologico/impresoraBuscar.php',
 			'ClassName' => 'FormularioInstanciaETImpresoraBuscar',
 			'GlobalName' => 'ClassFormularioInstanciaETImpresoraBuscar'
+		),
+		FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_BUSCAR  => array(
+			'File' => 'instancia/elementoTecnologico/sistemaOperativoBuscar.php',
+			'ClassName' => 'FormularioInstanciaETSistemaOperativoBuscar',
+			'GlobalName' => 'ClassFormularioInstanciaETSistemaOperativoBuscar'
 		),
 	);
 
