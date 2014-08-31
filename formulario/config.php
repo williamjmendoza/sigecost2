@@ -38,6 +38,7 @@
 	define('FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA_BUSCAR', 36);
 	define('FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO_BUSCAR', 37);
 	define('FORM_INSTANCIA_ET_BARRA_DIBUJO_BUSCAR', 38);
+	define('FORM_INSTANCIA_ET_BARRA_FORMATO_BUSCAR', 39);
 
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 
@@ -231,6 +232,11 @@
 			'File' => 'instancia/elementoTecnologico/barraDibujoBuscar.php',
 			'ClassName' => 'FormularioInstanciaETBarraDibujoBuscar',
 			'GlobalName' => 'ClassFormularioInstanciaETBarraDibujoBuscar'
+		),
+		FORM_INSTANCIA_ET_BARRA_FORMATO_BUSCAR => array(
+			'File' => 'instancia/elementoTecnologico/barraFormatoBuscar.php',
+			'ClassName' => 'FormularioInstanciaETBarraFormatoBuscar',
+			'GlobalName' => 'ClassFormularioInstanciaETBarraFormatoBuscar'
 		),
 	);
 

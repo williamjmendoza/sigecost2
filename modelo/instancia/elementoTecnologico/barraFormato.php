@@ -10,13 +10,19 @@
 
 	class ModeloInstanciaETBarraFormato
 	{
-		public static function buscarBarras()
+		public static function buscarBarras(array $parametros = null)
 		{
 			$preMsg = 'Error al buscar las instancias de barras de formato.';
 			$barras = array();
+			$limite = '';
+			$desplazamiento = '';
 
 			try
 			{
+				if($parametros !== null && count($parametros) > 0){
+					if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
+					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
+				}
 				// Obtener la instancia de barras de formato, dado el iri
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
@@ -26,12 +32,13 @@
 							?iriBarra ?nombreBarra ?versionBarra
 						WHERE
 						{
-							?iriBarra rdf:type :'.SIGECOST_FRAGMENTO_BARRA_FORMATO.' .
-							?iriBarra :nombreAplicacionPrograma ?nombreBarra .
-							?iriBarra :versionAplicacionPrograma ?versionBarra .
+							'.self::buscarInstanciasSubQuery().'
 						}
 						ORDER BY
-							?nombreBarra ?versionBarra
+							?nombreBarra
+							?versionBarra
+						'.$desplazamiento.'
+						'.$limite.'
 				';
 
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
@@ -51,6 +58,45 @@
 				error_log($e, 0);
 				return false;
 			}
+		}
+
+		public static function buscarInstanciasTotalElementos(array $parametros = null)
+		{
+			$preMsg = 'Error al buscar el contador de las instancias elemento tecnologico de barra de formato.';
+
+			// Buscar la cantidad de instancias de elemento tecnologico barra de formato.
+			$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+					SELECT
+						(COUNT(?iriBarra) AS ?totalElementos)
+					WHERE
+					{
+						'.self::buscarInstanciasSubQuery().'
+					}
+			';
+
+			$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+
+			if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+				throw new Exception($preMsg . " Detalles:\n". join("\n", $errors));
+
+			if (is_array($rows) && count($rows) > 0){
+				reset($rows);
+				return current($rows)['totalElementos'];
+			}
+			else return false;
+		}
+
+		public static function buscarInstanciasSubQuery(array $parametros = null)
+		{
+			return
+			'
+				?iriBarra rdf:type :'.SIGECOST_FRAGMENTO_BARRA_FORMATO.' .
+				?iriBarra :nombreAplicacionPrograma ?nombreBarra .
+				?iriBarra :versionAplicacionPrograma ?versionBarra .
+			';
 		}
 
 		public static function existeBarra(EntidadInstanciaETBarraFormato $barra)
@@ -73,7 +119,7 @@
 
 				if($barra->getVersion() == "")
 					throw new Exception($preMsg . ' El parámetro \'$barra->getVersion()\' está vacío.');
-				
+
 				// Si $barra->getIri() está presente, dicho iri de instancia será ignorado en la verificación
 				$filtro = ($barra->getIri() !== null && $barra->getIri() != '')
 					? 'FILTER (?instanciaBarra != <'.$barra->getIri().'>) .' : '';
@@ -242,9 +288,15 @@
 		{
 			$preMsg = 'Error al obtener todas las instancias de barra de formatos.';
 			$barras = array();
+			$limite = '';
+			$desplazamiento = '';
 
 			try
 			{
+				if($parametros !== null && count($parametros) > 0){
+					if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
+					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
+				}
 				// Obtener la instancia de barra de dibujo, dado el iri
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
@@ -254,12 +306,14 @@
 							?iriBarra ?nombreBarra ?versionBarra
 						WHERE
 						{
-							?iriBarra rdf:type :'.SIGECOST_FRAGMENTO_APLICACION_OFIMATICA.' .
+							?iriBarra rdf:type :'.SIGECOST_FRAGMENTO_BARRA_FORMATO.' .
 							?iriBarra :nombreAplicacionPrograma ?nombreBarra .
 							?iriBarra :versionAplicacionPrograma ?versionBarra .
 						}
 						ORDER BY
 							?nombreAplicacionBarra ?versionBarra
+						'.$desplazamiento.'
+						'.$limite.'
 				';
 
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
