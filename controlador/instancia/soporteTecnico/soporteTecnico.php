@@ -17,6 +17,15 @@
 				$form->getSoporteTecnico()->setUrlSoporteTecnico($urlSoporteTecnico);
 			}
 		}
+		
+		protected function __validarSolucionSoporteTecnico(FormularioInstanciaSoporteTecnico $form)
+		{
+			if(!isset($_POST['solucionSoporteTecnico']) || ($solucion=trim($_POST['solucionSoporteTecnico'])) == ''){
+				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir una soluci&oacute;n de soporte t&eacute;cnico.';
+			} else {
+				$form->getSoporteTecnico()->getPatron()->setSolucion($solucion);
+			}
+		}
 	}
 
 ?>

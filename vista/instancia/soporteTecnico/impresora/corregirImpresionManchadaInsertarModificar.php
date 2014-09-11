@@ -3,7 +3,8 @@
 	$impresoras = $GLOBALS['SigecostRequestVars']['impresoras'];
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR);
 	$instancia = $form->getSoporteTecnico();
-	$instanciaImpresora = $instancia->getEquipoReproduccion();
+	$patron = $instancia != null ? $instancia->getPatron() : null;
+	$instanciaImpresora = $instancia != null ? $instancia->getEquipoReproduccion() : null;
 	
 ?>
 <!DOCTYPE html>
@@ -12,6 +13,8 @@
 	<head>
 	
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
+		
+		<script type="text/javascript" src="<?php echo SIGECOST_PATH_URL_JAVASCRIPT ?>/lib/ckeditor/ckeditor.js"></script>
 		
 	</head>
 	
@@ -68,6 +71,19 @@
 							type="text" class="form-control" id="urlSoporteTecnico" name="urlSoporteTecnico" placeholder="Introduzca el url de S.T."
 							value="<?php echo $instancia != null ? $instancia->getUrlSoporteTecnico() : "" ?>"
 						>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3" for="solucionSoporteTecnico">Soluci&oacute;n soporte t&eacute;cnico:</label>
+					<div class="col-sm-7">
+						<textarea rows="3" id="solucionSoporteTecnico" name="solucionSoporteTecnico">
+							<?php echo $patron != null ? $patron->getSolucion() : "" ?>
+						</textarea>
+						<script>
+							// Replace the <textarea id="editor1"> with a CKEditor
+							// instance, using default configuration.
+							CKEDITOR.replace( 'solucionSoporteTecnico' );
+						</script>
 					</div>
 				</div>
 				<div class="form-group">
