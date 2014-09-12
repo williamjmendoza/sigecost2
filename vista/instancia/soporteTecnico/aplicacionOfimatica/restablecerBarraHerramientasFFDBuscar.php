@@ -38,7 +38,7 @@
 
 			<div class="page-header">
 				<h1>Instancias de soporte t&eacute;cnico en aplicaci&oacute;n ofim&aacute;tica:&nbsp;
-					<small>Restablecer barra herramientas funci&oacute; formato dibujo</small>
+					<small>Restablecer barra herramientas funci&oacute;n formato dibujo</small>
 				</h1>
 			</div>
 
