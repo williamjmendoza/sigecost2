@@ -12,6 +12,7 @@
 		public function __construct()
 		{
 			$this->setSoporteTecnico(new EntidadInstanciaSTImpresoraRepararImpresionCorrida());
+			$this->getSoporteTecnico()->setPatron(new EntidadPatron());
 			$this->getSoporteTecnico()->setEquipoReproduccion(new EntidadInstanciaETImpresora());
 		}
 	}
