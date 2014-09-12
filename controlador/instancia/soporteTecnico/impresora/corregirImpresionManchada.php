@@ -14,6 +14,53 @@
 	{
 		use ControladorTraitPaginacion;
 
+		public function actualizar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea actualizar.");
+
+				$form->getSoporteTecnico()->setIri($iri);
+
+				// Validar, obtener y guardar todos los inputs desde el formulario
+				$this->__validarIriEquipoReproduccion($form);
+				//$this->__validarIriSistemaOperativo($form);
+				$this->__validarUrlSoporteTecnico($form);
+
+				if(count($GLOBALS['SigecostErrors']['general']) == 0)
+				{
+
+				// Consultar si existe una instancia de soporte técnico en impresora para corregir impresión manchada, con las mismas características
+				if(($existeInstancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::existeInstancia($form->getSoporteTecnico())) === null)
+					throw new Exception("La instancia no pudo ser actualizada.");
+
+				// Validar si existe una instancia de soporte técnico en impresora para corregir impresión manchada, con las mismas características
+				if ($existeInstancia === true)
+					throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+
+				// Actualizar la instancia de soporte técnico en impresora para corregir impresión manchada, en la base de datos
+				$resultado = ModeloInstanciaSTImpresoraCorregirImpresionManchada::actualizarInstancia($form->getSoporteTecnico());
+
+				if($resultado === false)
+					throw new Exception("La instancia no pudo ser actualizada");
+
+				$GLOBALS['SigecostErrors']['general'] = "Instancia actualizada satisfactoriamente";
+
+				$this->__desplegarDetalles($iri);
+
+				} else {
+					$this->__desplegarFormulario();
+				}
+			} catch (Exception $e){
+					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+					$this->__desplegarFormulario();
+		}
+	}
+
 		public function buscar()
 		{
 			// Obtener el formulario
@@ -67,7 +114,6 @@
 			// Validar, obtener y guardar todos los inputs desde el formulario
 			$this->__validarIriEquipoReproduccion($form);
 			$this->__validarUrlSoporteTecnico($form);
-			$this->__validarSolucionSoporteTecnico($form);
 
 			// Verificar que no hubo nigún error con los datos suministrados en el formulario
 			if(count($GLOBALS['SigecostErrors']['general']) == 0)
@@ -105,6 +151,29 @@
 		public function insertar()
 		{
 			$this->__desplegarFormulario();
+		}
+
+		public function modificar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea modificar.");
+
+				if( ($instancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::obtenerInstanciaPorIri($iri)) === null )
+					throw new Exception("La instancia no pudo ser cargada.");
+
+				$form->setSoporteTecnico($instancia);
+
+				$this->__desplegarFormulario();
+
+				} catch (Exception $e){
+					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+					$this->__desplegarFormulario();
+			}
 		}
 
 		private function __desplegarDetalles($iriInstancia)
