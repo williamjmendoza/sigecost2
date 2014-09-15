@@ -96,7 +96,7 @@
 								<label class="control-label col-sm-3"  for="nombre">Nombre de la aplicaci&oacute;n:</label>
 								<div class="col-sm-5">
 									<input
-										type="text" class="form-control" id="nombre" name="nombre" placeholder=" <?php echo $instancia->getNombre() ?>"
+										type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $instancia->getNombre() ?>"
 										value="<?php echo $aplicacion != null ? $aplicacion->getNombre() : "" ?>"
 									>
 								</div>
@@ -104,7 +104,7 @@
 							<div class="form-group">							
 								<label class="control-label col-sm-3" for="version">Versi&oacute;n de la aplicaci&oacute;n:</label>
 								<div class="col-sm-5">
-									<input type="text" class="form-control" id="version" name="version" placeholder="<?php echo $instancia->getVersion() ?>"
+									<input type="text" class="form-control" id="version" name="version" value="<?php echo $instancia->getVersion() ?>"
 										value="<?php echo $aplicacion != null ? $aplicacion->getVersion() : "" ?>"
 									>
 								</div>
