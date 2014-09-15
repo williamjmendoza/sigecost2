@@ -12,6 +12,50 @@
 	{
 		use ControladorTraitPaginacion;
 
+		public function actualizar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+				
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea actualizar.");
+				
+				$form->getAplicacionPrograma()->setIri($iri);
+				
+				// Validar, obtener y guardar todos los inputs desde el formulario
+				$this->__validarNombre($form);
+				$this->__validarVersion($form);
+				
+				if(count($GLOBALS['SigecostErrors']['general']) == 0)
+				{
+					// Consultar si existe una instancia de elemento tecnológico en aplicación gráfica dibujo digital y diseño, con las mismas características
+					if(($existeInstancia = ModeloInstanciaETAplicacionGraficaDigitalDibujoDiseno::existeAplicacion($form->getAplicacionPrograma())) === null)
+						throw new Exception("La instancia no pudo ser actualizada.");
+					
+					// Validar si existe una instancia de elemento tecnológico en aplicación gráfica dibujo digital y diseño, con las mismas características
+					if ($existeInstancia === true)
+						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					
+					// Actualizar la instancia de soporte técnico en elemento tecnológico en aplicación gráfica dibujo digital y diseño, en la base de datos
+					$resultado = ModeloInstanciaETAplicacionGraficaDigitalDibujoDiseno::actualizarInstancia($form->getAplicacionPrograma());
+					
+					if($resultado === false)
+						throw new Exception("La instancia no pudo ser actualizada");
+					
+					$GLOBALS['SigecostErrors']['general'] = "Instancia actualizada satisfactoriamente";
+					$this->__desplegarDetalles($iri);
+					
+					} else {
+						$this->__desplegarFormulario();
+					}
+					} catch (Exception $e){
+						$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+						$this->__desplegarFormulario();
+		 	}
+		}
+				
 		public function buscar()
 		{
 			// Obtener el formulario
@@ -104,6 +148,30 @@
 			$this->__desplegarFormulario();
 		}
 
+		public function modificar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+				
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea modificar.");
+				
+				if( ($instancia = ModeloInstanciaETAplicacionGraficaDigitalDibujoDiseno::obtenerAplicacionPorIri($iri)) === null )
+					throw new Exception("La instancia no pudo ser cargada.");
+				
+				$form->setAplicacionPrograma($instancia);
+					
+				$this->__desplegarFormulario();
+				
+				} catch (Exception $e){
+					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+					$this->__desplegarFormulario();
+			}
+		}
+				
+		
 		private function __desplegarDetalles($iriInstancia)
 		{
 			$aplicacion = ModeloInstanciaETAplicacionGraficaDigitalDibujoDiseno::obtenerAplicacionPorIri($iriInstancia);
