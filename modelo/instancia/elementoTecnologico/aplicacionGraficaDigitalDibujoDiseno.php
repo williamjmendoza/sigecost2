@@ -75,7 +75,7 @@
 				}
 				*/
 				
-				// Guardar los datos actualizados de la instancia de aplicacion 
+				// Guardar los datos actualizados de la instancia de aplicacion 				
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -83,8 +83,8 @@
 				
 						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
 						{
-							<'.$instancia->getIri().'> :nombreAplicacionPrograma"'.$instancia->getNombre().'"^^xsd:string .
-							<'.$instancia->getIri().'> :versionAplicacionPrograma <'.$instancia->getVersion().'"^^xsd:string .						
+							<'.$instancia->getIri().'> :nombreAplicacionPrograma "' .$instancia->getNombre().'"^^xsd:string .
+							<'.$instancia->getIri().'> :versionAplicacionPrograma "' .$instancia->getVersion().'"^^xsd:string .														
 						}
 				';
 										
@@ -93,8 +93,11 @@
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					// Excepción porque no se pudieron guardar los datos actualizados de la instancia, para que se ejecute el Rollback
 					throw new Exception($preMsg . " No se pudieron guardar los datos actualizados de la instancia. Detalles:\n" . join("\n", $errors));
+
+				$GLOBALS['SigecostInfo']['general'][] = "Instancia de aplicación ofimática guardada satisfactoriamente.";
+				
 				// Commit de la transacción
-				return $aplicacion->getIri();
+				return $instancia->getIri();
 				
 				} catch (Exception $e) {
 					// Rollback de la transacción
