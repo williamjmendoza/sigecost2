@@ -7,7 +7,7 @@
 	require_once ( SIGECOST_PATH_FORMULARIO . '/formulario.php');
 	require_once ( SIGECOST_PATH_FORMULARIO . '/paginacion.php');
 
-	class FormularioInstanciaETAplicacionOfimaticaBuscar extends Formulario
+	class FormularioInstanciaETAplicacionProduccionAudiovisualMusicaBuscar extends Formulario
 	{
 		use FormularioTraitPaginacion;
 
