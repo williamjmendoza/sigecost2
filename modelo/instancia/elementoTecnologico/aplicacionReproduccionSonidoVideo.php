@@ -10,6 +10,100 @@
 
 	class ModeloInstanciaETAplicacionReproduccionSonidoVideo
 	{
+		public static function actualizarInstancia(EntidadInstanciaETAplicacionReproduccionSonidoVideo $instancia)
+		{
+			$preMsg = 'Error al actualizar la instancia de elemento tecnológico en aplicación reproduccion sonido y video.';
+		
+			try
+			{
+				if($instancia === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
+		
+				if($instancia ->getIri() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia ->getIri()\' está vacío.');
+				
+				if($instancia ->getNombre() === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia ->getNombre()\' es nulo.');
+				
+				if($instancia ->getNombre() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia ->getNombre()\' está vacío.');
+				
+				if($instancia ->getVersion() === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia ->getVersion()\' es nulo.');
+				
+				if($instancia ->getVersion() == "")
+					throw new Exception($preMsg . ' El parámetro \'$instancia ->getVersion()\' está vacío.');
+				
+				// Iniciar la transacción
+				// Borrar los datos anteriores de la instancia
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				
+						DELETE FROM <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
+						{
+							?iri :nombreAplicacionPrograma ?nombreAplicacion .
+							?iri :versionAplicacionPrograma ?versionAplicacion .
+						}
+						WHERE
+						{
+							?iri rdf:type :'.SIGECOST_FRAGMENTO_APLICACION_REPRODUCCION_SONIDO_VIDEO.' .
+							?iri :nombreAplicacionPrograma ?nombreAplicacion .
+						 	?iri :versionAplicacionPrograma ?versionAplicacion .
+							FILTER (?iri = <'.$instancia->getIri().'>) .
+						}
+				';
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . " No se pudieron eliminar los datos anteriores de la instancia. Detalles:\n" . join("\n", $errors));
+				
+				if($result["result"]["t_count"] == 0) {
+					// Excepción porque no se pudieron borrar los datos anteriores de la instancia, para que se ejecute el Rollback
+					throw new Exception($preMsg . ' Detalles: No se eliminó ningún registro.');
+				}
+				
+				/*
+				 // Descomentar cuando se utilicen transacciones
+				if($result["result"]["t_count"] != 2 && $result["result"]["t_count"] != 3) {
+				// Excepción porque no se pudieron borrar los datos anteriores de la instancia, para que se ejecute el Rollback
+				throw new Exception($preMsg . ' Detalles: El número de registros eliminados es incorrecto.' .
+						'Número de registros eliminados: ' . $result["result"]["t_count"] . '.'
+				);
+				}
+				*/
+				
+				// Guardar los datos actualizados de la instancia de aplicacion
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+				
+						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
+						{
+							<'.$instancia->getIri().'> :nombreAplicacionPrograma "' .$instancia->getNombre().'"^^xsd:string .
+							<'.$instancia->getIri().'> :versionAplicacionPrograma "' .$instancia->getVersion().'"^^xsd:string .
+						}
+				';
+				
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					// Excepción porque no se pudieron guardar los datos actualizados de la instancia, para que se ejecute el Rollback
+					throw new Exception($preMsg . " No se pudieron guardar los datos actualizados de la instancia. Detalles:\n" . join("\n", $errors));
+				
+				$GLOBALS['SigecostInfo']['general'][] = "Instancia de aplicaci&oacute;n de reproducci&oacute;n sonido y video modificada satisfactoriamente.";
+					
+				// Commit de la transacción
+				return $instancia->getIri();
+				
+			} catch (Exception $e) {
+				// Rollback de la transacción
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 		public static function buscarAplicaciones(array $parametros = null)
 		{
 			$preMsg = 'Error al buscar las instancias de aplicación reproduccion sonido video.';

@@ -93,8 +93,8 @@
 					// Excepción porque no se pudieron guardar los datos actualizados de la instancia, para que se ejecute el Rollback
 					throw new Exception($preMsg . " No se pudieron guardar los datos actualizados de la instancia. Detalles:\n" . join("\n", $errors));
 				
-				$GLOBALS['SigecostInfo']['general'][] = "Instancia de aplicación ofimática guardada satisfactoriamente.";
-				
+				$GLOBALS['SigecostInfo']['general'][] = "Instancia de aplicaci&oacute;n de producci&oacute;n audiovisual y m&uacute;sica modificada satisfactoriamente.";
+					
 				// Commit de la transacción
 				return $instancia->getIri();
 				
