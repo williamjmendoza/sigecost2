@@ -11,7 +11,52 @@
 	class ControladorInstanciaETBarraDibujo extends ControladorInstanciaETBarraHerramientas
 	{
 		use ControladorTraitPaginacion;
-
+		
+		public function actualizar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_BARRA_DIBUJO_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+		
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea actualizar.");
+				
+				$form->getBarraHerramientas()->setIri($iri);
+				
+				// Validar, obtener y guardar todos los inputs desde el formulario
+				$this->__validarNombre($form);
+				$this->__validarVersion($form);
+				
+				if(count($GLOBALS['SigecostErrors']['general']) == 0)
+				{
+					// Consultar si existe una instancia de elemento tecnológico en barra de dibujo, con las mismas características
+					if(($existeInstancia = ModeloInstanciaETBarraDibujo::existeBarra($form->getBarraHerramientas())) === null)
+						throw new Exception("La instancia no pudo ser actualizada.");
+				
+					// Validar si existe una instancia de elemento tecnológico en  barra de dibujo con las mismas características
+					if ($existeInstancia === true)
+						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+						
+					// Actualizar la instancia de elemento tecnológico  barra de dibujo, en la base de datos
+					$resultado =  ModeloInstanciaETBarraDibujo::actualizarInstancia($form->getBarraHerramientas());
+					
+					if($resultado === false)
+						throw new Exception("La instancia no pudo ser actualizada");
+						
+					$GLOBALS['SigecostErrors']['general'] = "Instancia actualizada satisfactoriamente";
+					$this->__desplegarDetalles($iri);
+						
+					
+					} else {
+						$this->__desplegarFormulario();
+					}
+				} catch (Exception $e){
+					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+					$this->__desplegarFormulario();
+				}
+		}
+				
 		public function buscar()
 		{
 			// Obtener el formulario
@@ -104,6 +149,29 @@
 			$this->__desplegarFormulario();
 		}
 
+		public function modificar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_BARRA_DIBUJO_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+		
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea modificar.");
+		
+				if( ($instancia = ModeloInstanciaETBarraDibujo::obtenerBarraPorIri($iri)) === null )
+					throw new Exception("La instancia no pudo ser cargada.");
+		
+				$form->setBarraHerramientas($instancia);
+					
+				$this->__desplegarFormulario();
+		
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->__desplegarFormulario();
+			}
+		}
+		
 		private function __desplegarDetalles($iriInstancia)
 		{
 			$barra = ModeloInstanciaETBarraDibujo::obtenerBarraPorIri($iriInstancia);
