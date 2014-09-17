@@ -5,7 +5,7 @@
 		{
 			$preMsg = "Error al consultar el número de siguiente secuencia.";
 			$fragmentoIriInstancia = $fragmentoIriClase . "_";
-			// Se inicializa la secuancia en 1, en caso de que no existan instancias para la clase dada, en cuyo caso se estaría creando la primera instancia. 
+			// Se inicializa la secuencia en 1, en caso de que no existan instancias para la clase dada, por lo tanto se estaría creando la primera instancia. 
 			$secuencia = 1;
 			
 			try {
@@ -41,7 +41,7 @@
 							?iriInstanciaMayorConsecutivo,
 							( mysql:length(:) + mysql:length("'.$fragmentoIriInstancia.'") + 1 ),
 							( mysql:length(?iriInstanciaMayorConsecutivo) - mysql:length(:) - mysql:length("'.$fragmentoIriInstancia.'") )
-						))
+						) + 0)
 					LIMIT 1
 				';
 				

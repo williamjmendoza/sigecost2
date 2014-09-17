@@ -6,6 +6,7 @@
 
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/general.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/patron.php' );
 
 	class ModeloInstanciaSTImpresoraRepararImpresionCorrida
 	{
@@ -157,25 +158,59 @@
 				return null;
 			}
 		}
+		
+		public static function establecerNombrePatron(EntidadInstanciaSTImpresoraRepararImpresionCorrida $instancia)
+		{
+			$preMsg = "Error al establecer el nombre del patrón de soporte técnico para la instancia de s. t. en impresora para reparar impresión corrida";
+			
+			try
+			{
+				$impresora = ModeloInstanciaETImpresora::obtenerImpresoraPorIri($instancia->getEquipoReproduccion()->getIri());
+				
+				if($impresora === null || $impresora === false)
+					throw new Exception($preMsg . ' Los datos de la impresora no pudieron ser consultados.');
+				
+				$instancia->getPatron()->setNombre(SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA . " enImpresora " . $impresora->getMarca() . " " . $impresora->getModelo());
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+			
+		}
 
 		// Guarda una nueva instancia de soporte técnico en impresora para corregir impresión manchada, y retorna su iri
 		public static function guardarInstancia(EntidadInstanciaSTImpresoraRepararImpresionCorrida $instancia)
 		{
-			$preMsg = 'Error al guardar la instancia de soporte técnico en impresora para REPARAR IMPRESION CORRIDA.';
+			$preMsg = 'Error al guardar la instancia de soporte técnico en impresora para reparar impresión corrida.';
+			$resultTransactionPatrones = null;
 
 			try
 			{
 				if ($instancia === null)
 					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
 
-				if($instancia->getUrlSoporteTecnico() == "")
-					throw new Exception($preMsg . ' El parámetro \'$instancia->getUrlSoporteTecnico()\' está vacío.');
-
 				if($instancia->getEquipoReproduccion() === null)
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()\' es nulo.');
 
 				if($instancia->getEquipoReproduccion()->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()->getIri()\' está vacío.');
+				
+				if($instancia->getPatron() === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getPatron()\' es nulo.');
+				
+				if(self::establecerNombrePatron($instancia) === false)
+					throw new Exception($preMsg . ' No se pudo establecer el nombre del patrón de soporte técnico.');
+				
+				// Iniciar la transacción de patrones
+				$resultTransactionPatrones = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
+				
+				if($resultTransactionPatrones === false)
+					throw new Exception($preMsg . ' No se pudo iniciar la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// Guardar el patrón de soporte técnico 
+				if(($codigoPatron = ModeloPatron::guardarPatron($instancia->getPatron())) === false)
+					throw new Exception($preMsg . " No se pudo guardar el patrón.");
 
 				// Consultar el número de secuencia para la siguiente instancia de soporte técnico en impresora para corregir impresión manchada a crear.
 				$secuencia = ModeloGeneral::getSiguienteSecuenciaInstancia(SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA);
@@ -189,7 +224,7 @@
 				// Construir el fragmento de la nueva instancia de concatenando el framento de la clase "SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA"
 				// con el el caracater underscore "_" y el número de secuencia obtenido "$secuencia"
 				$fragmentoIriInstancia = SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA . '_' . $secuencia;
-
+				
 				// Guardar la nueva instancia
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
@@ -199,7 +234,7 @@
 						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
 						{
 							:'.$fragmentoIriInstancia.' rdf:type :'.SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA.' .
-							:'.$fragmentoIriInstancia.' :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							:'.$fragmentoIriInstancia.' :uRLSoporteTecnico "'.$codigoPatron.'"^^xsd:string .
 							:'.$fragmentoIriInstancia.' :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
 						}
 				';
@@ -209,10 +244,15 @@
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception("Error al guardar la instancia de soporte técnico en impresora para reapara impresión corrida. Detalles:\n" .
 						join("\n", $errors));
+					
+				// Commit de la transacción de patrones
+				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
+					throw new Exception($preMsg . ' No se pudo realizar el commit  de la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
 
 				return SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia;
 
 			} catch (Exception $e) {
+				if(isset($resultTransactionPatrones) && $resultTransactionPatrones === true) $GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
 				error_log($e, 0);
 				return false;
 			}
@@ -224,7 +264,7 @@
 				$impresora = null;
 
 				if(!is_array($row))
-					throw new Exception('Error al intentar llenar la instancia de soporte técnico en impresora parareapara impresión corrida. '.
+					throw new Exception('Error al intentar llenar la instancia de soporte técnico en impresora para reparar impresión corrida. '.
 						'Detalles: el parámetro \'$row\' no es un arreglo.');
 
 				$instancia = new EntidadInstanciaSTImpresoraRepararImpresionCorrida();

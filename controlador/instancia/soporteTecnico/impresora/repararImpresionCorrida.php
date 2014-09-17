@@ -67,7 +67,6 @@
 			// Validar, obtener y guardar todos los inputs desde el formulario
 			$this->__validarIriEquipoReproduccion($form);
 			$this->__validarSolucionSoporteTecnico($form);
-			$this->__validarUrlSoporteTecnico($form);
 
 			// Verificar que no hubo nigún error con los datos suministrados en el formulario
 			if(count($GLOBALS['SigecostErrors']['general']) == 0)
@@ -75,12 +74,17 @@
 				try
 				{
 					// Consultar si existe una instancia de soporte técnico en impresora para repara impresión corrida, con las mismas características
-					if(($existeInstancia = ModeloInstanciaSTImpresoraRepararImpresionCorrida::existeInstancia($form->getSoporteTecnico())) === null)
-						throw new Exception("La instancia no pudo ser guardada.");
+					//if(($existeInstancia = ModeloInstanciaSTImpresoraRepararImpresionCorrida::existeInstancia($form->getSoporteTecnico())) === null)
+						//throw new Exception("La instancia no pudo ser guardada.");
 
 					// Validar si existe una instancia de soporte técnico en impresora para repara impresión corrida, con las mismas características
-					if ($existeInstancia === true)
-						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					//if ($existeInstancia === true)
+						//throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					
+					$patron = $form->getSoporteTecnico()->getPatron();
+					$usuarioCreador = new EntidadUsuario();
+					$usuarioCreador->setId(1);
+					$patron->setUsuarioCreador($usuarioCreador);
 
 					// Guardar instancia de soporte técnico en impresora para repara impresión corrida, en la base de datos
 					$iriNuevaInstancia = ModeloInstanciaSTImpresoraRepararImpresionCorrida::guardarInstancia($form->getSoporteTecnico());

@@ -67,15 +67,6 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="urlSoporteTecnico">Url soporte t&eacute;cnico:</label>
-					<div class="col-sm-7">
-						<input
-							type="text" class="form-control" id="urlSoporteTecnico" name="urlSoporteTecnico" placeholder="Introduzca el url de S.T."
-							value="<?php echo $instancia != null ? $instancia->getUrlSoporteTecnico() : "" ?>"
-						>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label col-sm-3" for="solucionSoporteTecnico">Soluci&oacute;n soporte t&eacute;cnico:</label>
 					<div class="col-sm-7">
 						<textarea id="solucionSoporteTecnico" name="solucionSoporteTecnico" rows="3">

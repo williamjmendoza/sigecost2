@@ -45,4 +45,8 @@
 	// Tamaño por defecto de la página
 	$GLOBALS['SIGECOST_CFG']["tamanoPaginaPorDefecto"] = 10;
 	$GLOBALS['SIGECOST_CFG']["tamanoVentana"] = 5;
+	/* Fin de Paginación */
+	
+	$GLOBALS['SIGECOST_CFG']["prefijoPatronSoporteTecnico"] = "PST_";
+	
 ?>

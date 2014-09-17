@@ -326,7 +326,7 @@ class MySQLDb extends Db
 			$this->SetError('Resource is a null object');
 			return false;
 		}
-		if (!is_resource($resource)) {
+		if (!($resource instanceof mysqli_result)) {
 			$this->SetError('Resource '.$resource.' is not really a resource');
 			return false;
 		}
@@ -531,6 +531,41 @@ class MySQLDb extends Db
 		}
 		$count = mysqli_num_rows($resource);
 		return $count;
+	}
+	
+	/**
+	 * FetchOne
+	 * Fetches one item from a result and returns it.
+	 *
+	 * @param String $result Result to fetch the item from.
+	 * @param String $item The item to look for and return.
+	 *
+	 * @see Fetch
+	 *
+	 * @return Mixed Returns false if there is no result or item, or if the item doesn't exist in the result. Otherwise returns the item's value.
+	 */
+	function FetchOne($result=null, $item=null)
+	{
+		if ($result === null) {
+			return false;
+		}
+		if (!($result instanceof mysqli_result)) {
+			$result = $this->Query($result);
+		}
+		$row = $this->Fetch($result);
+		if (!$row) {
+			return false;
+		}
+		if ($item === null) {
+			$item = key($row);
+		}
+		if (!isset($row[$item])) {
+			return false;
+		}
+		if($this->magic_quotes_runtime_on) {
+			$row[$item] = stripslashes($row[$item]);
+		}
+		return $row[$item];
 	}
 
 	/**
