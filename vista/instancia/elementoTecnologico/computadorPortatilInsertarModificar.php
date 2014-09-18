@@ -42,7 +42,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico computador portatil</h1>
+				<h1>Instancia del elemento tecnol&oacute;gico computador port&aacute;til</h1>
 			</div>
 
 			<form class="form-horizontal" role="form" method="post" action="computadorPortatil.php">
