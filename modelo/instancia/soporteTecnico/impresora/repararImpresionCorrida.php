@@ -145,6 +145,7 @@
 			$instancias = array();
 			$limite = '';
 			$desplazamiento = '';
+			$codigosPatrones = array();
 
 			try
 			{
@@ -183,6 +184,21 @@
 				if (is_array($rows) && count($rows) > 0){
 					foreach ($rows AS $row){
 						$instancias[$row['iri']] = self::llenarInstancia($row);
+						if(isset($row['urlSoporteTecnico']) && $row['urlSoporteTecnico'] != "")
+							$codigosPatrones[] = $row['urlSoporteTecnico'];
+					}
+				}
+				
+				// Buscar los patrones asociados a cada instancia
+				if(count($codigosPatrones) > 0)
+					$patrones = ModeloPatron::obtenerPatronesPorCodigos($codigosPatrones);
+				
+				// Establecer el patrón encontrado, a su respectiva instancia
+				if(is_array($patrones) && count($patrones) > 0)
+				{
+					foreach ($instancias AS $instancia){
+						if($instancia->getUrlSoporteTecnico() && isset($patrones[$instancia->getUrlSoporteTecnico()]))
+							$instancia->setPatron($patrones[$instancia->getUrlSoporteTecnico()]);
 					}
 				}
 

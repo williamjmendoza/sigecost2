@@ -267,5 +267,49 @@
 				return false;
 			}
 		}
+		
+		public static function obtenerPatronesPorCodigos(array $codigos)
+		{
+			$preMsg = 'Error al obtener un listado de patrones de soporte técnico, dado sus códigos.';
+			$patrones = null;
+				
+			try
+			{
+				if(!is_array($codigos))
+					throw new Exception($preMsg . ' El parámetro \'$codigos\' no es un arreglo.');
+		
+				$query = "
+					SELECT
+						patrones.codigo AS patron_codigo,
+						patrones.nombre AS patron_nombre,
+						patrones.solucion AS patron_solucion,
+						patrones.autor_crea,
+						DATE_FORMAT(
+							CONVERT_TZ(patrones.fecha_crea,'".GetConfig('timeZone')."','".GetConfig('displayTimeZone')."'), '%d/%m/%Y %H:%i:%s'
+						) AS patron_fecha_creacion,
+						patrones.autor_mod,
+						DATE_FORMAT(
+								CONVERT_TZ(patrones.fecha_mod,'".GetConfig('timeZone')."','".GetConfig('displayTimeZone')."'), '%d/%m/%Y %H:%i:%s'
+						) AS patron_fecha_ultima_modificacion
+					FROM
+						patrones
+					WHERE
+						patrones.codigo IN ('".implode("', '", $codigos)."')
+				";
+		
+				if(($result = $GLOBALS['PATRONES_CLASS_DB']->Query($query)) === false)
+					throw new Exception($preMsg." Detalles: ".($GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg()));
+		
+				while ($row = $GLOBALS['PATRONES_CLASS_DB']->Fetch($result))
+					$patrones[$row['patron_codigo']] = self::llenarPatron($row);
+		
+				return $patrones;
+		
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 	}
 ?>

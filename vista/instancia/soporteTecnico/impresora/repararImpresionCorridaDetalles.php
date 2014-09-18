@@ -34,7 +34,11 @@
 				<h1>Instancia de soporte t&eacute;cnico en impresora: <small>reparar impresi&oacute;n corrida</small></h1>
 			</div>
 			
-			<div class="form-horizontal" role="form">
+			<form class="form-horizontal" role="form" method="post" action="repararImpresionCorrida.php">
+				<div style="display:none;">
+					<input type="hidden" name="accion" value="">
+					<input type="hidden" name="iri" value="<?php echo $instancia->getIri() ?>">
+				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="iriEquipoReproduccion">En impresora:</label>
 					<div class="col-sm-10">
@@ -103,7 +107,12 @@
 						</div>
 					</div>
 				</div>
-			</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary" onclick="setAccion('modificar');">Modificar</button>
+					</div>
+				</div>
+			</form>
 		
 		</div>
 		
