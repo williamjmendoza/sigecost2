@@ -28,19 +28,25 @@
 
 				// Validar, obtener y guardar todos los inputs desde el formulario
 				$this->__validarIriEquipoReproduccion($form);
-				//$this->__validarIriSistemaOperativo($form);
-				$this->__validarUrlSoporteTecnico($form);
+				$this->__validarSolucionSoporteTecnico($form);
 
 				if(count($GLOBALS['SigecostErrors']['general']) == 0)
 				{
 
 				// Consultar si existe una instancia de soporte técnico en impresora para corregir impresión manchada, con las mismas características
-				if(($existeInstancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::existeInstancia($form->getSoporteTecnico())) === null)
-					throw new Exception("La instancia no pudo ser actualizada.");
+				//if(($existeInstancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::existeInstancia($form->getSoporteTecnico())) === null)
+					//throw new Exception("La instancia no pudo ser actualizada.");
 
 				// Validar si existe una instancia de soporte técnico en impresora para corregir impresión manchada, con las mismas características
-				if ($existeInstancia === true)
-					throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+				//if ($existeInstancia === true)
+					//throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					
+				// Borrar, temporal mientras se coloca el manejo de usuarios
+				$patron = $form->getSoporteTecnico()->getPatron();
+				$usuarioUltimaModificacion = new EntidadUsuario();
+				$usuarioUltimaModificacion->setId(3);
+				$patron->setUsuarioUltimaModificacion($usuarioUltimaModificacion);
+				// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
 
 				// Actualizar la instancia de soporte técnico en impresora para corregir impresión manchada, en la base de datos
 				$resultado = ModeloInstanciaSTImpresoraCorregirImpresionManchada::actualizarInstancia($form->getSoporteTecnico());
@@ -113,7 +119,7 @@
 
 			// Validar, obtener y guardar todos los inputs desde el formulario
 			$this->__validarIriEquipoReproduccion($form);
-			$this->__validarUrlSoporteTecnico($form);
+			$this->__validarSolucionSoporteTecnico($form);
 
 			// Verificar que no hubo nigún error con los datos suministrados en el formulario
 			if(count($GLOBALS['SigecostErrors']['general']) == 0)
@@ -121,12 +127,19 @@
 				try
 				{
 					// Consultar si existe una instancia de soporte técnico en impresora para corregir impresión manchada, con las mismas características
-					if(($existeInstancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::existeInstancia($form->getSoporteTecnico())) === null)
-						throw new Exception("La instancia no pudo ser guardada.");
+					//if(($existeInstancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::existeInstancia($form->getSoporteTecnico())) === null)
+						//throw new Exception("La instancia no pudo ser guardada.");
 
 					// Validar si existe una instancia de soporte técnico en impresora para corregir impresión manchada, con las mismas características
-					if ($existeInstancia === true)
-						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					//if ($existeInstancia === true)
+						//throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+						
+					// Borrar, temporal mientras se coloca el manejo de usuarios
+					$patron = $form->getSoporteTecnico()->getPatron();
+					$usuarioCreador = new EntidadUsuario();
+					$usuarioCreador->setId(1);
+					$patron->setUsuarioCreador($usuarioCreador);
+					// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
 
 					// Guardar instancia de soporte técnico en impresora para corregir impresión manchada, en la base de datos
 					$iriNuevaInstancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::guardarInstancia($form->getSoporteTecnico());
@@ -150,6 +163,17 @@
 
 		public function insertar()
 		{
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_CORREGIR_IMPRESION_MANCHADA_INSERTAR_MODIFICAR);
+			
+			// Borrar, temporal mientras se coloca el manejo de usuarios
+			$patron = $form->getSoporteTecnico()->getPatron();
+			$usuarioCreador = new EntidadUsuario();
+			$usuarioCreador->setId(1);
+			$usuarioCreador->setNombre("Anibal");
+			$usuarioCreador->setApellido("Ghanem");
+			$patron->setUsuarioCreador($usuarioCreador);
+			// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
+			
 			$this->__desplegarFormulario();
 		}
 

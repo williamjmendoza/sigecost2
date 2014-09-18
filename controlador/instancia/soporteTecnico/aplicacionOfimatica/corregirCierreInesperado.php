@@ -27,17 +27,24 @@
 				
 				// Validar, obtener y guardar todos los inputs desde el formulario
 				$this->__validarIriAplicacionPrograma($form);
-				$this->__validarUrlSoporteTecnico($form);
+				$this->__validarSolucionSoporteTecnico($form);
 				
 				if(count($GLOBALS['SigecostErrors']['general']) == 0)
 				{
 					// Consultar si existe una instancia de soporte técnico en aplicacion de programa para corregir cierre inesperado en aplicacion ofimatica, con las mismas características
-						if(($existeInstancia = ModeloInstanciaSTAplicacionOfimaticaCorregirCierreInesperado::existeInstancia($form->getSoporteTecnico())) === null)
-						throw new Exception("La instancia no pudo ser actualizada.");
+					//if(($existeInstancia = ModeloInstanciaSTAplicacionOfimaticaCorregirCierreInesperado::existeInstancia($form->getSoporteTecnico())) === null)
+						//throw new Exception("La instancia no pudo ser actualizada.");
 			
 					// Validar si existe una instancia de soporte técnico en aplicacion de programa  para corregir cierre inesperado en aplicacion ofimatica, con las mismas características
-						if ($existeInstancia === true)
-						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					//if ($existeInstancia === true)
+						//throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+						
+					// Borrar, temporal mientras se coloca el manejo de usuarios
+					$patron = $form->getSoporteTecnico()->getPatron();
+					$usuarioUltimaModificacion = new EntidadUsuario();
+					$usuarioUltimaModificacion->setId(3);
+					$patron->setUsuarioUltimaModificacion($usuarioUltimaModificacion);
+					// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
 						
 					// Actualizar la instancia de soporte técnico en  aplicacion de programa  para corregir cierre inesperado en aplicacion ofimatica, en la base de datos
 					$resultado = ModeloInstanciaSTAplicacionOfimaticaCorregirCierreInesperado::actualizarInstancia($form->getSoporteTecnico());
@@ -109,7 +116,7 @@
 
 			// Validar, obtener y guardar todos los inputs desde el formulario
 			$this->__validarIriAplicacionPrograma($form);
-			$this->__validarUrlSoporteTecnico($form);
+			$this->__validarSolucionSoporteTecnico($form);
 
 			// Verificar que no hubo nigún error con los datos suministrados en el formulario
 			if(count($GLOBALS['SigecostErrors']['general']) == 0)
@@ -117,12 +124,19 @@
 				try
 				{
 					// Consultar si existe una instancia de soporte técnico  para corregir el cierre inesperado de una aplicación ofimática
-					if(($existeInstancia = ModeloInstanciaSTAplicacionOfimaticaCorregirCierreInesperado::existeInstancia($form->getSoporteTecnico())) === null)
-						throw new Exception("La instancia no pudo ser guardada.");
+					//if(($existeInstancia = ModeloInstanciaSTAplicacionOfimaticaCorregirCierreInesperado::existeInstancia($form->getSoporteTecnico())) === null)
+						//throw new Exception("La instancia no pudo ser guardada.");
 
 					// Validar si existe una instancia de soporte técnico para corregir el cierre inesperado de una aplicación ofimática, con las mismas características
-					if ($existeInstancia === true)
-						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					//if ($existeInstancia === true)
+						//throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+						
+					// Borrar, temporal mientras se coloca el manejo de usuarios
+					$patron = $form->getSoporteTecnico()->getPatron();
+					$usuarioCreador = new EntidadUsuario();
+					$usuarioCreador->setId(1);
+					$patron->setUsuarioCreador($usuarioCreador);
+					// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
 
 					// Guardar la instancia de soporte técnico para corregir el cierre inesperado de una aplicación ofimática, en la base de datos
 					$iriNuevaInstancia = ModeloInstanciaSTAplicacionOfimaticaCorregirCierreInesperado::guardarInstancia($form->getSoporteTecnico());
@@ -155,6 +169,17 @@
 
 		public function insertar()
 		{
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_OFIMATICA_CORREGIR_CIERRE_INESPERADO_INSERTAR_MODIFICAR);
+			
+			// Borrar, temporal mientras se coloca el manejo de usuarios
+			$patron = $form->getSoporteTecnico()->getPatron();
+			$usuarioCreador = new EntidadUsuario();
+			$usuarioCreador->setId(1);
+			$usuarioCreador->setNombre("Anibal");
+			$usuarioCreador->setApellido("Ghanem");
+			$patron->setUsuarioCreador($usuarioCreador);
+			// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
+			
 			$this->__desplegarFormulario();
 		}
 
@@ -175,9 +200,9 @@
 				
 				$this->__desplegarFormulario();
 				
-				} catch (Exception $e){
-					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
-					$this->__desplegarFormulario();
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->__desplegarFormulario();
 			}
 		}
 		

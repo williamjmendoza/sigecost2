@@ -13,6 +13,7 @@
 		public function __construct()
 		{
 			$this->setSoporteTecnico(new EntidadInstanciaSTAplicacionGDDDInstalacionAplicacionGDDD());
+			$this->getSoporteTecnico()->setPatron(new EntidadPatron());
 			$this->getSoporteTecnico()->setAplicacionPrograma(new EntidadInstanciaETAplicacionGraficaDigitalDibujoDiseno());
 			$this->getSoporteTecnico()->setSistemaOperativo(new EntidadInstanciaETSistemaOperativo());
 		}

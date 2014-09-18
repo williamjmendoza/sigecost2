@@ -13,6 +13,10 @@
 		private $_usuarioCreador;
 		private $_usuarioUltimaModificacion;
 		
+		public function __construct(){
+			$this->setFechaCreacion(date("d/m/Y"));
+			$this->setFechaUltimaModificacion(date("d/m/Y"));
+		}
 		public function getCodigo(){
 			return $this->_codigo;
 		}

@@ -12,6 +12,7 @@
 		public function __construct()
 		{
 			$this->setSoporteTecnico(new EntidadInstanciaSTAplicacionOfimaticaCorregirCierreInesperado());
+			$this->getSoporteTecnico()->setPatron(new EntidadPatron());
 			$this->getSoporteTecnico()->setAplicacionPrograma(new EntidadInstanciaETAplicacionOfimatica());
 		}
 	}

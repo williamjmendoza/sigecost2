@@ -45,6 +45,7 @@
 					$usuarioUltimaModificacion = new EntidadUsuario();
 					$usuarioUltimaModificacion->setId(3);
 					$patron->setUsuarioUltimaModificacion($usuarioUltimaModificacion);
+					// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
 					
 					// Actualizar la instancia de soporte técnico en impresora para reparar impresión corrida, en la base de datos
 					$resultado = ModeloInstanciaSTImpresoraRepararImpresionCorrida::actualizarInstancia($form->getSoporteTecnico());
@@ -78,7 +79,7 @@
 			if($totalElementos !== false)
 			{
 				// Configurar el objeto de paginación
-				$form->setPaginacion(new EntidadPaginacion($totalElementos));  // EntidadPaginacion(<Tamaño página>, <Total elementos>)
+				$form->setPaginacion(new EntidadPaginacion($totalElementos));  // EntidadPaginacion(<Total elementos>)
 				$this->__validarParametrosPaginacion($form);
 				$form->getPaginacion()->setUrlObjetivo("repararImpresionCorrida.php?accion=buscar");
 			}
@@ -138,6 +139,7 @@
 					$usuarioCreador = new EntidadUsuario();
 					$usuarioCreador->setId(1);
 					$patron->setUsuarioCreador($usuarioCreador);
+					// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
 
 					// Guardar instancia de soporte técnico en impresora para repara impresión corrida, en la base de datos
 					$iriNuevaInstancia = ModeloInstanciaSTImpresoraRepararImpresionCorrida::guardarInstancia($form->getSoporteTecnico());
@@ -164,17 +166,12 @@
 			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR);
 			
 			// Borrar, temporal mientras se coloca el manejo de usuarios
-			
 			$patron = $form->getSoporteTecnico()->getPatron();
-			
 			$usuarioCreador = new EntidadUsuario();
 			$usuarioCreador->setId(1);
 			$usuarioCreador->setNombre("Anibal");
 			$usuarioCreador->setApellido("Ghanem");
 			$patron->setUsuarioCreador($usuarioCreador);
-			
-			$patron->setFechaCreacion(date("d/m/Y"));
-			
 			// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
 			
 			$this->__desplegarFormulario();
@@ -194,7 +191,7 @@
 					throw new Exception("La instancia no pudo ser cargada.");
 		
 				$form->setSoporteTecnico($instancia);
-		
+				
 				$this->__desplegarFormulario();
 		
 			} catch (Exception $e){

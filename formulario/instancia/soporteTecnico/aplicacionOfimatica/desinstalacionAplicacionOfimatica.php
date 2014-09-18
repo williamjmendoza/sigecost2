@@ -13,6 +13,7 @@
 		public function __construct()
 		{
 			$this->setSoporteTecnico(new EntidadInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica());
+			$this->getSoporteTecnico()->setPatron(new EntidadPatron());
 			$this->getSoporteTecnico()->setAplicacionPrograma(new EntidadInstanciaETAplicacionOfimatica());
 			$this->getSoporteTecnico()->setSistemaOperativo(new EntidadInstanciaETSistemaOperativo());
 		}
