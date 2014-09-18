@@ -51,7 +51,7 @@
 	
 	require (SIGECOST_PATH_LIB . '/database/mysql.php');
 	
-	header("Content-Type: text/html; charset=" . GetConfig('CharacterSet'));
+	header("Content-Type: text/html; charset=" . GetConfig('characterSet'));
 	
 	// Realizar la conexión a la base de datos que contiene los patrones de soporte técnico
 	$db_type = 'MySQLDb';
@@ -59,7 +59,7 @@
 	
 	$db->TablePrefix = GetConfig('tablePrefix');
 	$db->charset = GetConfig('dbEncoding');
-	$db->timezone = '+0:00';
+	$db->timezone = GetConfig('timeZone');
 	
 	$connection = $db->Connect(
 			GetConfig('dbServer'),

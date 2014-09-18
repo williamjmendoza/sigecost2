@@ -11,7 +11,9 @@
 	$GLOBALS['SIGECOST_CFG']["dbPass"] = "987654321";
 	$GLOBALS['SIGECOST_CFG']["dbDatabase"] = "patrones_st";
 	$GLOBALS['SIGECOST_CFG']["tablePrefix"] = "";
-	$GLOBALS['SIGECOST_CFG']["CharacterSet"] = "UTF-8";
+	$GLOBALS['SIGECOST_CFG']["characterSet"] = "UTF-8";
+	$GLOBALS['SIGECOST_CFG']["timeZone"] = "+0:00";
+	$GLOBALS['SIGECOST_CFG']["displayTimeZone"] = "-04:30";
 	
 	// Configuración de la base de datos de arc2 (Ontología)
 	$GLOBALS['SIGECOST_CFG']["ontoDbServer"] = $GLOBALS['SIGECOST_CFG']["dbServer"];

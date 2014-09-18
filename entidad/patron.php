@@ -16,7 +16,7 @@
 		public function getCodigo(){
 			return $this->_codigo;
 		}
-		public function serCodigo($codigo){
+		public function setCodigo($codigo){
 			$this->_codigo = $codigo;
 		}
 		public function getFechaCreacion(){
@@ -53,7 +53,7 @@
 			return $this->_usuarioUltimaModificacion;
 		}
 		public function setUsuarioUltimaModificacion(EntidadUsuario $usuarioUltimaModificacion){
-			$this->_fechaUltimaModificacion = $usuarioUltimaModificacion;
+			$this->_usuarioUltimaModificacion = $usuarioUltimaModificacion;
 		}
 	}
 	

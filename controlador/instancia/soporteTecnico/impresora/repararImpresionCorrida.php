@@ -13,6 +13,58 @@
 	class ControladorInstanciaSTImpresoraRepararImpresionCorrida extends ControladorInstanciaSTImpresora
 	{
 		use ControladorTraitPaginacion;
+		
+		public function actualizar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+				
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea actualizar.");
+				
+				$form->getSoporteTecnico()->setIri($iri);
+				
+				// Validar, obtener y guardar todos los inputs desde el formulario
+				$this->__validarIriEquipoReproduccion($form);
+				$this->__validarSolucionSoporteTecnico($form);
+				
+				if(count($GLOBALS['SigecostErrors']['general']) == 0)
+				{
+					// Consultar si existe una instancia de soporte técnico en impresora para reparar impresión corrida, con las mismas características
+					//if(($existeInstancia = ModeloInstanciaSTImpresoraRepararImpresionCorrida::existeInstancia($form->getSoporteTecnico())) === null)
+						//throw new Exception("La instancia no pudo ser guardada.");
+					
+					// Validar si existe una instancia de soporte técnico en impresora para repara impresión corrida, con las mismas características
+					//if ($existeInstancia === true)
+						//throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					
+					// Borrar, temporal mientras se coloca el manejo de usuarios
+					$patron = $form->getSoporteTecnico()->getPatron();
+					$usuarioUltimaModificacion = new EntidadUsuario();
+					$usuarioUltimaModificacion->setId(3);
+					$patron->setUsuarioUltimaModificacion($usuarioUltimaModificacion);
+					
+					// Actualizar la instancia de soporte técnico en impresora para reparar impresión corrida, en la base de datos
+					$resultado = ModeloInstanciaSTImpresoraRepararImpresionCorrida::actualizarInstancia($form->getSoporteTecnico());
+					
+					if($resultado === false)
+						throw new Exception("La instancia no pudo ser actualizada");
+						
+					$GLOBALS['SigecostErrors']['general'] = "Instancia actualizada satisfactoriamente";
+						
+					$this->__desplegarDetalles($iri);
+					
+				} else {
+					$this->__desplegarFormulario();
+				}
+				
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->__desplegarFormulario();
+			}
+		}
 
 		public function buscar()
 		{
@@ -81,6 +133,7 @@
 					//if ($existeInstancia === true)
 						//throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
 					
+					// Borrar, temporal mientras se coloca el manejo de usuarios
 					$patron = $form->getSoporteTecnico()->getPatron();
 					$usuarioCreador = new EntidadUsuario();
 					$usuarioCreador->setId(1);
@@ -108,7 +161,46 @@
 
 		public function insertar()
 		{
+			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR);
+			
+			// Borrar, temporal mientras se coloca el manejo de usuarios
+			
+			$patron = $form->getSoporteTecnico()->getPatron();
+			
+			$usuarioCreador = new EntidadUsuario();
+			$usuarioCreador->setId(1);
+			$usuarioCreador->setNombre("Anibal");
+			$usuarioCreador->setApellido("Ghanem");
+			$patron->setUsuarioCreador($usuarioCreador);
+			
+			$patron->setFechaCreacion(date("d/m/Y"));
+			
+			// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
+			
 			$this->__desplegarFormulario();
+		}
+		
+		public function modificar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+		
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea modificar.");
+		
+				if( ($instancia = ModeloInstanciaSTImpresoraRepararImpresionCorrida::obtenerInstanciaPorIri($iri)) === null )
+					throw new Exception("La instancia no pudo ser cargada.");
+		
+				$form->setSoporteTecnico($instancia);
+		
+				$this->__desplegarFormulario();
+		
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->__desplegarFormulario();
+			}
 		}
 
 		private function __desplegarDetalles($iriInstancia)

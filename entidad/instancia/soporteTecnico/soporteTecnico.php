@@ -12,7 +12,7 @@
 		public function getPatron(){
 			return $this->_patron;
 		}
-		public function setPatron(EntidadPatron $patron){
+		public function setPatron(EntidadPatron $patron = null){
 			$this->_patron = $patron;
 		}
 		public function getUrlSoporteTecnico(){
