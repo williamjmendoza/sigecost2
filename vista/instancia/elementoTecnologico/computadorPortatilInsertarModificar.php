@@ -42,7 +42,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico computador port&aacute;til</h1>
+				<h1>Instancia del elemento tecnol&oacute;gico computador portatil</h1>
 			</div>
 
 			<form class="form-horizontal" role="form" method="post" action="computadorPortatil.php">
@@ -64,7 +64,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="modelo">Modelo del Computador Portatil:</label>
+					<label class="control-label col-sm-3" for="modelo">Modelo del Computador Port&aacute;til:</label>
 					<div class="col-sm-5">
 						<input type="text" class="form-control" id="modelo" name="modelo" placeholder="Introduzca el modelo Computador Portatil"
 							value="<?php echo $equipoComputacion != null ? $equipoComputacion->getModelo() : "" ?>"
