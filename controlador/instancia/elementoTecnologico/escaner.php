@@ -12,6 +12,51 @@
 	class ControladorInstanciaETEscaner extends ControladorInstanciaETEquipoReproduccion
 	{
 		use ControladorTraitPaginacion;
+		
+		public function actualizar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_ESCANER_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+		
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea actualizar.");
+		
+				$form->getEquipoReproduccion()->setIri($iri);
+				
+				// Validar, obtener y guardar todos los inputs desde el formulario
+				$this->__validarMarca($form);
+				$this->__validarModelo($form);
+		
+				if(count($GLOBALS['SigecostErrors']['general']) == 0)
+				{
+					// Consultar si existe una instancia de elemento tecnológico en escaner, con las mismas características
+					if(($existeInstancia = ModeloInstanciaETEscaner::existeEscaner($form->getEquipoReproduccion())) === null)
+						throw new Exception("La instancia no pudo ser actualizada.");
+				
+					// Validar si existe una instancia de elemento tecnológico escaner con las mismas características
+					if ($existeInstancia === true)
+						throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
+					
+					// Actualizar la instancia de elemento tecnológico escaner, en la base de datos
+					$resultado = ModeloInstanciaETEscaner::actualizarInstancia($form->getEquipoReproduccion());
+					
+					if($resultado === false)
+						throw new Exception("La instancia no pudo ser actualizada");
+					
+					$GLOBALS['SigecostErrors']['general'] = "Instancia actualizada satisfactoriamente";
+					$this->__desplegarDetalles($iri);
+						
+					} else {
+						$this->__desplegarFormulario();
+					}
+				} catch (Exception $e){
+					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+					$this->__desplegarFormulario();
+				}
+			}	
+				
 
 		public function buscar()
 		{
@@ -105,6 +150,29 @@
 			$this->__desplegarFormulario();
 		}
 
+		public function modificar()
+		{
+			try
+			{
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_ESCANER_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+		
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea modificar.");
+		
+				if( ($instancia = ModeloInstanciaETEscaner::obtenerEscanerPorIri($iri)) === null )
+					throw new Exception("La instancia no pudo ser cargada.");
+				
+				$form->setEquipoReproduccion($instancia);
+				
+				$this->__desplegarFormulario();
+				
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->__desplegarFormulario();
+			}
+		}
+		
 		private function __desplegarDetalles($iriInstancia)
 		{
 

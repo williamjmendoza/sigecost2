@@ -56,10 +56,10 @@
 				
 				<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_INSERTAR) { ?>
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="especificacion">Especificacion del consumible:</label>
+					<label class="control-label col-sm-3" for="especificacion">Especificaci&oacute;n del consumible:</label>
 					<div class="col-sm-5">
 						<input
-							type="text" class="form-control" id="especificacion" name="especificacion" placeholder="Introduzca la Especificacion del consumible"
+							type="text" class="form-control" id="especificacion" name="especificacion" placeholder="Introduzca la Especificaci&oacute;n del consumible"
 							value="<?php echo $consumible != null ? $consumible->getEspecificacion() : "" ?>"
 						>
 					</div>
