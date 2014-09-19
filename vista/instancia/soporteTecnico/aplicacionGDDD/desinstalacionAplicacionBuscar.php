@@ -1,6 +1,6 @@
 <?php
 
-$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_G_D_D_D_DESINSTALACION_APLICACION_BUSCAR);
+	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_G_D_D_D_DESINSTALACION_APLICACION_BUSCAR);
 	$instancias = $GLOBALS['SigecostRequestVars']['instancias'];
 
 ?>
@@ -10,14 +10,6 @@ $form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_G_D_D_D_
 	<head>
 
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
-
-    	<script type="text/javascript">
-
-			function setAccion(accion) {
-				$('input[type="hidden"][name="accion"]').val(accion);
-			}
-
-    	</script>
 
 	</head>
 

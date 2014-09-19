@@ -11,14 +11,6 @@
 
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
 
-    	<script type="text/javascript">
-
-			function setAccion(accion) {
-				$('input[type="hidden"][name="accion"]').val(accion);
-			}
-
-    	</script>
-
 	</head>
 
 	<body>
@@ -53,7 +45,7 @@
 							<th rowspan="2">#</th>
 							<th colspan="2">Aplicaci&oacute;n</th>
 							<th colspan="2">Sistema operativo</th>
-							<th rowspan="2">Url soporte t&eacute;cnico</th>
+							<th colspan="2">Patr&oacute;n soporte t&eacute;cnico</th>
 							<th rowspan="2">Opciones</th>
 						</tr>
 						<tr>
@@ -61,12 +53,15 @@
 							<th>Modelo</th>
 							<th>Nombre</th>
 							<th>Versi&oacute;n</th>
+							<th>Fecha creaci&oacute;n</th>
+							<th>Soluci&oacute;n</th>
 						</tr>
 					</thead>
 					<tbody>
 			<?php
 					foreach ($instancias AS $instancia)
 					{
+						$patron = $instancia->getPatron();
 			?>
 						<tr>
 							<td><?php echo (++$contador) ?></td>
@@ -74,7 +69,23 @@
 							<td><?php echo $instancia->getAplicacionPrograma()->getVersion() ?></td>
 							<td><?php echo $instancia->getSistemaOperativo()->getNombre() ?></td>
 							<td><?php echo $instancia->getSistemaOperativo()->getVersion() ?></td>
-							<td><?php echo $instancia->getUrlSoporteTecnico() ?></td>
+							<td><?php echo $patron != null ? $patron->getFechaCreacion() : "" ?></td>
+							<td><samp><?php
+								$strSolucion = "";
+								$truncamiento = GetConfig("truncamientoSolucionPatronSoporteTecnico");
+								
+								if($patron != null)
+								{
+									if(strlen($patron->getSolucion()) <= $truncamiento)
+										$strSolucion = htmlentities($patron->getSolucion());
+									else {
+										$strSolucion = htmlentities(substr($patron->getSolucion(), 0, $truncamiento - 3)) . '...';
+									}
+
+								}
+								echo $strSolucion;
+							
+							?></samp></td>
 							<td>
 								<form class="form-horizontal" role="form" action="instalacionAplicacionOfimatica.php" method="post">
 									<div style="display:none;">
