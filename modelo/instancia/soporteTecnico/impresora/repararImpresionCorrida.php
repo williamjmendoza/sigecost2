@@ -132,6 +132,7 @@
 				
 			} catch (Exception $e) {
 				// Rollback de la transacción
+				if(isset($resultTransactionPatrones) && $resultTransactionPatrones === true) $GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
 				error_log($e, 0);
 				return false;
 			}
@@ -328,7 +329,6 @@
 		public static function guardarInstancia(EntidadInstanciaSTImpresoraRepararImpresionCorrida $instancia)
 		{
 			$preMsg = 'Error al guardar la instancia de soporte técnico en impresora para reparar impresión corrida.';
-			$resultTransactionPatrones = null;
 
 			try
 			{
@@ -476,7 +476,7 @@
 				$instancia = self::llenarInstancia($row);
 				
 				if($instancia === false)
-					throw new Exception($preMsg . "  no se pudo llenar la instancia.");
+					throw new Exception($preMsg . "  No se pudo llenar la instancia.");
 				
 				if(isset($row['urlSoporteTecnico']) && $row['urlSoporteTecnico'] != "")
 					$patron = ModeloPatron::obtenerPatronPorCodigo($row['urlSoporteTecnico']);

@@ -5,6 +5,7 @@
 
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/general.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/patron.php' );
 
 // restablecer barra herramientas funcion formato dibujo
 	class ModeloInstanciaSTAplicacionOfimaticaRestablecerBarraHerramientasFFD

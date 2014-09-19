@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="urlSoporteTecnico">Patr&oacute;n soporte t&eacute;cnico:</label>
+					<label class="control-label col-sm-2" for="solucionSoporteTecnico">Patr&oacute;n soporte t&eacute;cnico:</label>
 					<div class="col-sm-10">
 						<div class="panel panel-default">
 							<div class="panel-heading">Detalles del patr&oacute;n de soporte t&eacute;cnico</div>

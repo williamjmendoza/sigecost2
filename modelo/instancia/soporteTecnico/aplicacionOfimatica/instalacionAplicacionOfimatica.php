@@ -6,6 +6,7 @@
 
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/general.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/patron.php' );
 
 	class ModeloInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimatica
 	{

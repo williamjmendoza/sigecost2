@@ -88,8 +88,7 @@
 								}
 								echo $strSolucion;
 							
-							?></samp>
-							</td>
+							?></samp></td>
 							<td>
 								<form class="form-horizontal" role="form" action="repararImpresionCorrida.php" method="post">
 									<div style="display:none;">
