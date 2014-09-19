@@ -17,13 +17,10 @@
 			try
 			{
 				if ($instancia === null)
-					throw new Exception($preMsg . ' El par�metro \'$instancia\' es nulo.');
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
 				
 				if($instancia->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getIri()\' está vacío.');
-				
-				if($instancia->getUrlSoporteTecnico() == "")
-					throw new Exception($preMsg . ' El parámetro \'$instancia->getUrlSoporteTecnico()\' está vacío.');
 			
 				if($instancia->getAplicacionPrograma() === null)
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getAplicacionPrograma()\' es nulo.');
@@ -36,6 +33,53 @@
 				
 				if($instancia->getSistemaOperativo()->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getSistemaOperativo()->getIri()\' está vacío.');
+				
+				if($instancia->getPatron() === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getPatron()\' es nulo.');
+				
+				// Consultar la instancia, para obtener el código (urlSoporteTecnico) del patrón asociado a la instancia
+				$instanciaGuardada = self::obtenerInstanciaPorIri($instancia->getIri());
+				
+				if($instanciaGuardada === false)
+					throw new Exception($preMsg . ' No se pudo obtener la instancia guardada.');
+				
+				if($instanciaGuardada === null)
+					throw new Exception($preMsg . ' La instancia que estaba guardada ya no existe en la base de datos.');
+				
+				if($instanciaGuardada->getUrlSoporteTecnico() != "" && $instanciaGuardada->getPatron() === null)
+					throw new Exception($preMsg . ' No se pudo obtener el patrón asociado a la instancia que se desea actualizar.');
+				
+				// Crear el nombre del patrón de soporte técnico
+				if(self::establecerNombrePatron($instancia) === false)
+					throw new Exception($preMsg . ' No se pudo establecer el nombre del patrón de soporte técnico.');
+				
+				// Iniciar la transacción de patrones
+				$resultTransactionPatrones = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
+				
+				if($resultTransactionPatrones === false)
+					throw new Exception($preMsg . ' No se pudo iniciar la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// No existe un patrón para la instancia que se desea actualizar, por lo que se debe crear un nuevo patrón
+				if($instanciaGuardada->getPatron() === null)
+				{
+					$patron = new EntidadPatron();
+					$patron->setNombre($instancia->getPatron()->getNombre());
+					$patron->setSolucion($instancia->getPatron()->getSolucion());
+					$patron->setUsuarioCreador($instancia->getPatron()->getUsuarioUltimaModificacion());
+				
+					// Guardar el patrón de soporte técnico
+					if(($codigoPatron = ModeloPatron::guardarPatron($patron)) === false)
+						throw new Exception($preMsg . " No se pudo crear y guardar el patrón de soporte técnico.");
+				
+				} else { // Ya existe un patrón para la instancia, en este caso solo se actualizará el patrón
+				
+					// Establecer el código del patrón de soporte técnico para la instancia que se desea actualizar
+					$instancia->getPatron()->setCodigo($instanciaGuardada->getPatron()->getCodigo());
+				
+					// Actualizar el patrón de soporte técnico
+					if(($codigoPatron = ModeloPatron::actualizarPatron($instancia->getPatron())) === false)
+						throw new Exception($preMsg . " No se pudo actualizar el patrón de soporte técnico.");
+				}
 				
 				// Iniciar la transacción
 				// Borrar los datos anteriores de la instancia
@@ -87,7 +131,7 @@
 				
 						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
 						{
-							<'.$instancia->getIri().'> :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							<'.$instancia->getIri().'> :uRLSoporteTecnico "'.$codigoPatron.'"^^xsd:string .
 							<'.$instancia->getIri().'> :aplicacionOfimatica <'.$instancia->getAplicacionPrograma()->getIri().'> .
 							<'.$instancia->getIri().'> :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
 						}
@@ -98,13 +142,19 @@
 					// Excepción porque no se pudieron guardar los datos actualizados de la instancia, para que se ejecute el Rollback
 					throw new Exception($preMsg . " No se pudieron guardar los datos actualizados de la instancia. Detalles:\n" . join("\n", $errors));
 				
-			// Commit de la transacción
+				// Commit de la transacción
+			
+				// Commit de la transacción de patrones
+				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
+					throw new Exception($preMsg . ' No se pudo realizar el commit  de la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
 				return $instancia->getIri();
 				
-				} catch (Exception $e) {
-					// Rollback de la transacción
-					error_log($e, 0);
-					return false;
+			} catch (Exception $e) {
+				// Rollback de la transacción
+				if(isset($resultTransactionPatrones) && $resultTransactionPatrones === true) $GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
+				error_log($e, 0);
+				return false;
 			}
 		}
 		
@@ -115,6 +165,7 @@
 			$instancias = array();
 			$limite = '';
 			$desplazamiento = '';
+			$codigosPatrones = array();
 
 			try
 			{
@@ -161,6 +212,21 @@
 				if (is_array($rows) && count($rows) > 0){
 					foreach ($rows AS $row){
 						$instancias[$row['iri']] = self::llenarInstancia($row);
+						if(isset($row['urlSoporteTecnico']) && $row['urlSoporteTecnico'] != "")
+							$codigosPatrones[] = $row['urlSoporteTecnico'];
+					}
+				}
+				
+				// Buscar los patrones asociados a cada instancia
+				if(count($codigosPatrones) > 0)
+					$patrones = ModeloPatron::obtenerPatronesPorCodigos($codigosPatrones);
+				
+				// Establecer el patrón encontrado, a su respectiva instancia
+				if(is_array($patrones) && count($patrones) > 0)
+				{
+					foreach ($instancias AS $instancia){
+						if($instancia->getUrlSoporteTecnico() && isset($patrones[$instancia->getUrlSoporteTecnico()]))
+							$instancia->setPatron($patrones[$instancia->getUrlSoporteTecnico()]);
 					}
 				}
 				
@@ -278,19 +344,46 @@
 				return null;
 			}
 		}
+		
+		public static function establecerNombrePatron(EntidadInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimatica $instancia)
+		{
+			$preMsg = "Error al establecer el nombre del patrón de soporte técnico para la instancia" .
+				" de s. t. para la instalación de aplicacion ofimatica.";
+		
+			try
+			{
+				$aplicacion = ModeloInstanciaETAplicacionOfimatica::obtenerAplicacionPorIri($instancia->getAplicacionPrograma()->getIri());
+		
+				if($aplicacion === null || $aplicacion === false)
+					throw new Exception($preMsg . ' Los datos de la aplicación ofimática no pudieron ser consultados.');
+		
+				$nombre = SIGECOST_FRAGMENTO_S_T_INSTALACION_APLICACION_OFIMATICA .
+					" aplicaci&oacute;n " . $aplicacion->getNombre() . " " . $aplicacion->getVersion();
+		
+				$sistemaOperativo = ModeloInstanciaETSistemaOperativo::obtenerSistemaOperativoPorIri($instancia->getSistemaOperativo()->getIri());
+		
+				if($sistemaOperativo === null || $sistemaOperativo === false)
+					throw new Exception($preMsg . ' Los datos del sistema operativo no pudieron ser consultados.');
+		
+				$nombre .= " sobreSistemaOperativo " . $sistemaOperativo->getNombre() . " " . $sistemaOperativo->getVersion();
+		
+				$instancia->getPatron()->setNombre($nombre);
+		
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
 
 		// Guarda una nueva instancia de soporte técnico en aplicacion ofimatica para la instalación de aplicacion ofimatica, y retorna su iri
-		public static function guardarInstancia($instancia)
+		public static function guardarInstancia(EntidadInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimatica $instancia)
 		{
-			$preMsg = 'Error al guardar la instancia de soporte técnico en aplicacion ofimatica  para la instalación de aplicacion ofimatica .';
+			$preMsg = 'Error al guardar la instancia de soporte técnico en aplicacion ofimatica para la instalación de aplicacion ofimatica.';
 
 			try
 			{
 				if ($instancia === null)
 					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
-
-				if($instancia->getUrlSoporteTecnico() == "")
-					throw new Exception($preMsg . ' El parámetro \'$instancia->getUrlSoporteTecnico()\' está vacío.');
 
 				if($instancia->getAplicacionPrograma() === null)
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getAplicacionPrograma()\' es nulo.');
@@ -303,6 +396,23 @@
 
 				if($instancia->getSistemaOperativo()->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getSistemaOperativo()->getIri()\' está vacío.');
+				
+				if($instancia->getPatron() === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia->getPatron()\' es nulo.');
+				
+				// Crear el nombre del patrón de soporte técnico
+				if(self::establecerNombrePatron($instancia) === false)
+					throw new Exception($preMsg . ' No se pudo establecer el nombre del patrón de soporte técnico.');
+				
+				// Iniciar la transacción de patrones
+				$resultTransactionPatrones = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
+				
+				if($resultTransactionPatrones === false)
+					throw new Exception($preMsg . ' No se pudo iniciar la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// Guardar el patrón de soporte técnico
+				if(($codigoPatron = ModeloPatron::guardarPatron($instancia->getPatron())) === false)
+					throw new Exception($preMsg . " No se pudo guardar el patrón.");
 
 				// Consultar el número de secuencia para la siguiente instancia de soporte técnico en aplicacion ofimatica  para la instalación de aplicacion ofimatica , a crear.
 				$secuencia = ModeloGeneral::getSiguienteSecuenciaInstancia(SIGECOST_FRAGMENTO_S_T_INSTALACION_APLICACION_OFIMATICA);
@@ -326,7 +436,7 @@
 						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
 						{
 							:'.$fragmentoIriInstancia.' rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_APLICACION_OFIMATICA.' .
-							:'.$fragmentoIriInstancia.' :uRLSoporteTecnico "'.$instancia->getUrlSoporteTecnico().'"^^xsd:string .
+							:'.$fragmentoIriInstancia.' :uRLSoporteTecnico "'.$codigoPatron.'"^^xsd:string .
 							:'.$fragmentoIriInstancia.' :aplicacionOfimatica <'.$instancia->getAplicacionPrograma()->getIri().'> .
 							:'.$fragmentoIriInstancia.' :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
 						}
@@ -337,10 +447,15 @@
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception("Error al guardar la instancia de soporte técnico en aplicación ofimática para la instalación de una aplicación ofimática. Detalles:\n" .
 						join("\n", $errors));
+					
+				// Commit de la transacción de patrones
+				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
+					throw new Exception($preMsg . ' No se pudo realizar el commit  de la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
 
 				return SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia;
 
 			} catch (Exception $e) {
+				if(isset($resultTransactionPatrones) && $resultTransactionPatrones === true) $GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
 				error_log($e, 0);
 				return false;
 			}
@@ -381,6 +496,7 @@
 		public static function obtenerInstanciaPorIri($iri)
 		{
 			$preMsg = 'Error al obtener una instancia de soporte técnico en aplicación ofimática para la instalación de aplicación ofimática, dado el iri.';
+			$patron = null;
 
 			try
 			{
@@ -424,13 +540,23 @@
 
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
-
-				if (is_array($rows) && count($rows) > 0){
-					reset($rows);
-					return self::llenarInstancia(current($rows));
-				}
-				else
+				
+				if (!is_array($rows) || count($rows) <= 0)
 					return null;
+				
+				reset($rows);
+				$row = current($rows);
+				$instancia = self::llenarInstancia($row);
+				
+				if($instancia === false)
+					throw new Exception($preMsg . "  No se pudo llenar la instancia.");
+				
+				if(isset($row['urlSoporteTecnico']) && $row['urlSoporteTecnico'] != "")
+					$patron = ModeloPatron::obtenerPatronPorCodigo($row['urlSoporteTecnico']);
+				
+				$instancia->setPatron($patron);
+				
+				return $instancia;
 
 			} catch (Exception $e) {
 				error_log($e, 0);

@@ -10,15 +10,7 @@
 	<head>
 
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
-
-    	<script type="text/javascript">
-
-			function setAccion(accion) {
-				$('input[type="hidden"][name="accion"]').val(accion);
-			}
-
-    	</script>
-
+		
 	</head>
 
 	<body>
@@ -51,24 +43,43 @@
 						<tr>
 							<th rowspan="2">#</th>
 							<th colspan="2">Impresora</th>
-							<th rowspan="2">Url soporte t&eacute;cnico</th>
+							<th colspan="2">Patr&oacute;n soporte t&eacute;cnico</th>
 							<th rowspan="2">Opciones</th>
 						</tr>
 						<tr>
 							<th>Marca</th>
 							<th>Modelo</th>
+							<th>Fecha creaci&oacute;n</th>
+							<th>Soluci&oacute;n</th>
 						</tr>
 					</thead>
 					<tbody>
 			<?php
 					foreach ($instancias AS $instancia)
 					{
+						$patron = $instancia->getPatron();
 			?>
 						<tr>
 							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $instancia->getEquipoReproduccion()->getMarca() ?> </td>
 							<td><?php echo $instancia->getEquipoReproduccion()->getModelo() ?></td>
-							<td><?php echo $instancia->getUrlSoporteTecnico() ?></td>
+							<td><?php echo $patron != null ? $patron->getFechaCreacion() : "" ?></td>
+							<td><samp><?php
+								$strSolucion = "";
+								$truncamiento = GetConfig("truncamientoSolucionPatronSoporteTecnico");
+								
+								if($patron != null)
+								{
+									if(strlen($patron->getSolucion()) <= $truncamiento)
+										$strSolucion = htmlentities($patron->getSolucion());
+									else {
+										$strSolucion = htmlentities(substr($patron->getSolucion(), 0, $truncamiento - 3)) . '...';
+									}
+
+								}
+								echo $strSolucion;
+							
+							?></samp></td>
 							<td>
 								<form class="form-horizontal" role="form" action="corregirImpresionManchada.php" method="post">
 									<div style="display:none;">

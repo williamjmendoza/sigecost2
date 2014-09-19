@@ -316,7 +316,9 @@
 				if($impresora === null || $impresora === false)
 					throw new Exception($preMsg . ' Los datos de la impresora no pudieron ser consultados.');
 				
-				$instancia->getPatron()->setNombre(SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA . " enImpresora " . $impresora->getMarca() . " " . $impresora->getModelo());
+				$nombre = SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA . " enImpresora " . $impresora->getMarca() . " " . $impresora->getModelo();
+				
+				$instancia->getPatron()->setNombre($nombre);
 				
 			} catch (Exception $e) {
 				error_log($e, 0);

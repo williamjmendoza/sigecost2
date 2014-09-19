@@ -18,7 +18,7 @@
 			try
 			{
 				if ($instancia === null)
-					throw new Exception($preMsg . ' El par�metro \'$instancia\' es nulo.');
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
 				
 				if($instancia->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getIri()\' está vacío.');
@@ -174,7 +174,6 @@
 					if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
 					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
 				}
-
 
 				// Buscar las instancias de soporte técnico aplicación gráfica digital, dibujo y diseño.
 				$query = '
@@ -350,7 +349,7 @@
 		public static function establecerNombrePatron(EntidadInstanciaSTAplicacionGDDDInstalacionAplicacionGDDD $instancia)
 		{
 			$preMsg = "Error al establecer el nombre del patrón de soporte técnico para la instancia" .
-					" de s. t. para la instalación de una aplicación gráfica digital, dibujo y diseño.";
+				" de s. t. para la instalación de una aplicación gráfica digital, dibujo y diseño.";
 		
 			try
 			{
@@ -379,7 +378,7 @@
 		}
 
 		// Guarda una nueva instancia de soporte técnico en instalación de una aplicacion gráfica digital, dibujo y diseño, y retorna su iri
-		public static function guardarInstancia($instancia)
+		public static function guardarInstancia(EntidadInstanciaSTAplicacionGDDDInstalacionAplicacionGDDD $instancia)
 		{
 			$preMsg = 'Error al guardar la instancia de soporte técnico en instalación de una aplicacion gráfica digital, dibujo y diseño .';
 

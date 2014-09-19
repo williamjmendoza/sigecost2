@@ -3,6 +3,7 @@
 	$impresoras = $GLOBALS['SigecostRequestVars']['impresoras'];
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_INSERTAR_MODIFICAR);
 	$instancia = $form->getSoporteTecnico();
+	$patron = $instancia != null ? $instancia->getPatron() : null;
 	$instanciaImpresora = $instancia->getEquipoReproduccion();
 	
 ?>
@@ -13,13 +14,7 @@
 	
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
 		
-		<script type="text/javascript">
-
-			function setAccion(accion) {
-				$('input[type="hidden"][name="accion"]').val(accion);
-			}
-
-    	</script>
+		<script type="text/javascript" src="<?php echo SIGECOST_PATH_URL_JAVASCRIPT ?>/lib/ckeditor/ckeditor.js"></script>
 		
 	</head>
 	
@@ -55,8 +50,8 @@
 					<?php } ?>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="iriEquipoReproduccion">En impresora:</label>
-					<div class="col-sm-7">
+					<label class="control-label col-sm-2" for="iriEquipoReproduccion">En impresora:</label>
+					<div class="col-sm-10">
 						<select class="form-control" id="iriEquipoReproduccion"  name="iriEquipoReproduccion">
 							<option value="0">Seleccionar impresora...</option>
 							<?php
@@ -78,16 +73,72 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-3" for="urlSoporteTecnico">Url soporte t&eacute;cnico:</label>
-					<div class="col-sm-7">
-						<input
-							type="text" class="form-control" id="urlSoporteTecnico" name="urlSoporteTecnico" placeholder="Introduzca el url de S.T."
-							value="<?php echo $instancia != null ? $instancia->getUrlSoporteTecnico() : "" ?>"
-						>
+					<label class="control-label col-sm-2" for="solucionSoporteTecnico">Patr&oacute;n soporte t&eacute;cnico:</label>
+					<div class="col-sm-10">
+						<div class="panel panel-default">
+							<div class="panel-heading">Detalles del patr&oacute;n de soporte t&eacute;cnico</div>
+							<ul class="list-group">
+								<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
+								<li class="list-group-item"><strong>Nombre: </strong><?php echo $patron != null ? $patron->getNombre() : "" ?></li>
+								<?php }?>
+								<li class="list-group-item">
+									<div class="row">
+										<div class="col-sm-6">
+											<strong>Creado por: </strong>
+											<?php
+												echo $patron != null
+													? 	(	$patron->getUsuarioCreador() != null
+															? $patron->getUsuarioCreador()->getNombre() . " " . $patron->getUsuarioCreador()->getApellido() : ""
+														)
+													: ""
+											?>
+										</div>
+										<div class="col-sm-6">
+											<strong>Fecha de creaci&oacute;n: </strong>
+											<?php 
+												echo $patron != null ? $patron->getFechaCreacion() : "" 
+											?>
+										</div>
+									</div>
+								</li>
+								<?php if($patron != null && $patron->getUsuarioUltimaModificacion() != null) { ?>
+								<li class="list-group-item">
+									<div class="row">
+										<div class="col-sm-6">
+											<strong>Modificado por: </strong>
+											<?php
+												echo $patron != null
+													? 	(	$patron->getUsuarioUltimaModificacion() != null
+															? $patron->getUsuarioUltimaModificacion()->getNombre() . " " . $patron->getUsuarioUltimaModificacion()->getApellido() : ""
+														)
+													: ""
+											?>
+										</div>
+										<div class="col-sm-6">
+											<strong>Fecha de modificaci&oacute;n: </strong>
+											<?php 
+												echo $patron != null ? $patron->getFechaultimaModificacion() : "" 
+											?>
+										</div>
+									</div>
+								</li>
+								<?php  } ?>
+								<li class="list-group-item">
+									<strong>Soluci&oacute;n:</strong>
+									<br><br>
+									<textarea id="solucionSoporteTecnico" name="solucionSoporteTecnico" rows="3">
+										<?php echo $patron != null ? $patron->getSolucion() : "" ?>
+									</textarea>
+									<script>
+										CKEDITOR.replace( 'solucionSoporteTecnico' );
+									</script>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-offset-3 col-sm-7">
+					<div class="col-sm-offset-2 col-sm-10">
 						<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_INSERTAR) { ?>
 						<button type="submit" class="btn btn-primary" onclick="setAccion('guardar');">Guardar</button>
 						<?php } else if ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
