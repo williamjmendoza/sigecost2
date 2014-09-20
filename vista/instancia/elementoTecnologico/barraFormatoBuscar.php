@@ -9,15 +9,7 @@
 	<head>
 
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
-
-    	<script type="text/javascript">
-
-			function setAccion(accion) {
-				$('input[type="hidden"][name="accion"]').val(accion);
-			}
-
-    	</script>
-
+		
 	</head>
 
 	<body>
@@ -64,13 +56,15 @@
 							<td><?php echo $barra->getNombre() ?> </td>
 							<td><?php echo $barra->getVersion() ?></td>
 							<td>
-								<form class="form-horizontal" role="form" action="barraFormato.php" method="post">
+								<form class="form-horizontal buscarOpciones" role="form" action="barraFormato.php" method="post">
 									<div style="display:none;">
 										<input type="hidden" name="accion" value="">
 										<input type="hidden" name="iri" value="<?php echo $barra->getIri() ?>">
 									</div>
-									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('modificar');">Modificar</button>
-									<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Ver detalles</button>
+									<div class="form-group">
+										<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('modificar');">Modificar</button>
+										<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Ver detalles</button>
+									</div>
 								</form>
 							</td>
 						</tr>
