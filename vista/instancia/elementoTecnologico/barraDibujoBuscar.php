@@ -59,12 +59,11 @@
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="barraDibujo.php" method="post">
 									<div style="display:none;">
-										<input type="hidden" name="accion" value="">
+										<input type="hidden" name="accion" value="desplegarDetalles">
 										<input type="hidden" name="iri" value="<?php echo $barra->getIri() ?>">
 									</div>
 									<div class="form-group">
-										<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('modificar');">Modificar</button>
-										<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Ver detalles</button>
+										<button type="submit" class="btn btn-primary btn-xs">Ver detalles</button>
 									</div>
 								</form>
 							</td>

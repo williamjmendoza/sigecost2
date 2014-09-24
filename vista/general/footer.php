@@ -4,3 +4,5 @@
 		<script src="<?php echo SIGECOST_PATH_URL_ESTILOS ?>/lib/bootstrap/js/bootstrap.min.js"></script>
 		<!-- Javascript con funciones generales para el sistema -->
 		<script type="text/javascript" src="<?php echo SIGECOST_PATH_URL_JAVASCRIPT ?>/general.js"></script>
+		
+		<script type="text/javascript" src="<?php echo SIGECOST_PATH_URL_JAVASCRIPT ?>/constantes.js"></script>

@@ -2,3 +2,11 @@
 function setAccion(accion) {
 	$('input[type="hidden"][name="accion"]').val(accion);
 }
+
+function eliminarInstancia(formulario)
+{
+	if(confirm(pACUTE+"Est"+aACUTE+" seguro que desea eliminar la instancia?") == true) {
+		setAccion('eliminar');
+		$('#' + formulario).submit();
+	}
+}

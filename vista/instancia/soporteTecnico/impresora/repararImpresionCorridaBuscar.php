@@ -84,12 +84,11 @@
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="repararImpresionCorrida.php" method="post">
 									<div style="display:none;">
-										<input type="hidden" name="accion" value="">
+										<input type="hidden" name="accion" value="desplegarDetalles">
 										<input type="hidden" name="iri" value="<?php echo $instancia->getIri() ?>">
 									</div>
 									<div class="form-group">
-										<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('modificar');">Modificar</button>
-										<button type="submit" class="btn btn-primary btn-xs" onclick="setAccion('desplegarDetalles');">Ver Detalles</button>
+										<button type="submit" class="btn btn-primary btn-xs">Ver Detalles</button>
 									</div>
 								</form>
 							</td>

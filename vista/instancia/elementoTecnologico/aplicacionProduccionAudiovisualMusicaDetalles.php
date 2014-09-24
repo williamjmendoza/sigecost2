@@ -32,7 +32,11 @@
 				<h1>Instancia del elemento tecnol&oacute;gico aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica</h1>
 			</div>
 			
-			<div class="form-horizontal" role="form">
+			<form id="formAplicacionProduccionAudiovisualMusica" class="form-horizontal" role="form" method="post" action="aplicacionProduccionAudiovisualMusica.php">
+				<div style="display:none;">
+					<input type="hidden" name="accion" value="">
+					<input type="hidden" name="iri" value="<?php echo $aplicacion->getIri() ?>">
+				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-3" for="nombre">Nombre de la aplicación:</label>
 					<div class="col-sm-5">
@@ -45,7 +49,13 @@
 						<p class="form-control-static"><?php echo $aplicacion != null ? $aplicacion->getVersion() : "" ?></p>
 					</div>
 				</div>
-			</div>
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-5">
+						<button type="submit" class="btn btn-primary" onclick="setAccion('modificar');">Modificar</button>
+						<button type="button" class="btn btn-primary" onclick="eliminarInstancia('formAplicacionProduccionAudiovisualMusica');">Eliminar</button>
+					</div>
+				</div>
+			</form>
 			
 		</div>
 		

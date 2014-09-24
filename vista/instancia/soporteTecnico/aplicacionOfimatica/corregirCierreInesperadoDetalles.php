@@ -36,7 +36,7 @@
 				</h1>
 			</div>
 			
-			<form class="form-horizontal" role="form" method="post" action="corregirCierreInesperado.php">
+			<form id="formCorregirCierreInesperado" class="form-horizontal" role="form" method="post" action="corregirCierreInesperado.php">
 				<div style="display:none;">
 					<input type="hidden" name="accion" value="">
 					<input type="hidden" name="iri" value="<?php echo $instancia->getIri() ?>">
@@ -112,6 +112,7 @@
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-primary" onclick="setAccion('modificar');">Modificar</button>
+						<button type="button" class="btn btn-primary" onclick="eliminarInstancia('formCorregirCierreInesperado');">Eliminar</button>
 					</div>
 				</div>
 			</form>
