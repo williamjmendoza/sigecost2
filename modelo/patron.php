@@ -68,6 +68,49 @@
 			}
 		}
 		
+		public static function eliminarPatron($codigo)
+		{
+			$preMsg = 'Error al eliminar el patrón.';
+			$resultTransaction = null;
+			
+			try
+			{
+				if($codigo === null)
+					throw new Exception($preMsg . ' El parámetro \'$codigo\' es nulo.');
+				
+				if($codigo == "")
+					throw new Exception($preMsg . ' El parámetro \'$codigo\' está vacío.');
+				
+				// Iniciar la transacción
+				$resultTransaction = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
+				
+				if($resultTransaction === false)
+					throw new Exception($preMsg . ' No se pudo iniciar la transacción. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				$query = "
+					DELETE FROM
+						patrones
+					WHERE
+						codigo = '".$codigo."'
+				";
+				
+				if($GLOBALS['PATRONES_CLASS_DB']->Query($query) === false)
+					throw new Exception($preMsg . ' Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// Commit de la transacción
+				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
+					throw new Exception($preMsg . ' No se pudo realizar el commit de la transacción. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// retornar el código del patrón de soporte técnico
+				return $codigo;
+				
+			} catch (Exception $e) {
+				if(isset($resultTransaction) && $resultTransaction === true) $GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 		public static function getSiguienteSecuenciaPatron()
 		{
 			$preMsg = "Error al consultar el número de siguiente secuencia del patrón.";
