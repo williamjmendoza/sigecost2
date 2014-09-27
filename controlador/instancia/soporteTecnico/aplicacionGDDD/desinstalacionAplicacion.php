@@ -55,7 +55,8 @@
 						
 					if($resultado === false)
 						throw new Exception("La instancia no pudo ser actualizada");
-					$GLOBALS['SigecostErrors']['general'] = "Instancia actualizada satisfactoriamente";
+					
+					$GLOBALS['SigecostInfo']['general'][] = "Instancia actualizada satisfactoriamente.";
 						
 					$this->__desplegarDetalles($iri);
 						
@@ -116,6 +117,30 @@
 			}
 		}
 
+		public function eliminar()
+		{
+			try
+			{
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea eliminar.");
+		
+				// Eliminar la instancia de soporte técnico en aplicación de programa para instalación de aplicación gráfica digital,dibujo y diseño, de la base de datos
+				$resultado = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::eliminarInstancia($iri);
+					
+				if($resultado === false)
+					throw new Exception("La instancia no pudo ser eliminada.");
+				
+				$GLOBALS['SigecostInfo']['general'][] = "Instancia eliminada satisfactoriamente.";
+				
+				$this->buscar();
+				
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->buscar();
+			}
+		}
+		
+		
 		public function guardar()
 		{
 			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_G_D_D_D_DESINSTALACION_APLICACION_INSERTAR_MODIFICAR);
