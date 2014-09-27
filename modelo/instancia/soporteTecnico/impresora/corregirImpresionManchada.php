@@ -314,6 +314,86 @@
 			}
 		}
 		
+		public static function eliminarInstancia($iri)
+		{
+			$preMsg = 'Error al eliminar la instancia de soporte técnico en impresora para corregir impresión manchada.';
+				
+			try
+			{
+				if($iri === null)
+					throw new Exception($preMsg . ' El parámetro \'$iri\' es nulo.');
+		
+				if($iri == "")
+					throw new Exception($preMsg . ' El parámetro \'$iri\' está vacío.');
+		
+				// Consultar la instancia, para obtener el código (urlSoporteTecnico) del patrón asociado a la instancia
+				$instanciaGuardada = self::obtenerInstanciaPorIri($iri);
+				
+				if($instanciaGuardada === false)
+					throw new Exception($preMsg . ' No se pudo obtener la instancia guardada.');
+				
+				if($instanciaGuardada === null)
+					throw new Exception($preMsg . ' La instancia que estaba guardada ya no existe en la base de datos.');
+				
+				if($instanciaGuardada->getUrlSoporteTecnico() != "" && $instanciaGuardada->getPatron() === null)
+					throw new Exception($preMsg . ' No se pudo obtener el patrón asociado a la instancia que se desea actualizar.');
+				
+				// Iniciar la transacción de patrones
+				$resultTransactionPatrones = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
+				
+				if($resultTransactionPatrones === false)
+					throw new Exception($preMsg . ' No se pudo iniciar la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// Existe un patrón asociado a la instancia que se desea eliminar, por lo que se debe eliminar el patrón
+				if($instanciaGuardada->getPatron() !== null)
+				{
+					// Eliminar el patrón de soporte técnico
+					if(($codigoPatron = ModeloPatron::eliminarPatron($instanciaGuardada->getPatron()->getCodigo())) === false)
+						throw new Exception($preMsg . " No se pudo eliminar el patrón de soporte técnico.");
+				}
+				
+				// Borrar los datos de la instancia desde la base de datos
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+					DELETE FROM <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
+					{
+						?iri ?predicado ?objeto .
+					}
+					WHERE
+					{
+						?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA.' .
+						?iri ?predicado ?objeto .
+						FILTER (?iri = <'.$iri.'>) .
+					}
+				';
+				
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . " No se pudieron eliminar los datos de la instancia. Detalles:\n" . join("\n", $errors));
+				
+				if($result["result"]["t_count"] == 0) {
+					// Excepción porque no se pudieron borrar los datos de la instancia, para que se ejecute el Rollback
+					throw new Exception($preMsg . ' Detalles: No se eliminó ningún registro.');
+				}
+				
+				// Commit de la transacción de patrones
+				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
+					throw new Exception($preMsg . ' No se pudo realizar el commit de la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+
+				return $iri;
+				
+			} catch (Exception $e) {
+				// Rollback de la transacción
+				if(isset($resultTransactionPatrones) && $resultTransactionPatrones === true) $GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
+		
 		public static function establecerNombrePatron(EntidadInstanciaSTImpresoraCorregirImpresionManchada $instancia)
 		{
 			$preMsg = "Error al establecer el nombre del patrón de soporte técnico para la instancia de s. t. en impresora para corregir impresión manchada.";
