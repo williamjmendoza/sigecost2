@@ -9,8 +9,7 @@
 	require_once ( SIGECOST_PATH_MODELO . '/general.php' );
 
 	class ModeloInstanciaETAplicacionGraficaDigitalDibujoDiseno
-	{
-		
+	{		
 		public static function actualizarInstancia(EntidadInstanciaETAplicacionGraficaDigitalDibujoDiseno $instancia)
 		{
 			$preMsg = 'Error al actualizar la instancia de elemento tecnológico en instalacion de aplicacion gráfica dibujo digital y diseño.';
@@ -173,7 +172,6 @@
 						'.self::buscarInstanciasSubQuery().'
 					}
 			';
-
 			$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
 
 			if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())

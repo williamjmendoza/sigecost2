@@ -47,7 +47,6 @@
 					$GLOBALS['SigecostInfo']['general'][] = "Instancia de aplicación ofimática guardada satisfactoriamente.";
 					$this->__desplegarDetalles($iri);
 					
-
 					} else {
 						$this->__desplegarFormulario();
 					}
