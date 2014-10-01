@@ -54,7 +54,9 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="iriEquipoReproduccion">En impresora:</label>
 					<div class="col-sm-10">
-						<select class="form-control" id="iriEquipoReproduccion"  name="iriEquipoReproduccion">
+						<select class="form-control" id="iriEquipoReproduccion"  name="iriEquipoReproduccion"
+							<?php echo ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) ? ' disabled' : ''?>
+						>
 							<option value="0">Seleccionar impresora...</option>
 							<?php
 								if(is_array($impresoras) && count($impresoras) > 0)
@@ -77,7 +79,9 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="iriSistemaOperativo">Sobre sistema operativo:</label>
 					<div class="col-sm-10">
-						<select class="form-control" id="iriSistemaOperativo"  name="iriSistemaOperativo">
+						<select class="form-control" id="iriSistemaOperativo"  name="iriSistemaOperativo"
+							<?php echo ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) ? ' disabled' : ''?>
+						>
 							<option value="0">Seleccionar sistema operativo...</option>
 							<?php
 								

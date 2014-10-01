@@ -54,7 +54,9 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="iriAplicacionPrograma">En aplicaci&oacute;n de programa:</label>
 					<div class="col-sm-10">
-						<select class="form-control" id="iriAplicacionPrograma"  name="iriAplicacionPrograma">
+						<select class="form-control" id="iriAplicacionPrograma"  name="iriAplicacionPrograma"
+							<?php echo ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) ? ' disabled' : ''?>
+						>
 							<option value="0">Seleccionar aplicaci&oacute;n...</option>
 							<?php
 								if(is_array($aplicaciones) && count($aplicaciones) > 0)

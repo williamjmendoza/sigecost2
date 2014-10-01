@@ -24,11 +24,12 @@
 				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
 					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea actualizar.");
 				
-				$form->getSoporteTecnico()->setIri($iri);
+				if( ($instancia = ModeloInstanciaSTImpresoraInstalacionImpresora::obtenerInstanciaPorIri($iri)) === null )
+					throw new Exception("La instancia no pudo ser cargada.");
+				
+				$form->setSoporteTecnico($instancia);
 				
 				// Validar, obtener y guardar todos los inputs desde el formulario
-				$this->__validarIriEquipoReproduccion($form);
-				$this->__validarIriSistemaOperativo($form);
 				$this->__validarSolucionSoporteTecnico($form);
 				
 				if(count($GLOBALS['SigecostErrors']['general']) == 0)
