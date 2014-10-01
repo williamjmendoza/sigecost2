@@ -148,7 +148,7 @@
 			// Validar, obtener y guardar todos los inputs desde el formulario
 			$this->__validarIriAplicacionPrograma($form);
 			$this->__validarIriSistemaOperativo($form);
-			$this->__validarSolucionSoporteTecnico($form);
+			$this->__obtenerSolucionSoporteTecnico($form);
 
 			// Verificar que no hubo nigún error con los datos suministrados en el formulario
 			if(count($GLOBALS['SigecostErrors']['general']) == 0)

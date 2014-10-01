@@ -16,6 +16,13 @@
 				$form->getSoporteTecnico()->getPatron()->setSolucion($solucion);
 			}
 		}
+		
+		protected function __obtenerSolucionSoporteTecnico(FormularioInstanciaSoporteTecnico $form)
+		{
+			if(isset($_POST['solucionSoporteTecnico']) && ($solucion=trim($_POST['solucionSoporteTecnico'])) != ''){
+				$form->getSoporteTecnico()->getPatron()->setSolucion($solucion);
+			}
+		}
 	}
 
 ?>

@@ -460,6 +460,7 @@
 		public static function guardarInstancia(EntidadInstanciaSTImpresoraInstalacionImpresora $instancia)
 		{
 			$preMsg = 'Error al guardar la instancia de soporte técnico en impresora para la instalación de impresora.';
+			$guardarPatron = false;
 			
 			try
 			{
@@ -481,20 +482,27 @@
 				if($instancia->getPatron() === null)
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getPatron()\' es nulo.');
 				
-				// Crear el nombre del patrón de soporte técnico
-				if(self::establecerNombrePatron($instancia) === false)
-					throw new Exception($preMsg . ' No se pudo establecer el nombre del patrón de soporte técnico.');
+				if($instancia->getPatron()->getSolucion() !== null && $instancia->getPatron()->getSolucion() != ""){
+					$guardarPatron = true;
+				}
 				
-				// Iniciar la transacción de patrones
-				$resultTransactionPatrones = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
-				
-				if($resultTransactionPatrones === false)
-					throw new Exception($preMsg . ' No se pudo iniciar la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
-				
-				// Guardar el patrón de soporte técnico
-				if(($codigoPatron = ModeloPatron::guardarPatron($instancia->getPatron())) === false)
-					throw new Exception($preMsg . " No se pudo guardar el patrón.");
-				
+				if($guardarPatron)
+				{
+					// Crear el nombre del patrón de soporte técnico
+					if(self::establecerNombrePatron($instancia) === false)
+						throw new Exception($preMsg . ' No se pudo establecer el nombre del patrón de soporte técnico.');
+					
+					// Iniciar la transacción de patrones
+					$resultTransactionPatrones = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
+					
+					if($resultTransactionPatrones === false)
+						throw new Exception($preMsg . ' No se pudo iniciar la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+					
+					// Guardar el patrón de soporte técnico
+					if(($codigoPatron = ModeloPatron::guardarPatron($instancia->getPatron())) === false)
+						throw new Exception($preMsg . " No se pudo guardar el patrón.");
+				}
+					
 				// Consultar el número de secuencia para la siguiente instancia de soporte técnico en impresora para la instalación de impresora, a crear.
 				$secuencia = ModeloGeneral::getSiguienteSecuenciaInstancia(SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA);
 				
@@ -517,7 +525,7 @@
 						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
 						{
 							:'.$fragmentoIriInstancia.' rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
-							:'.$fragmentoIriInstancia.' :uRLSoporteTecnico "'.$codigoPatron.'"^^xsd:string .
+							'.( $guardarPatron ? ':'.$fragmentoIriInstancia.' :uRLSoporteTecnico "'.$codigoPatron.'"^^xsd:string .' : '').'
 							:'.$fragmentoIriInstancia.' :enImpresora <'.$instancia->getEquipoReproduccion()->getIri().'> .
 							:'.$fragmentoIriInstancia.' :sobreSistemaOperativo <'.$instancia->getSistemaOperativo()->getIri().'> .
 						}
@@ -530,13 +538,14 @@
 						join("\n", $errors));
 					
 				// Commit de la transacción de patrones
-				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
+				if($guardarPatron && $GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
 					throw new Exception($preMsg . ' No se pudo realizar el commit  de la transacción de patrones. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
 				
 				return SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia;
 				
 			} catch (Exception $e) {
-				if(isset($resultTransactionPatrones) && $resultTransactionPatrones === true) $GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
+				if($guardarPatron && isset($resultTransactionPatrones) && $resultTransactionPatrones === true)
+					$GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
 				error_log($e, 0);
 				return false;
 			}
