@@ -110,7 +110,7 @@
 					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea eliminar.");
 				
 				// Eliminar la instancia de elemento tecnológico aplicacion grafica digital dibujo y diseño , de la base de datos
-				$resultado = ModeloInstanciaSTImpresoraRepararImpresionCorrida::eliminarInstancia($iri);
+				$resultado = ModeloInstanciaETAplicacionGraficaDigitalDibujoDiseno::eliminarInstancia($iri);
 					
 				if($resultado === false)
 					throw new Exception("La instancia no pudo ser eliminada.");
