@@ -45,7 +45,7 @@
 					if($resultado === false)
 						throw new Exception("La instancia no pudo ser actualizada");
 						
-					$GLOBALS['SigecostErrors']['general'] = "Instancia actualizada satisfactoriamente";
+					$GLOBALS['SigecostInfo']['general'][] = "Instancia actualizada satisfactoriamente.";
 					$this->__desplegarDetalles($iri);
 						
 					} else {
@@ -56,7 +56,6 @@
 					$this->__desplegarFormulario();
 				}
 			}	
-					
 		
 		public function buscar()
 		{
@@ -103,6 +102,42 @@
 			}
 		}
 
+		public function eliminar()
+		{
+			$iri = null;
+		
+			try
+			{
+				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
+					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea eliminar.");
+		
+				if(($resultado = ModeloInstanciaETSistemaOperativo::esInstanciaUtilizada($iri)) === null)
+					throw new Exception("No se pudo consultar si la instancia est&aacute; siendo utilizada por alguna instancia de soporte t&eacute;cnico.");
+		
+				if($resultado === true)
+					throw new Exception("La instancia est&aacute; siendo utilizada por alguna instancia de soporte t&eacute;cnico. ".
+							"Debe eliminar esas instancias de soporte t&eacute;cnico primero.");
+		
+					// Eliminar la instancia de elemento tecnológico sistema operativo, de la base de datos
+					$resultado = ModeloInstanciaETSistemaOperativo::eliminarInstancia($iri);
+						
+					if($resultado === false)
+						throw new Exception("La instancia no pudo ser eliminada.");
+		
+					$GLOBALS['SigecostInfo']['general'][] = "Instancia eliminada satisfactoriamente.";
+		
+					$this->buscar();
+		
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				if($iri !== null && $iri != "")
+					$this->__desplegarDetalles($iri);
+				else
+					$this->buscar();
+			}
+		}
+		
+		
 		public function guardar()
 		{
 			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR);

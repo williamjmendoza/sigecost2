@@ -246,6 +246,90 @@
 			}
 		}
 
+		public static function eliminarInstancia($iri)
+		{
+			$preMsg = 'Error al eliminar la instancia de elemento tecnol&oacute;ico sistema operativo.';
+		
+			try
+			{
+				if($iri === null)
+					throw new Exception($preMsg . ' El parámetro \'$iri\' es nulo.');
+		
+				if($iri == "")
+					throw new Exception($preMsg . ' El parámetro \'$iri\' está vacío.');
+				// Borrar los datos de la instancia desde la base de datos
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+					DELETE FROM <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
+					{
+						?iri ?predicado ?objeto .
+					}
+					WHERE
+					{
+						?iri rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
+						?iri ?predicado ?objeto .
+						FILTER (?iri = <'.$iri.'>) .
+					}
+				';
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . " No se pudieron eliminar los datos de la instancia. Detalles:\n" . join("\n", $errors));
+		
+				if($result["result"]["t_count"] == 0) {
+					// Excepción porque no se pudieron borrar los datos de la instancia, para que se ejecute el Rollback
+					throw new Exception($preMsg . ' Detalles: No se eliminó ningún registro.');
+				}
+		
+				return $iri;
+		
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
+		public static function esInstanciaUtilizada($iri)
+		{
+			$preMsg = 'Error al verificar si está siendo utilizada una instancia de sistema operativo.';
+		
+			try
+			{
+				if($iri === null)
+					throw new Exception($preMsg . ' El parámetro \'$iri\' es nulo.');
+		
+				if($iri == "")
+					throw new Exception($preMsg . ' El parámetro \'$iri\' está vacío.');
+		
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+						ASK
+						{
+							?instanciaAplicacion rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
+							?instanciaST :sobreSistemaOperativo ?instanciaAplicacion .
+							FILTER (?instanciaAplicacion = <'.$iri.'>) .
+						}
+								
+				';
+		
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception("Error al verificar si está siendo utilizada la instancia de sistema operativo." .
+							" Detalles:\n" . join("\n", $errors));
+		
+					return $result['result'];
+		
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return null;
+			}
+		}
+		
 		// Guarda una nueva instancia de sistema operativo, y retorno su iri
 		public static function guardarSistemaOperativo(EntidadInstanciaETSistemaOperativo $sistemaOperativo)
 		{
