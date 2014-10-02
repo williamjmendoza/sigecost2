@@ -8,16 +8,6 @@
 	<head>
 	
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
-    	
-    	<style type="text/css">
-    	/*
-    		div > div > div {
-    			border-width: 1px; border-color: red; border-style: solid;
-    		}
-    		*/
-    		
-    		body { padding-top: 70px; }
-    	</style>
 	
 	</head>
 	
