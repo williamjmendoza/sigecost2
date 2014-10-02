@@ -242,7 +242,7 @@
 					throw new Exception("Error al consultar la existencia de la instancia de la aplicación gráfica digital, dibujo y diseño " .
 							"(nombre = '".$aplicacion->getNombre()."', versión = '".$aplicacion->getVersion()."'). Detalles:\n" . join("\n", $errors));
 
-					return $result['result'];
+				return $result['result'];
 
 			} catch (Exception $e) {
 				error_log($e, 0);
@@ -261,8 +261,9 @@
 		
 				if($iri == "")
 					throw new Exception($preMsg . ' El parámetro \'$iri\' está vacío.');
+				
 				// Borrar los datos de la instancia desde la base de datos
-					$query = '
+				$query = '
 					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 		
@@ -277,6 +278,7 @@
 						FILTER (?iri = <'.$iri.'>) .
 					}
 				';
+				
 				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 				
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
@@ -294,6 +296,44 @@
 				return false;
 			}
 		}	
+		
+		public static function esInstanciaUtilizada($iri)
+		{
+			$preMsg = 'Error al verificar si está siendo utilizada una instancia de aplicación gráfica digital, dibujo y diseño.';
+			
+			try
+			{
+				if($iri === null)
+					throw new Exception($preMsg . ' El parámetro \'$iri\' es nulo.');
+				
+				if($iri == "")
+					throw new Exception($preMsg . ' El parámetro \'$iri\' está vacío.');
+				
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				
+						ASK
+						{
+							?instanciaAplicacion rdf:type :'.SIGECOST_FRAGMENTO_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO.' .
+							?instanciaST :aplicacionGraficaDigitalDibujoDiseno ?instanciaAplicacion .
+							FILTER (?instanciaAplicacion = <'.$iri.'>) .
+						}
+				';
+				
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception("Error al verificar si está siendo utilizada la instancia de la aplicación gráfica digital, dibujo y diseño." .
+						" Detalles:\n" . join("\n", $errors));
+				
+				return $result['result'];
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return null;
+			}
+		}
 		
 		// Guarda una nueva instancia de aplicación gráfica digital, dibujo y diseño, y retorna su iri
 		public static function guardarAplicacion(EntidadInstanciaETAplicacionGraficaDigitalDibujoDiseno $aplicacion)

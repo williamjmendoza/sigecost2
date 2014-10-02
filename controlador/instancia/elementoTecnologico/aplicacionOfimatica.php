@@ -105,10 +105,19 @@
 
 		public function eliminar()
 		{
+			$iri = null;
+			
 			try
 			{
 				if( (!isset($_POST['iri'])) || (($iri=trim($_POST['iri'])) == '') )
 					throw new Exception("No se encontr&oacute; ning&uacute;n identificador para la instancia que desea eliminar.");
+				
+				if(($resultado = ModeloInstanciaETAplicacionOfimatica::esInstanciaUtilizada($iri)) === null)
+					throw new Exception("No se pudo consultar si la instancia est&aacute; siendo utilizada por alguna instancia de soporte t&eacute;cnico.");
+				
+				if($resultado === true)
+					throw new Exception("La instancia est&aacute; siendo utilizada por alguna instancia de soporte t&eacute;cnico. ".
+							"Debe eliminar esas instancias de soporte t&eacute;cnico primero.");
 		
 				// Eliminar la instancia de elemento tecnológico aplicacion ofimática, de la base de datos
 				$resultado = ModeloInstanciaETAplicacionOfimatica::eliminarInstancia($iri);
@@ -122,7 +131,10 @@
 				
 			} catch (Exception $e){
 				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
-				$this->buscar();
+				if($iri !== null && $iri != "")
+					$this->__desplegarDetalles($iri);
+				else
+					$this->buscar();
 			}
 		}		
 		
