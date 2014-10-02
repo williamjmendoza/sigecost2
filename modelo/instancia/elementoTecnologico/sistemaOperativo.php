@@ -320,9 +320,9 @@
 		
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception("Error al verificar si está siendo utilizada la instancia de sistema operativo." .
-							" Detalles:\n" . join("\n", $errors));
+						" Detalles:\n" . join("\n", $errors));
 		
-					return $result['result'];
+				return $result['result'];
 		
 			} catch (Exception $e) {
 				error_log($e, 0);

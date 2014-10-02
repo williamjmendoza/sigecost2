@@ -118,15 +118,15 @@
 					throw new Exception("La instancia est&aacute; siendo utilizada por alguna instancia de soporte t&eacute;cnico. ".
 							"Debe eliminar esas instancias de soporte t&eacute;cnico primero.");
 		
-					// Eliminar la instancia de elemento tecnológico sistema operativo, de la base de datos
-					$resultado = ModeloInstanciaETSistemaOperativo::eliminarInstancia($iri);
-						
-					if($resultado === false)
-						throw new Exception("La instancia no pudo ser eliminada.");
-		
-					$GLOBALS['SigecostInfo']['general'][] = "Instancia eliminada satisfactoriamente.";
-		
-					$this->buscar();
+				// Eliminar la instancia de elemento tecnológico sistema operativo, de la base de datos
+				$resultado = ModeloInstanciaETSistemaOperativo::eliminarInstancia($iri);
+					
+				if($resultado === false)
+					throw new Exception("La instancia no pudo ser eliminada.");
+	
+				$GLOBALS['SigecostInfo']['general'][] = "Instancia eliminada satisfactoriamente.";
+	
+				$this->buscar();
 		
 			} catch (Exception $e){
 				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
