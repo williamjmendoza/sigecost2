@@ -1,7 +1,3 @@
-<?php
-	include(dirname(__FILE__)."/init.php");
-	
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -24,8 +20,16 @@
 				</h1>
 			</div>
 			
-			<form action="exportar.php">
-			
+			<form class="form-horizontal" role="form" method="post" action="archivo.php">
+				<div style="display:none;">
+					<input type="hidden" name="accion" value="">
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3"  for="exportarOwl">Exportar ontolog&iacute;a a owl:</label>
+					<div class="col-sm-5">
+						<button type="submit" class="btn btn-primary" onclick="setAccion('exportarOntologiaAOwl');">Exportar</button>
+					</div>
+				</div>
 			</form>
 		</div>
 

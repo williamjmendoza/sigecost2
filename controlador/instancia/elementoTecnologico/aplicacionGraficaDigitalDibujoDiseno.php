@@ -47,12 +47,12 @@
 					$GLOBALS['SigecostInfo']['general'][] = "Instancia actualizada satisfactoriamente.";
 					$this->__desplegarDetalles($iri);
 					
-					} else {
-						$this->__desplegarFormulario();
-					}
-					} catch (Exception $e){
-						$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
-						$this->__desplegarFormulario();
+				} else {
+					$this->__desplegarFormulario();
+				}
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->__desplegarFormulario();
 		 	}
 		}
 				

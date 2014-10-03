@@ -98,10 +98,10 @@
 				// Commit de la transacción
 				return $instancia->getIri();
 				
-				} catch (Exception $e) {
-					// Rollback de la transacción
-					error_log($e, 0);
-					return false;
+			} catch (Exception $e) {
+				// Rollback de la transacción
+				error_log($e, 0);
+				return false;
 			}
 		}				
 		
