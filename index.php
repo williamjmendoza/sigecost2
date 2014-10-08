@@ -33,7 +33,7 @@
 			<h1>B&uacute;squedas</h1>
 			<ul>
 				<li><a href="controlador/desarrollo/todasTripletas.php">Todas las tripletas</a></li>
-				<li><a href="controlador/busqueda.php">B&uacute;squeda</a></li>
+				<li><a href="controlador/pruebaBusqueda.php">B&uacute;squeda</a></li>
 			</ul>
 		</div>
 

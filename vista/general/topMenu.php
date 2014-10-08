@@ -86,7 +86,8 @@
 						</a></li>
 					</ul>
 				</li>
-				<li class="active"><a href="#">B&uacute;squeda</a></li>
+				<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/busqueda.php?accion=buscar">B&uacute;squeda</a></li>
+				<li class="active"><a href="#">Opciones</a></li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 
