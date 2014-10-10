@@ -23,14 +23,18 @@
 					<input type="hidden" name="accion" value="buscar">
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="clave">Palabra clave:</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="clave" name="clave" autocomplete="off" placeholder="Introduzca una(s) palabra(s) clave(es)" value="">
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-primary">Buscar</button>
+					<label class="sr-only" for="clave">B&uacute;squeda:</label>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<input type="text" class="form-control" id="clave" name="clave" autocomplete="off" autofocus="autofocus"
+								placeholder="Introduzca una o mas palabras claves" value=""
+							>
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-primary">
+									<span class="glyphicon glyphicon-search"></span>
+								</button>
+							</span>
+						</div>
 					</div>
 				</div>
 			</form>
