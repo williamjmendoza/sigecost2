@@ -11,13 +11,6 @@
 	<head>
 
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
-		<script type="text/javascript">
-    	
-			function setAccion(accion) {
-				$('input[type="hidden"][name="accion"]').val(accion);
-			}
-			
-    	</script>
 
 	</head>
 

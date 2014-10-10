@@ -57,7 +57,7 @@
 							<td><?php echo $escaner->getMarca() ?> </td>
 							<td><?php echo $escaner->getModelo() ?></td>
 							<td>
-								<form class="form-horizonta buscarOpcionesl" role="form" action="escaner.php" method="post">
+								<form class="form-horizonta buscarOpciones" role="form" action="escaner.php" method="post">
 									<div style="display:none;">
 										<input type="hidden" name="accion" value="desplegarDetalles">
 										<input type="hidden" name="iri" value="<?php echo $escaner->getIri() ?>">

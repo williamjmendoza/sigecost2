@@ -12,12 +12,6 @@
 	
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
 		
-		<script type="text/javascript">    	
-			function setAccion(accion) {
-				$('input[type="hidden"][name="accion"]').val(accion);
-			}			
-    	</script>
-		
 	</head>
 	
 	<body>
@@ -41,7 +35,12 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico impresora</h1>
+				<h1>
+					Instancia del elemento tecnol&oacute;gico impresora<?php
+						if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) {
+					?>: <small><?php echo $equipoReproduccion->getMarca() . ' - ' . $equipoReproduccion->getModelo() ?></small>
+					<?php } ?>
+				</h1>
 			</div>
 			
 			<form class="form-horizontal" role="form" method="post" action="impresora.php">
@@ -51,8 +50,6 @@
 						<input type="hidden" name="iri" value="<?php echo $form->getEquipoReproduccion()->getIri() ?>">
 			 		<?php } ?>
 				</div>
-				
-				<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_INSERTAR) { ?>
 				<div class="form-group">
 					<label class="control-label col-sm-3" for="marca">Marca de la impresora:</label>
 					<div class="col-sm-5">
@@ -70,45 +67,16 @@
 						>
 					</div>
 				</div>
-				<?php } ?>
-				
 				<div class="form-group">
-				<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_INSERTAR) { ?>
-					<div class="col-sm-offset-3 col-sm-5">
-							<button type="submit" class="btn btn-primary" onclick="setAccion('guardar');">Guardar</button>
-					</div>
-				<?php } else if ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
-					<div class="form-group">
+					<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_INSERTAR) { ?>
 						<div class="col-sm-offset-3 col-sm-5">
-							<p class="form-control-static">
-							<h4> Instancia a Modificar: 
-							<?php echo $equipoReproduccion->getMarca() . ' - ' . $equipoReproduccion->getModelo() ?>
-							</h4>
-							</p>
-						</div>			
-					</div>
-					<div class="form-group">
-					<label class="control-label col-sm-3" for="marca">Marca de la impresora:</label>
-					<div class="col-sm-5">
-						<input
-							type="text" class="form-control" id="marca" name="marca" value="<?php echo $equipoReproduccion->getMarca()?>"
-							value="<?php echo $equipoReproduccion != null ? $equipoReproduccion->getMarca() : "" ?>"
-						>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-3" for="modelo">Modelo de la impresora:</label>
-					<div class="col-sm-5">
-						<input type="text" class="form-control" id="modelo" name="modelo" value="<?php echo $equipoReproduccion->getModelo() ?>"
-							value="<?php echo $equipoReproduccion != null ? $equipoReproduccion->getModelo() : "" ?>"
-						>
-					</div>
-				</div>
-				<div class="col-sm-offset-3 col-sm-5">
-						<button type="submit" class="btn btn-primary" onclick="setAccion('actualizar');">Actualizar</button>
-				</div>
-			<?php } ?>	
-					
+							<button type="submit" class="btn btn-primary" onclick="setAccion('guardar');">Guardar</button>
+						</div>
+					<?php } else if ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
+						<div class="col-sm-offset-3 col-sm-5">
+							<button type="submit" class="btn btn-primary" onclick="setAccion('actualizar');">Actualizar</button>
+						</div>
+					<?php } ?>
 				</div>
 			</form>
 		
