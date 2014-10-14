@@ -18,7 +18,7 @@
 				</h1>
 			</div>
 		
-			<form class="form-horizontal" role="form" method="post" action="busqueda.php">
+			<form class="form-horizontal" role="form" method="post" action="buscar.php">
 				<div style="display:none;">
 					<input type="hidden" name="accion" value="buscar">
 				</div>

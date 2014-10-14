@@ -6,13 +6,19 @@
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/controlador.php' );
 
 	// Modelos
-	//require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/impresora.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/buscar.php' );
 
 	class ControladorBusqueda extends Controlador
 	{
 		public function buscar()
 		{
-			require ( SIGECOST_PATH_VISTA . '/busqueda/busqueda.php' );
+			
+			if(isset($_POST['clave']) && ($clave = trim($_POST['clave'])) != "")
+			{
+				ModeloBuscar::buscar(array('clave' => $clave));
+			}
+			
+			require ( SIGECOST_PATH_VISTA . '/buscar/buscar.php' );
 		}
 	}
 	
