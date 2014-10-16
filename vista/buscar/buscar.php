@@ -30,7 +30,7 @@
 								placeholder="Introduzca una o mas palabras claves" value=""
 							>
 							<span class="input-group-btn">
-								<button type="button" class="btn btn-primary">
+								<button type="submit" class="btn btn-primary">
 									<span class="glyphicon glyphicon-search"></span>
 								</button>
 							</span>

@@ -25,21 +25,38 @@
 				{
 					
 					
+					/*
+					$graph->setPrefix('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+					$graph->setPrefix('protege', 'http://protege.stanford.edu/plugins/owl/protege#');
+					$graph->setPrefix('xsp', 'http://www.owl-ontologies.com/2005/08/07/xsp.owl#');
+					$graph->setPrefix('owl', 'http://www.w3.org/2002/07/owl#');
+					$graph->setPrefix('xsd', 'http://www.w3.org/2001/XMLSchema#');
+					$graph->setPrefix('swrl', 'http://www.w3.org/2003/11/swrl#');
+					$graph->setPrefix('swrlb', 'http://www.w3.org/2003/11/swrlb#');
+					$graph->setPrefix('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
+					$graph->setPrefix('base', 'http://www.owl-ontologies.com/OntologySoporteTecnico.owl#');
+					*/
 					
 					$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX owl: <http://www.w3.org/2002/07/owl#>
 					
 						SELECT
-							?iri
-							?urlSoporteTecnico
+							?instanciaST ?claseST ?urlSoporteTecnico ?claseET ?instanciaET ?propiedad ?objeto
 						WHERE
 						{
-							?iri rdf:type :'.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA.' .
-							OPTIONAL { ?iri :uRLSoporteTecnico ?urlSoporteTecnico } .
+							?instanciaST rdf:type ?claseST .
+							?instanciaST :uRLSoporteTecnico ?urlSoporteTecnico .
+							?instanciaST ?IntanciaST_ET ?instanciaET .
+							?claseET rdf:type owl:Class .
+							?instanciaET rdf:type ?claseET .
+							?instanciaET ?propiedad ?objeto .
+							FILTER regex(?objeto, "'.$clave.'"^^xsd:string,  "i") .
+							FILTER isLiteral(?objeto) .
 						}
 						LIMIT
-							4
+							10
 					';
 					
 					// Borrar
@@ -53,10 +70,13 @@
 					if (is_array($rows) && count($rows) > 0){
 						$instancias = array();
 						foreach ($rows AS $row){
+							/*
 							$instancias[] = array(
 								'iri' => $row['iri'],
 								'urlSoporteTecnico' => $row['urlSoporteTecnico']
 							);
+							*/
+							$instancias[] = $row;
 						}
 					}
 					
