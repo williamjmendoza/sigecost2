@@ -41,22 +41,29 @@
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 						PREFIX owl: <http://www.w3.org/2002/07/owl#>
+						PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 					
 						SELECT
-							?instanciaST ?claseST ?urlSoporteTecnico ?claseET ?instanciaET ?propiedad ?objeto
+							?claseST ?labelClaseST ?instanciaST ?urlSoporteTecnico ?claseET ?instanciaET ?propiedadET ?labelPropiedadET ?objeto
 						WHERE
 						{
+							?claseST rdfs:label ?labelClaseST .
 							?instanciaST rdf:type ?claseST .
 							?instanciaST :uRLSoporteTecnico ?urlSoporteTecnico .
 							?instanciaST ?IntanciaST_ET ?instanciaET .
 							?claseET rdf:type owl:Class .
 							?instanciaET rdf:type ?claseET .
-							?instanciaET ?propiedad ?objeto .
-							FILTER regex(?objeto, "'.$clave.'"^^xsd:string,  "i") .
+							?propiedadET rdfs:label ?labelPropiedadET .
+							?instanciaET ?propiedadET ?objeto .
+							FILTER (
+								regex(?objeto, "'.$clave.'"^^xsd:string,  "i") ||	# Filtro para instancia
+								regex(?labelClaseST, "'.$clave.'"^^xsd:string,  "i") || # Filtro para clase
+								regex(?labelPropiedadET, "'.$clave.'"^^xsd:string,  "i") # Filtro para propiedad de datos
+							) .
 							FILTER isLiteral(?objeto) .
 						}
 						LIMIT
-							10
+							20
 					';
 					
 					// Borrar
