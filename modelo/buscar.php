@@ -66,6 +66,34 @@
 							20
 					';
 					
+					$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX owl: <http://www.w3.org/2002/07/owl#>
+						PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			
+						SELECT DISTINCT
+							?claseNivel1 ?claseNivel2 ?claseNivel3 ?claseNivel4
+						WHERE
+						{
+							?claseNivel1 rdfs:subClassOf :SoporteTecnico .
+							OPTIONAL {
+								?claseNivel2 rdfs:subClassOf ?claseNivel1 .
+								OPTIONAL {
+									?claseNivel3 rdfs:subClassOf ?claseNivel2 .
+									OPTIONAL { ?claseNivel4 rdfs:subClassOf ?claseNivel3 . } .
+								} .
+							} .
+							
+							#OPTIONAL { ?claseNivel4 rdfs:subClassOf ?claseNivel3 . } .
+							
+								
+								
+							#FILTER (?clasePadre = :SoporteTecnico ) .
+						}
+						
+					';
+					
 					// Borrar
 					//error_log($query);
 					
@@ -88,7 +116,11 @@
 					}
 					
 					// Borrar
-					error_log(print_r($instancias, true));
+					//error_log(print_r($instancias, true));
+					
+					echo "<pre>";
+					print_r($instancias);
+					echo "</pre>";
 					
 					// FILTER (?iri = <'.$instancia->getIri().'>) .
 					
