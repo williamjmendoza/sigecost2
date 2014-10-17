@@ -13,6 +13,10 @@
 			if(!isset($_POST['solucionSoporteTecnico']) || ($solucion=trim($_POST['solucionSoporteTecnico'])) == ''){
 				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir una soluci&oacute;n de soporte t&eacute;cnico.';
 			} else {
+				
+				if( $form->getSoporteTecnico()->getPatron() === null )
+					$form->getSoporteTecnico()->setPatron(new EntidadPatron());
+				
 				$form->getSoporteTecnico()->getPatron()->setSolucion($solucion);
 			}
 		}
