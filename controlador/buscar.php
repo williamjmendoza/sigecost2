@@ -15,7 +15,9 @@
 			
 			if(isset($_POST['clave']) && ($clave = trim($_POST['clave'])) != "")
 			{
-				ModeloBuscar::buscar(array('clave' => $clave));
+				$datos = ModeloBuscar::buscar(array('clave' => $clave));
+				
+				$GLOBALS['SigecostRequestVars']['datos'] = $datos;
 			}
 			
 			require ( SIGECOST_PATH_VISTA . '/buscar/buscar.php' );

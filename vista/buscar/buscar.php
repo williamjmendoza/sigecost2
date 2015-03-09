@@ -1,3 +1,7 @@
+<?php
+	$datos = $GLOBALS['SigecostRequestVars']['datos'];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -38,6 +42,58 @@
 					</div>
 				</div>
 			</form>
+			
+			<?php
+				if (is_array($datos) && count($datos) > 0)
+				{
+			?>
+			<div class="table-responsive">
+				<table class="table table table-hover">
+					<thead>
+						<tr>
+			<?php
+					$headres = array_keys(current($datos));
+				
+					foreach ($headres AS $header)
+					{
+			?>
+							
+							<th><?php echo $header?></th>
+			<?php
+					}
+				
+					reset($datos);
+			?>
+						</tr>
+					</thead>
+					<tbody>
+			<?php
+					foreach ($datos AS $datosInternos)
+					{
+			?>
+						<tr>
+			<?php
+						foreach ($datosInternos AS $dato)
+						{
+			?>
+							<td><?php echo $dato; ?></td>
+			<?php
+						}
+			?>
+						</tr>
+			<?php
+					}
+			?>
+					</tbody>
+				</table>
+			</div>
+			<?php
+				} else {
+			?>
+			<p>No existen elementos que coincidan con la b&uacute;squeda.</p>
+			<?php
+				}
+			?>
 			
 		</div>
 
