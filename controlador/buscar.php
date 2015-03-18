@@ -18,6 +18,7 @@
 				$datos = ModeloBuscar::buscar(array('clave' => $clave));
 				
 				$GLOBALS['SigecostRequestVars']['datos'] = $datos;
+				$GLOBALS['SigecostRequestVars']['clave'] = $clave;
 			}
 			
 			require ( SIGECOST_PATH_VISTA . '/buscar/buscar.php' );

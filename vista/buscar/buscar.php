@@ -1,5 +1,6 @@
 <?php
 	$datos = $GLOBALS['SigecostRequestVars']['datos'];
+	$clave = isset($GLOBALS['SigecostRequestVars']['clave']) ? $GLOBALS['SigecostRequestVars']['clave'] : null;
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +32,7 @@
 					<div class="col-sm-4">
 						<div class="input-group">
 							<input type="text" class="form-control" id="clave" name="clave" autocomplete="off" autofocus="autofocus"
-								placeholder="Introduzca una o mas palabras claves" value=""
+								placeholder="Introduzca una o mas palabras claves" value="<?php echo $clave != null ? $clave : '' ?>"
 							>
 							<span class="input-group-btn">
 								<button type="submit" class="btn btn-primary">

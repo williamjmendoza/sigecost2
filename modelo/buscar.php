@@ -37,6 +37,9 @@
 					$graph->setPrefix('base', 'http://www.owl-ontologies.com/OntologySoporteTecnico.owl#');
 					*/
 					
+					
+					// Query de búsquedas en instancias
+					/*
 					$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -65,7 +68,10 @@
 						LIMIT
 							20
 					';
+					*/
 					
+					// Query de búsquedas en instancias
+					/*
 					$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
 						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -94,8 +100,9 @@
 						LIMIT
 							20
 					';
+					*/
 					
-					
+					// Query de búsquedas en clases
 					/*
 					$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
@@ -125,6 +132,26 @@
 						
 					';
 					*/
+					// Query para obtener el árbol de soporte técnico
+					$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX owl: <http://www.w3.org/2002/07/owl#>
+						PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+						
+						SELECT
+							?claseHijo ?clasePadre
+						WHERE
+						{
+							#?claseHijo rdfs:subClassOf :SoporteTecnico
+							#?claseHijo rdfs:subClassOf ?clasePadre .
+							#{ ?hijo rdfs:subClassOf ?claseHijo }
+							{ ?claseHijo rdfs:subClassOf ?clasePadre } UNION { ?clasePadre rdfs:subClassOf ?claseHijo }
+							
+						}
+						ORDER BY
+							?claseHijo
+					';
 					
 					// Borrar
 					//error_log($query);
@@ -167,4 +194,13 @@
 			}
 		}
 	}
+	
+	/*
+	Búsqueda:
+		1 - Buscar la palabra clave en las instancias
+		2 - Buscar la palabra clave en las clases
+			2.1 - Si la coincidencia es en una clase padre, todas sus clase hijos (e instancias) apareceran
+					En los resultados de la búsquea.
+			
+	*/
 ?>
