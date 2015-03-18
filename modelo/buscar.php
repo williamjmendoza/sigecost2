@@ -5,6 +5,109 @@
 
 	class ModeloBuscar
 	{
+		// Función recursiva de Anibal para construir e árbol
+		public static function consultar_clases($clase,$store)
+		{
+		
+		
+			$q =' 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				PREFIX kb: <http://protege.stanford.edu/kb#>
+				SELECT ?subclase ?label
+				WHERE { 	?subclase rdfs:subClassOf kb:' . $clase . ' .
+							?subclase rdfs:label ?label .
+		}
+			';
+		
+			$rows = $store->query($q, 'rows');
+			$r = '';
+			$h = '';
+			if ($rows = $store->query($q, 'rows')) {
+		
+				$params = array();
+		
+				foreach ($rows as $row) {
+		
+					$x = consultar_clases($row['label'],$store);
+					$params[$row['label']] = $x != false?  $x : array();
+					 
+		
+		
+				}
+		
+				return $params;
+			}
+				
+			else{
+				return false;
+			}
+				
+		}
+		
+		public static function sn2()
+		{
+			return self::sn(SIGECOST_IRI_ONTOLOGIA_NUMERAL."SoporteTecnico");
+		}
+		
+		public static function sn($iriPadre, $contador = 1, &$datos = array())
+		{
+			$preMsg = 'Error al buscar patrones en la ontología';
+			$hijos = null;
+				
+			try
+			{
+				if ($iriPadre === null)
+					throw new Exception($preMsg . ' El parámetro \'$iriPadre\' es nulo.');
+			
+				if ( ($iriPadre = trim($iriPadre)) == '')
+					throw new Exception($preMsg . ' El parámetro \'$iriPadre\' está vacío.');
+			
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX owl: <http://www.w3.org/2002/07/owl#>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			
+					SELECT
+						?clasePadre ?claseHijo
+					WHERE
+					{
+						?clasePadre rdf:type owl:Class .
+						?claseHijo rdfs:subClassOf ?clasePadre .
+						?claseHijo rdf:type owl:Class .
+						FILTER (?clasePadre = <'.$iriPadre.'>)
+					}
+					ORDER BY
+						?clasePadre ?claseHijo
+				';
+				
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+					
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+					
+				if (is_array($rows) && count($rows) > 0){
+					$hijos = array();
+					foreach ($rows AS $row){
+						/*
+						 $instancias[] = array(
+						 		'iri' => $row['iri'],
+						 		'urlSoporteTecnico' => $row['urlSoporteTecnico']
+						 );
+						*/
+						$hijos[] = $row;
+					}
+				}
+				
+				return $hijos;
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+			
+		}
+		
 		public static function buscar(array $parametros = null)
 		{
 			$preMsg = 'Error al buscar patrones en la ontología';
@@ -140,17 +243,16 @@
 						PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 						
 						SELECT
-							?claseHijo ?clasePadre
+							?clasePadre ?claseHijo
 						WHERE
 						{
-							#?claseHijo rdfs:subClassOf :SoporteTecnico
-							#?claseHijo rdfs:subClassOf ?clasePadre .
-							#{ ?hijo rdfs:subClassOf ?claseHijo }
-							{ ?claseHijo rdfs:subClassOf ?clasePadre } UNION { ?clasePadre rdfs:subClassOf ?claseHijo }
+							?clasePadre rdf:type owl:Class .
+							?claseHijo rdfs:subClassOf ?clasePadre .
+							?claseHijo rdf:type owl:Class .
 							
 						}
 						ORDER BY
-							?claseHijo
+							?clasePadre ?claseHijo
 					';
 					
 					// Borrar

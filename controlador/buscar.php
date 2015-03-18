@@ -15,7 +15,10 @@
 			
 			if(isset($_POST['clave']) && ($clave = trim($_POST['clave'])) != "")
 			{
-				$datos = ModeloBuscar::buscar(array('clave' => $clave));
+				//$datos = ModeloBuscar::buscar(array('clave' => $clave));
+				
+				// Borrar
+				$datos = ModeloBuscar::sn2();
 				
 				$GLOBALS['SigecostRequestVars']['datos'] = $datos;
 				$GLOBALS['SigecostRequestVars']['clave'] = $clave;
