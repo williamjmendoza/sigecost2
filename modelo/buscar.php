@@ -5,6 +5,15 @@
 	
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/aplicacionGDDD/desinstalacionAplicacion.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/aplicacionGDDD/instalacionAplicacionGDDD.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/aplicacionOfimatica/corregirCierreInesperado.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/aplicacionOfimatica/desinstalacionAplicacionOfimatica.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/aplicacionOfimatica/instalacionAplicacionOfimatica.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFD.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/impresora/corregirImpresionManchada.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/impresora/desatascarPapel.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/impresora/instalacionImpresora.php' );
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/impresora/repararImpresionCorrida.php' );
 
 	class ModeloBuscar
 	{
@@ -516,17 +525,57 @@
 				switch ($iriPadre)
 				{
 					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO:
-
 						$instancias = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::buscarInstancias(array('iris' => $hijos));
-						
 						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						break;
 						
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO:
+						$instancias = ModeloInstanciaSTAplicacionGDDDInstalacionAplicacionGDDD::buscarInstancias(array('iris' => $hijos));
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						break;
+						
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_CORREGIR_CIERRE_INESPERADO:
+						$instancias = ModeloInstanciaSTAplicacionOfimaticaCorregirCierreInesperado::buscarInstancias(array('iris' => $hijos));
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						break;
+						
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_OFIMATICA:
+						$instancias = ModeloInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica::buscarInstancias(array('iris' => $hijos));
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						break;
+						
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_APLICACION_OFIMATICA:
+						$instancias = ModeloInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimatica::buscarInstancias(array('iris' => $hijos));
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						break;
+						
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO:
+						$instancias = ModeloInstanciaSTAplicacionOfimaticaRestablecerBarraHerramientasFFD::buscarInstancias(array('iris' => $hijos));
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						break;
+						
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA:
+						$instancias = ModeloInstanciaSTImpresoraCorregirImpresionManchada::buscarInstancias(array('iris' => $hijos));
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						break;
+						
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESATASCAR_PAPEL:
+						$instancias = ModeloInstanciaSTImpresoraDesatascarPapel::buscarInstancias(array('iris' => $hijos));
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						break;
+						
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA:
+						$instancias = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias(array('iris' => $hijos));
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						break;
+						
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA:
+						$instancias = ModeloInstanciaSTImpresoraRepararImpresionCorrida::buscarInstancias(array('iris' => $hijos));
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
 						break;
 						
 					default:
-						
 						return array('datosClaseST' => array(), 'instanciasClaseST' => array());
-						
 						break;
 				}
 				
