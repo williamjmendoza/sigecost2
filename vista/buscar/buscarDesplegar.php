@@ -69,7 +69,7 @@
 <?php
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFDDesplegar.php' );
 			breaK;
-	
+
 		default:
 ?>
 			<div class="page-header">
