@@ -164,6 +164,7 @@
 			$instancias = array();
 			$limite = '';
 			$desplazamiento = '';
+			$filtros = '';
 			$codigosPatrones = array();
 
 			try
@@ -171,6 +172,24 @@
 				if($parametros !== null && count($parametros) > 0){
 					if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
 					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
+					
+					if(isset($parametros['iris']))
+					{
+						if(!is_array($parametros['iris']))
+							throw new Exception($preMsg . ' El parámetro \'$parametros[\'iris\']\' no es un arreglo.');
+						
+						foreach ($parametros['iris'] AS $iri)
+						{
+							$filtros .= '
+								'.( $filtros != '' ? '|| ' : '' ).'?iri = <'.$iri.'>';
+						}
+					}
+					
+					$filtros = $filtros != '' ? '
+							FILTER (
+								'.$filtros.'
+							) .
+					' : '';
 				}
 
 				// Buscar las instancias de soporte técnico en impresora para la instalación de impresora
@@ -189,7 +208,7 @@
 							?versionSistemaOperativo
 						WHERE
 						{
-							'.self::buscarInstanciasSubQuery().'
+							'.self::buscarInstanciasSubQuery(array('filtros' => $filtros)).'
 						}
 						ORDER BY
 							?nombreAplicacion
@@ -279,6 +298,7 @@
 				?iriSistemaOperativo rdf:type :'.SIGECOST_FRAGMENTO_SISTEMA_OPERATIVO.' .
 				?iriSistemaOperativo :nombreSistemaOperativo ?nombreSistemaOperativo .
 				?iriSistemaOperativo :versionSistemaOperativo ?versionSistemaOperativo .
+				'.(isset($parametros['filtros']) ? $parametros['filtros'] : '').'
 			';
 
 		}

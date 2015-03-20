@@ -1,6 +1,6 @@
 <?php
 	$form = FormularioManejador::getFormulario(FORM_BUSCAR);
-	$datos = $GLOBALS['SigecostRequestVars']['datos'];
+	$instancias = $GLOBALS['SigecostRequestVars']['instancias'];
 	$clave = isset($GLOBALS['SigecostRequestVars']['clave']) ? $GLOBALS['SigecostRequestVars']['clave'] : null;
 ?>
 
@@ -46,21 +46,52 @@
 			</form>
 			
 			<?php
-				if (is_array($datos) && count($datos) > 0)
+				if (is_array($instancias) && count($instancias) > 0)
 				{
-					$GLOBALS['SigecostRequestVars']['contador'] = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
+					$contador = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
 			?>
 			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<div class="table-responsive">
+				<table class="table table table-hover">
+					<thead>
+						<tr>
+							<th>Nº</th>
 			<?php
-					foreach ($datos AS $iriClaseST => $datosClaseST)
+					$headres = array_keys(current($instancias));
+				
+					foreach ($headres AS $header)
 					{
-						$GLOBALS['SigecostRequestVars']['iriClaseST'] = $iriClaseST;
-						$GLOBALS['SigecostRequestVars']['instanciasClaseST'] = $datosClaseST['instanciasClaseST'];
-						
-						require ( SIGECOST_PATH_VISTA . '/buscar/buscarDesplegar.php' );
+			?>
+							
+							<th><?php echo $header?></th>
+			<?php
+					}
+				
+					reset($instancias);
+			?>
+						</tr>
+					</thead>
+					<tbody>
+			<?php
+					foreach ($instancias AS $datosInternos)
+					{
+			?>
+						<tr>
+							<td><?php echo ++$contador; ?></td>
+			<?php
+						foreach ($datosInternos AS $dato)
+						{
+			?>
+							<td><?php echo $dato; ?></td>
+			<?php
+						}
+			?>
+						</tr>
+			<?php
 					}
 			?>
+					</tbody>
+				</table>
 			</div>
 			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 			<?php

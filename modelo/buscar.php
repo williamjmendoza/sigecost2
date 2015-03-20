@@ -2,6 +2,9 @@
 
 	// Lib
 	require_once( SIGECOST_PATH_LIB . '/definiciones.php' );
+	
+	// Modelos
+	require_once ( SIGECOST_PATH_MODELO . '/instancia/soporteTecnico/aplicacionGDDD/desinstalacionAplicacion.php' );
 
 	class ModeloBuscar
 	{
@@ -44,21 +47,21 @@
 				
 		}
 		
+		public static function construirNodosPadresyHojasET()
+		{
+			$datos = array();
+		
+			self::construirNodosPadresyHojasRecursivo(SIGECOST_IRI_ONTOLOGIA_NUMERAL."ElementoTecnologico", $datos);
+		
+			return $datos;
+		}
+		
 		public static function construirNodosPadresyHojasST()
 		{
 			$datos = array();
 			
 			self::construirNodosPadresyHojasRecursivo(SIGECOST_IRI_ONTOLOGIA_NUMERAL."SoporteTecnico", $datos);
 			
-			return $datos;
-		}
-		
-		public static function construirNodosPadresyHojasET()
-		{
-			$datos = array();
-				
-			self::construirNodosPadresyHojasRecursivo(SIGECOST_IRI_ONTOLOGIA_NUMERAL."ElementoTecnologico", $datos);
-				
 			return $datos;
 		}
 		
@@ -133,7 +136,19 @@
 			}
 		}
 		
-		public static function agregarHojasCoincidentes($iriConsultado, $nodosPadresyHojas, array &$hojasCoincidentes)
+		public static function agregarHojasCoincidentesET($iriConsultado, $nodosPadresyHojas, array &$hojasCoincidentes)
+		{
+			if(isset($nodosPadresyHojas[SIGECOST_IRI_ONTOLOGIA_NUMERAL."ElementoTecnologico"][$iriConsultado]))
+				$hojasCoincidentes[$iriConsultado] = true;
+			else {
+				foreach ($nodosPadresyHojas[$iriConsultado] AS $iriHoja => $elemento)
+				{
+					$hojasCoincidentes[$iriHoja] = true;
+				}
+			}
+		}
+		
+		public static function agregarHojasCoincidentesST($iriConsultado, $nodosPadresyHojas, array &$hojasCoincidentes)
 		{
 			if(isset($nodosPadresyHojas[SIGECOST_IRI_ONTOLOGIA_NUMERAL."SoporteTecnico"][$iriConsultado]))
 				$hojasCoincidentes[$iriConsultado] = true;
@@ -145,10 +160,219 @@
 			}
 		}
 		
+		// Búsquedas en clases de elemento tecnológico
+		public static function getFiltroClaseElementoTecnologico(array $parametros = null)
+		{
+			$preMsg = 'Error al obtener los filtros de clase elemento tecnológico.';
+			
+			try
+			{
+				if ($parametros === null)
+					throw new Exception($preMsg . ' El parámetro \'$parametros\' es nulo.');
+				
+				if (!is_array($parametros))
+					throw new Exception($preMsg . ' El parámetro \'$parametros\' no es arreglo.');
+				
+				if (count($parametros) == 0)
+					throw new Exception($preMsg . ' El parámetro \'$parametros\' está vacío.');
+				
+				if ($parametros['clave'] === null)
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'clave\']\' es nulo.');
+				
+				if (($clave = trim($parametros['clave'])) === '')
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'clave\']\' está vacío.');
+				
+				
+				// Construir un arreglo de nodos padres con sus respectivas hojas para los elementos tecnológicos
+				$nodosPadresyHojasET = ModeloBuscar::construirNodosPadresyHojasET();
+					
+				$filtroClaseET = '';
+				
+				// Filtro con los nodos padres de elemento tecnológico
+				foreach ($nodosPadresyHojasET AS $iriPadre => $elemento)
+				{
+					$filtroClaseET .= '
+									'.( $filtroClaseET != '' ? '|| ' : '' ).'?claseET = <'.$iriPadre.'>';
+				}
+				
+				// Filtro con los nodos hojas de elemento tecnológico
+				foreach ($nodosPadresyHojasET[SIGECOST_IRI_ONTOLOGIA_NUMERAL.'ElementoTecnologico'] AS $iriPadre => $elemento)
+				{
+					$filtroClaseET .= '
+									'.( $filtroClaseET != '' ? '|| ' : '' ).'?claseET = <'.$iriPadre.'>';
+				}
+				
+				$filtroClaseET = '# Filtros sobre clases solo de elemento tecnológico
+								FILTER (
+									'.$filtroClaseET.'
+								) .
+						';
+				
+				/* Fin de Filtros sobre clases de soporte técnico */
+				
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX owl: <http://www.w3.org/2002/07/owl#>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+		
+					SELECT DISTINCT
+						?claseET
+					WHERE
+					{
+						?claseET rdf:type owl:Class .
+						?claseET rdfs:label ?labelClaseET .
+						OPTIONAL  { ?claseET rdfs:comment ?commentClaseET . } .
+						FILTER (
+							regex(?labelClaseET, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre el label de la clase elemento tecnológico
+							|| regex(?commentClaseET, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre el comment de la clase elemento tecnológico
+						) .
+						'.$filtroClaseET.'
+					}
+					ORDER BY
+						?claseET
+				';
+				
+				$hojasCoincidentesET = array();
+				
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+				
+				if (is_array($rows) && count($rows) > 0)
+				{
+					foreach ($rows AS $row)
+					{
+						self::agregarHojasCoincidentesET ($row['claseET'], $nodosPadresyHojasET, $hojasCoincidentesET);
+					}
+				}
+					
+				$filtroHojasCoincidentesClaseET = '';
+				// Filtro con las hojas de elementos tecnológicos coincidentes en la búsqueda por clase de elementos tecnológicos
+				foreach ($hojasCoincidentesET AS $iriHojaCoincidente => $elemento)
+				{
+					$filtroHojasCoincidentesClaseET .= '
+									|| ?claseET = <'.$iriHojaCoincidente.'>';
+				}
+				
+				return $filtroHojasCoincidentesClaseET;
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
+		public static function getFiltroClaseSoporteTecnico(array $parametros = null)
+		{
+			$preMsg = 'Error al obtener los filtros de clase soporte técnico.';
+				
+			try
+			{
+				if ($parametros === null)
+					throw new Exception($preMsg . ' El parámetro \'$parametros\' es nulo.');
+				
+				if (!is_array($parametros))
+					throw new Exception($preMsg . ' El parámetro \'$parametros\' no es arreglo.');
+				
+				if (count($parametros) == 0)
+					throw new Exception($preMsg . ' El parámetro \'$parametros\' está vacío.');
+				
+				if ($parametros['clave'] === null)
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'clave\']\' es nulo.');
+				
+				if (($clave = trim($parametros['clave'])) === '')
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'clave\']\' está vacío.');
+					
+				// Construir un arreglo de nodos padres con sus respectivas hojas para los soportes técnicos
+				$nodosPadresyHojasST = ModeloBuscar::construirNodosPadresyHojasST();
+				
+				/* Filtros sobre clases de soporte técnico */
+					
+				$filtroClaseST = '';
+					
+				// Filtro con los nodos padres de soporte técnico
+				foreach ($nodosPadresyHojasST AS $iriPadre => $elemento)
+				{
+					$filtroClaseST .= '
+								'.( $filtroClaseST != '' ? '|| ' : '' ).'?claseST = <'.$iriPadre.'>';
+				}
+					
+				// Filtro con los nodos hojas de soporte técnico
+				foreach ($nodosPadresyHojasST[SIGECOST_IRI_ONTOLOGIA_NUMERAL.'SoporteTecnico'] AS $iriPadre => $elemento)
+				{
+					$filtroClaseST .= '
+								'.( $filtroClaseST != '' ? '|| ' : '' ).'?claseST = <'.$iriPadre.'>';
+				}
+					
+				$filtroClaseST = '# Filtros sobre clases solo de soporte tecnico
+							FILTER (
+								'.$filtroClaseST.'
+							) .
+					';
+					
+				/* Fin de Filtros sobre clases de soporte técnico */
+					
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX owl: <http://www.w3.org/2002/07/owl#>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+	
+					SELECT DISTINCT
+						?claseST
+					WHERE
+					{
+						?claseST rdf:type owl:Class .
+						?claseST rdfs:label ?labelClaseST .
+						?claseST rdfs:comment ?commentClaseST .
+						FILTER (
+							regex(?labelClaseST, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre el label de la clase soporte técnico
+							|| regex(?commentClaseST, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre el comment de la clase soporte técnico
+						) .
+						'.$filtroClaseST.'
+					}
+					ORDER BY
+						?claseST
+				';
+					
+				$hojasCoincidentesST = array();
+					
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+					
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+					
+				if (is_array($rows) && count($rows) > 0){
+					foreach ($rows AS $row)
+					{
+						self::agregarHojasCoincidentesST ($row['claseST'], $nodosPadresyHojasST, $hojasCoincidentesST);
+					}
+				}
+					
+				$filtroHojasCoincidentesClaseST = '';
+				// Filtro con las hojas se soporte técnico coincidentes en la búsqueda por clase de soporte técnico
+				foreach ($hojasCoincidentesST AS $iriHojaCoincidente => $elemento)
+				{
+					$filtroHojasCoincidentesClaseST .= '
+								|| ?claseST = <'.$iriHojaCoincidente.'>';
+				}
+					
+				return $filtroHojasCoincidentesClaseST;
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
 		public static function buscar(array $parametros = null)
 		{
 			$preMsg = 'Error al buscar patrones en la ontología';
+			$datos = array();
 			$instancias = null;
+			$limite = '';
+			$desplazamiento = '';
 			
 			try
 			{
@@ -161,249 +385,149 @@
 				if (count($parametros) == 0)
 					throw new Exception($preMsg . ' El parámetro \'$parametros\' está vacío.');
 				
-				if (isset($parametros['clave']) && ($clave = $parametros['clave']) != "")
-				{
-					
-					
-					/*
-					$graph->setPrefix('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
-					$graph->setPrefix('protege', 'http://protege.stanford.edu/plugins/owl/protege#');
-					$graph->setPrefix('xsp', 'http://www.owl-ontologies.com/2005/08/07/xsp.owl#');
-					$graph->setPrefix('owl', 'http://www.w3.org/2002/07/owl#');
-					$graph->setPrefix('xsd', 'http://www.w3.org/2001/XMLSchema#');
-					$graph->setPrefix('swrl', 'http://www.w3.org/2003/11/swrl#');
-					$graph->setPrefix('swrlb', 'http://www.w3.org/2003/11/swrlb#');
-					$graph->setPrefix('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
-					$graph->setPrefix('base', 'http://www.owl-ontologies.com/OntologySoporteTecnico.owl#');
-					*/
-					
-					
-					// Query de búsquedas en instancias
-					/*
-					$query = '
-						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
-						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-						PREFIX owl: <http://www.w3.org/2002/07/owl#>
-						PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-					
-						SELECT
-							?claseST ?labelClaseST ?instanciaST ?urlSoporteTecnico ?claseET ?instanciaET ?propiedadET ?labelPropiedadET ?objeto
-						WHERE
-						{
-							?claseST rdfs:label ?labelClaseST .
-							?instanciaST rdf:type ?claseST .
-							?instanciaST :uRLSoporteTecnico ?urlSoporteTecnico .
-							?instanciaST ?IntanciaST_ET ?instanciaET .
-							?claseET rdf:type owl:Class .
-							?instanciaET rdf:type ?claseET .
-							?propiedadET rdfs:label ?labelPropiedadET .
-							?instanciaET ?propiedadET ?objeto .
-							FILTER (
-								regex(?objeto, "'.$clave.'"^^xsd:string,  "i") ||	# Filtro para instancia
-								regex(?labelClaseST, "'.$clave.'"^^xsd:string,  "i") || # Filtro para clase
-								regex(?labelPropiedadET, "'.$clave.'"^^xsd:string,  "i") # Filtro para propiedad de datos
-							) .
-							FILTER isLiteral(?objeto) .
-						}
-						LIMIT
-							20
-					';
-					*/
-					
-					
-					// Construir un arreglo de nodos padres con sus respectivas hojas para los soportes técnicos
-					$nodosPadresyHojasST = ModeloBuscar::construirNodosPadresyHojasST();
-						
-					// Borrar
-					//error_log(print_r($nodosPadresyHojasST, true)."\n\n\n");
-					
-					// Construir un arreglo de nodos padres con sus respectivas hojas para los elementos tecnológicos
-					$nodosPadresyHojasET = ModeloBuscar::construirNodosPadresyHojasET();
-					
-					// Borrar
-					//error_log(print_r($nodosPadresyHojasST, true)."\n\n\n");
-					
-					
-					/**********************************************
-					 Búsquedas en clases de elemento tecnológico
-					**********************************************/
-					
-					
-					/**********************************************
-					 Fin de Búsquedas en clases de elemento tecnológico
-					**********************************************/
-					
+				if ($parametros['clave'] === null)
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'clave\']\' es nulo.');
 				
-					/*******************************************
-					 Búsquedas en clases de soporte técnico
-					 *******************************************/
-					
-					/* Filtros sobre clases de soporte técnico */
-					
-					$filtroClaseST = '';
-					
-					// Filtro con los nodos padres de soporte técnico 
-					foreach ($nodosPadresyHojasST AS $iriPadre => $elemento)
+				if (($clave = trim($parametros['clave'])) === '')
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'clave\']\' está vacío.');
+				
+				if(!isset($parametros['filtroClaseET']))
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'filtroClaseET\']\' no está presente.');
+				
+				if(!isset($parametros['filtroClaseST']))
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'filtroClaseST\']\' no está presente.');
+				
+				$filtroClaseET = trim($parametros['filtroClaseET']);
+				$filtroClaseST = trim($parametros['filtroClaseST']);
+				
+				if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
+				if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
+				
+				// Query para consultar las instancias
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX owl: <http://www.w3.org/2002/07/owl#>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+		
+					SELECT DISTINCT
+						?claseST
+						?instanciaST
+					WHERE
 					{
-						$filtroClaseST .= '
-								'.( $filtroClaseST != '' ? '|| ' : '' ).'?claseST = <'.$iriPadre.'>';
+						'.self::buscarInstanciasSubQuery($clave, $filtroClaseET, $filtroClaseST).'
 					}
+					ORDER BY
+						?claseST
+						?instanciaST
+					'.$desplazamiento.'
+					'.$limite.'
+				';
+				
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
 					
-					// Filtro con los nodos hojas de soporte técnico
-					foreach ($nodosPadresyHojasST[SIGECOST_IRI_ONTOLOGIA_NUMERAL.'SoporteTecnico'] AS $iriPadre => $elemento)
-					{
-						$filtroClaseST .= '
-								'.( $filtroClaseST != '' ? '|| ' : '' ).'?claseST = <'.$iriPadre.'>';
-					}
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
 					
-					$filtroClaseST = '# Filtros sobre clases solo de soporte tecnico
-							FILTER (
-								'.$filtroClaseST.'
-							) .
-					';
-					
-					/* Fin de Filtros sobre clases de soporte técnico */
-					
-					$query = '
-						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
-						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-						PREFIX owl: <http://www.w3.org/2002/07/owl#>
-						PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-			
-						SELECT DISTINCT
-							?claseST
-						WHERE
-						{
-							?claseST rdf:type owl:Class .
-							?claseST rdfs:label ?labelClaseST .
-							?claseST rdfs:comment ?commentClaseST .
-							FILTER (
-								regex(?labelClaseST, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre el label de la clase soporte técnico
-								|| regex(?commentClaseST, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre el comment de la clase soporte técnico
-							) .	
-							'.$filtroClaseST.'
-						}
-						ORDER BY
-							?claseST
-					';
-					
-					
-					// Borrar
-					//error_log(print_r($nodosPadresyHojasST, true)."\n\n\n");
-					
-					$hojasCoincidentes = array();
-					
-					// Borrar
-					//error_log($query);
-					
-					$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
-					
-					if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
-						throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
-					
-					if (is_array($rows) && count($rows) > 0){
-						$instancias = array();
-						foreach ($rows AS $row){
-							/*
-							$instancias[] = array(
-								'iri' => $row['iri'],
-								'urlSoporteTecnico' => $row['urlSoporteTecnico']
-							);
-							*/
-							$instancias[] = $row;
-							
-							self::agregarHojasCoincidentes($row['claseST'], $nodosPadresyHojasST, $hojasCoincidentes);
-						}
-					}
-					
-					$filtroHojasCoincidentesClaseST = '';
-					// Filtro con las hojas se soporte técnico coincidentes en la búsqueda por clase de soporte técnico
-					foreach ($hojasCoincidentes AS $iriHojaCoincidente => $elemento)
-					{
-						$filtroHojasCoincidentesClaseST .= '
-								|| ?claseST = <'.$iriHojaCoincidente.'>';
-					}
-					
-					/*******************************************
-					 Fin de Búsquedas en clases de soporte técnico
-					*******************************************/
-					
-					// Query para consultar las instancias
-					$query = '
-						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
-						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-						PREFIX owl: <http://www.w3.org/2002/07/owl#>
-						PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-			
-						SELECT DISTINCT
-							?claseST
-							?instanciaST
-						WHERE
-						{
-							?claseST rdf:type owl:Class .
-							?instanciaST rdf:type ?claseST .
-							?instanciaST ?intanciaST_ET ?instanciaET .
-							?instanciaET rdf:type ?claseET .
-							?claseET rdf:type owl:Class .
-							?claseET rdfs:label ?labelClaseET .
-							?claseET rdfs:comment ?commentClaseET .
-							?instanciaET ?propiedadET ?objeto .
-							?propiedadET rdfs:label ?labelPropiedadET .
-							FILTER (
-								regex(?objeto, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre el valor del dato
-								|| regex(?labelPropiedadET, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre propiedad de datos
-								|| regex(?labelClaseET, "'.$clave.'"^^xsd:string,  "i") # Filtro para el label de la clase de elemento téc.
-								|| regex(?commentClaseET, "'.$clave.'"^^xsd:string,  "i") # Filtro para el comment de la clase de elemento téc.
-								
-								# Filtro sobre clases de soporte técnico
-								'.$filtroHojasCoincidentesClaseST.'
-							) .
-							FILTER isLiteral(?objeto) .
-						}
-						ORDER BY
-							?claseST
-							?instanciaST
-					';
-					
-					// Borrar
+				if (is_array($rows) && count($rows) > 0){
 					$instancias = array();
 					
-					// Borrar
-					//error_log($query);
+					foreach ($rows AS $row){
+						/*
+						 $instancias[] = array(
+						 		'iri' => $row['iri'],
+						 		'urlSoporteTecnico' => $row['urlSoporteTecnico']
+						 );
+						*/
+						
+						/*
+						switch ($row['claseST']){
+							case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO:
+								
+								
+								
+								break;
+						}
+						*/
+						
+						$instancias[] = $row;
+					}
+				}
+				
+				$claseSTAnterior = '';
+				$irisInstanciasST = array();
+				
+				foreach ($instancias AS $instancia)
+				{
+					$claseSTActual = $instancia['claseST'];
 					
-					$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+					if ($claseSTAnterior == '')
+					{
+						$irisInstanciasST[] = $instancia['instanciaST'];
 						
-					if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
-						throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+					} else {
 						
-					if (is_array($rows) && count($rows) > 0){
-						$instancias = array();
-						foreach ($rows AS $row){
-							/*
-							 $instancias[] = array(
-							 		'iri' => $row['iri'],
-							 		'urlSoporteTecnico' => $row['urlSoporteTecnico']
-							 );
-							*/
-							$instancias[] = $row;
+						if(strcmp($claseSTAnterior, $claseSTActual) == 0 )
+						{
+							// Borrar
+							//error_log("Igual: Anterior: " . $claseSTAnterior . ", Actual: " . $claseSTActual);
+							$irisInstanciasST[] = $instancia['instanciaST'];
+							
+						} else {
+						
+							// Consultar las instancias en el array $irisInstanciasST
+							$instanciasConsultadas = self::consultarInstancias($claseSTAnterior, $irisInstanciasST);
+							$datos[$claseSTAnterior] = $instanciasConsultadas;
+							// Borrar
+							//error_log("Diferente: Anterior: " . $claseSTAnterior . ", Actual: " . $claseSTActual);
+							//error_log(print_r($irisInstanciasST, true));
+							
+							$irisInstanciasST = array();
+							$irisInstanciasST[] = $instancia['instanciaST'];
 						}
 					}
 					
-					// Borrar
-					//error_log(print_r($hojasCoincidencias, true)."\n\n\n");
-					
-					// Borrar
-					//error_log(print_r($instancias, true));
-					
-					/*
-					echo "<pre>";
-					print_r($instancias);
-					echo "</pre>";
-					*/
-					
-					// FILTER (?iri = <'.$instancia->getIri().'>) .
-					
-					return $instancias;
+					$claseSTAnterior = $claseSTActual;
+				}
+				
+				// Consultar las instancias en el array $irisInstanciasST
+				$instanciasConsultadas = self::consultarInstancias($claseSTAnterior, $irisInstanciasST);
+				$datos[$claseSTAnterior] = $instanciasConsultadas;
+				// Borrar
+				//error_log(print_r($irisInstanciasST, true));
+				
+				
+				// Borrar
+				//error_log(print_r($datos, true));
+				
+				
+				return $datos;
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
+		public static function consultarInstancias($iriPadre, array $hijos)
+		{
+			try
+			{
+				switch ($iriPadre)
+				{
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO:
+
+						$instancias = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::buscarInstancias(array('iris' => $hijos));
+						
+						return array('datosClaseST' => array(), 'instanciasClaseST' => $instancias);
+						
+						break;
+						
+					default:
+						
+						return array('datosClaseST' => array(), 'instanciasClaseST' => array());
+						
+						break;
 				}
 				
 			} catch (Exception $e) {
@@ -411,14 +535,101 @@
 				return false;
 			}
 		}
-	}
-	
-	/*
-	Búsqueda:
-		1 - Buscar la palabra clave en las instancias
-		2 - Buscar la palabra clave en las clases
-			2.1 - Si la coincidencia es en una clase padre, todas sus clase hijos (e instancias) apareceran
-					En los resultados de la búsquea.
+		
+		public static function buscarTotalElementos(array $parametros = null)
+		{
 			
-	*/
+			$preMsg = 'Error al buscar el contador de las búsquedas.';
+			
+			try {
+				
+				if ($parametros === null)
+					throw new Exception($preMsg . ' El parámetro \'$parametros\' es nulo.');
+				
+				if (!is_array($parametros))
+					throw new Exception($preMsg . ' El parámetro \'$parametros\' no es un arreglo.');
+				
+				if (count($parametros) == 0)
+					throw new Exception($preMsg . ' El parámetro \'$parametros\' está vacío.');
+				
+				if ($parametros['clave'] === null)
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'clave\']\' es nulo.');
+				
+				if (($clave = trim($parametros['clave'])) === '')
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'clave\']\' está vacío.');
+				
+				if(!isset($parametros['filtroClaseET']))
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'filtroClaseET\']\' no está presente.');
+				
+				if(!isset($parametros['filtroClaseST']))
+					throw new Exception($preMsg . ' El parámetro \'$parametros[\'filtroClaseST\']\' no está presente.');
+				
+				$filtroClaseET = trim($parametros['filtroClaseET']);
+				$filtroClaseST = trim($parametros['filtroClaseST']);
+				
+					
+				// Buscar la cantidad de instancias según los criterios
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX owl: <http://www.w3.org/2002/07/owl#>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+	
+					SELECT DISTINCT
+						(COUNT(?instanciaST) AS ?totalElementos)
+					WHERE
+					{
+						'.self::buscarInstanciasSubQuery($clave, $filtroClaseET, $filtroClaseST).'
+					}
+				';
+				
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+					
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+					
+				if (is_array($rows) && count($rows) > 0){
+					reset($rows);
+					return current($rows)['totalElementos'];
+				}
+				else return false;
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+				
+		}
+		
+		public static function buscarInstanciasSubQuery($clave, $filtroHojasCoincidentesClaseET = '', $filtroHojasCoincidentesClaseST = '')
+		{
+			return
+			'
+							?claseST rdf:type owl:Class .
+							?instanciaST rdf:type ?claseST .
+							?instanciaST :uRLSoporteTecnico ?uRLSoporteTecnico .
+							?instanciaST ?intanciaST_ET ?instanciaET .
+							?instanciaET rdf:type ?claseET .
+							?claseET rdf:type owl:Class .
+							?instanciaET ?propiedadET ?valorPropiedadET .
+							?propiedadET rdfs:label ?labelPropiedadET .
+							FILTER (
+		
+								# Filtro sobre las instancias
+		
+								regex(?valorPropiedadET, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre el valor del dato
+								|| regex(?labelPropiedadET, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre propiedad de datos
+		
+								# Filtro sobre clases de elemento tecnológico
+								'.$filtroHojasCoincidentesClaseET.'
+		
+								# Filtro sobre clases de soporte técnico
+								'.$filtroHojasCoincidentesClaseST.'
+							) .
+							FILTER isLiteral(?valorPropiedadET) .
+			';
+		
+		}
+		
+	}
 ?>
