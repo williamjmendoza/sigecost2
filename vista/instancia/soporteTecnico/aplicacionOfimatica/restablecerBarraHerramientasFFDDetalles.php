@@ -115,7 +115,7 @@
 						<button type="button" class="btn btn-primary" onclick="eliminarInstancia('formRestablecerBarraHerramientasFFD');">Eliminar</button>
 					</div>
 				</div>
-			<form class="form-horizontal" role="form" method="post" action="">
+			</form>
 
 		</div>
 

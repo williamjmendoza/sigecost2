@@ -680,5 +680,72 @@
 		
 		}
 		
+		public static function verDetalles($iriClaseST, $iriIstanciaST)
+		{
+			try
+			{
+				switch ($iriClaseST)
+				{
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO:
+						$instancia = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO:
+						$instancia = ModeloInstanciaSTAplicacionGDDDInstalacionAplicacionGDDD::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_CORREGIR_CIERRE_INESPERADO:
+						$instancia = ModeloInstanciaSTAplicacionOfimaticaCorregirCierreInesperado::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_OFIMATICA:
+						$instancia = ModeloInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_APLICACION_OFIMATICA:
+						$instancia = ModeloInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimatica::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO:
+						$instancia = ModeloInstanciaSTAplicacionOfimaticaRestablecerBarraHerramientasFFD::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA:
+						$instancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESATASCAR_PAPEL:
+						$instancia = ModeloInstanciaSTImpresoraDesatascarPapel::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA:
+						$instancia = ModeloInstanciaSTImpresoraInstalacionImpresora::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA:
+						$instancia = ModeloInstanciaSTImpresoraRepararImpresionCorrida::obtenerInstanciaPorIri($iriIstanciaST);
+						return array('iriClaseST' => $iriClaseST, 'instancia' => $instancia);
+						break;
+			
+					default:
+						return array('iriClaseST' => '', 'instancia' => array());
+						break;
+				}
+			
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 	}
 ?>

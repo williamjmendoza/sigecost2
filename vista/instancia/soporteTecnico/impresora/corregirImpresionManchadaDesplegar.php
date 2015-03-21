@@ -1,5 +1,6 @@
 <?php
 
+	$iriClaseST = $GLOBALS['SigecostRequestVars']['iriClaseST'];
 	$instancias = $GLOBALS['SigecostRequestVars']['instanciasClaseST'];
 	
 	if (is_array($instancias) && count($instancias) > 0)
@@ -25,7 +26,7 @@
 			{
 				$patron = $instancia->getPatron();
 	?>
-				<tr class="datoST" onclick="alert('Hola');">
+				<tr class="datoST" onclick="verDetallesInstanciaSTenBusquedaClave('<?php echo $iriClaseST ?>', '<?php echo $instancia->getIri() ?>');">
 					<td><?php echo (++$GLOBALS['SigecostRequestVars']['contador']) ?></td>
 					<td><?php echo $instancia->getEquipoReproduccion()->getMarca() ?> </td>
 					<td><?php echo $instancia->getEquipoReproduccion()->getModelo() ?></td>

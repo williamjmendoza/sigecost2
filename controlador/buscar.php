@@ -18,7 +18,21 @@
 			// Obtener el formulario
 			$form = FormularioManejador::getFormulario(FORM_BUSCAR);
 			
-			if(isset($_REQUEST['clave']) && ($clave = trim($_REQUEST['clave'])) != "")
+			$clave = isset($_REQUEST['clave']) ? trim($_REQUEST['clave']) : '';
+			$subAccion = !isset($_REQUEST['subaccion']) || trim($_REQUEST['subaccion']) == 'false' ? false : trim($_REQUEST['subaccion']);
+			$iriClaseSTVerDetalles = $_REQUEST['iriClaseSTVerDetalles'];
+			$iriInstanciaSTVerDetalles = $_REQUEST['iriInstanciaSTVerDetalles'];
+			
+			// Validar si se está solicitando mostrar los detalles de un patrón de solución
+			if($subAccion == 'verDetalles' && $iriClaseSTVerDetalles != "" && $iriInstanciaSTVerDetalles != "")
+			{
+				$datosInstancia = ModeloBuscar::verDetalles($iriClaseSTVerDetalles, $iriInstanciaSTVerDetalles);
+				
+				$GLOBALS['SigecostRequestVars']['subaccion'] = 'verDetalles';
+				$GLOBALS['SigecostRequestVars']['datosInstancia'] = $datosInstancia;
+				$GLOBALS['SigecostRequestVars']['pag'] = $_REQUEST['pag'];
+			}
+			else if($clave != '')
 			{
 				
 				// Búsquedas en clases de elemento tecnológico
@@ -36,7 +50,7 @@
 				if($totalElementos !== false)
 				{
 					// Configurar el objeto de paginación
-					$form->setPaginacion(new EntidadPaginacion($totalElementos));  // EntidadPaginacion(<Tamaño página>, <Total elementos>)
+					$form->setPaginacion(new EntidadPaginacion($totalElementos));  // EntidadPaginacion(<Total elementos>)
 					$this->__validarParametrosPaginacion($form);
 					$form->getPaginacion()->setUrlObjetivo("buscar.php?accion=buscar&clave=". urlencode($clave));
 				
@@ -48,9 +62,10 @@
 				$datos = ModeloBuscar::buscar($parametros);
 				
 				$GLOBALS['SigecostRequestVars']['datos'] = $datos;
-				$GLOBALS['SigecostRequestVars']['clave'] = $clave;
 				$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;
 			}
+			
+			$GLOBALS['SigecostRequestVars']['clave'] = $clave;
 			
 			require ( SIGECOST_PATH_VISTA . '/buscar/buscar.php' );
 		}
