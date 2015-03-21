@@ -10,6 +10,16 @@
 	<head>
 	
 		<?php require ( SIGECOST_PATH_VISTA . '/general/head.php' ); ?>
+		
+		<style type="text/css">
+		
+			tr.datoST:hover
+			{
+				 cursor:pointer;
+				 color: #357ebd;
+			}
+		
+		</style>
 	
 	</head>
 	
@@ -43,34 +53,34 @@
 						</div>
 					</div>
 				</div>
-			</form>
 			
-			<?php
-				if (is_array($datos) && count($datos) > 0)
-				{
-					$GLOBALS['SigecostRequestVars']['contador'] = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
-			?>
-			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
-			<div class="table-responsive">
-			<?php
-					foreach ($datos AS $iriClaseST => $datosClaseST)
+			
+				<?php
+					if (is_array($datos) && count($datos) > 0)
 					{
-						$GLOBALS['SigecostRequestVars']['iriClaseST'] = $iriClaseST;
-						$GLOBALS['SigecostRequestVars']['instanciasClaseST'] = $datosClaseST['instanciasClaseST'];
-						
-						require ( SIGECOST_PATH_VISTA . '/buscar/buscarDesplegar.php' );
+						$GLOBALS['SigecostRequestVars']['contador'] = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
+				?>
+				<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
+				<div class="table-responsive">
+				<?php
+						foreach ($datos AS $iriClaseST => $datosClaseST)
+						{
+							$GLOBALS['SigecostRequestVars']['iriClaseST'] = $iriClaseST;
+							$GLOBALS['SigecostRequestVars']['instanciasClaseST'] = $datosClaseST['instanciasClaseST'];
+							
+							require ( SIGECOST_PATH_VISTA . '/buscar/buscarDesplegar.php' );
+						}
+				?>
+				</div>
+				<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
+				<?php
+					} else {
+				?>
+				<p>No existen elementos que coincidan con la b&uacute;squeda.</p>
+				<?php
 					}
-			?>
-			</div>
-			<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
-			<?php
-				} else {
-			?>
-			<p>No existen elementos que coincidan con la b&uacute;squeda.</p>
-			<?php
-				}
-			?>
-			
+				?>
+			</form>
 		</div>
 
 		<?php require ( SIGECOST_PATH_VISTA . '/general/footer.php' ); ?>

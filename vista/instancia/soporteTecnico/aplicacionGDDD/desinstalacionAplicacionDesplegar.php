@@ -6,14 +6,14 @@
 	{
 ?>
 <div class="table-responsive">
-	<table class="table table table-hover table-responsive">
+	<table class="table table-striped table-condensed table-responsive">
 		<thead>
 			<tr>
 				<th rowspan="2">#</th>
 				<th colspan="2">Aplicaci&oacute;n</th>
 				<th colspan="2">Sistema operativo</th>
-				<th colspan="2">Patr&oacute;n soporte t&eacute;cnico</th>
-				<th rowspan="2">Opciones</th>
+				<th colspan="1">Patr&oacute;n soporte t&eacute;cnico</th>
+				
 			</tr>
 			<tr>
 				<th>Nombre</th>
@@ -21,7 +21,6 @@
 				<th>Nombre</th>
 				<th>Versi&oacute;n</th>
 				<th>Fecha creaci&oacute;n</th>
-				<th>Soluci&oacute;n</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -30,39 +29,33 @@
 		{
 			$patron = $instancia->getPatron();
 		?>
-			<tr>
+			<tr class="datoST" onclick="alert('Hola');">
 				<td><?php echo (++$GLOBALS['SigecostRequestVars']['contador']) ?></td>
 				<td><?php echo $instancia->getAplicacionPrograma()->getNombre() ?> </td>
 				<td><?php echo $instancia->getAplicacionPrograma()->getVersion() ?></td>
 				<td><?php echo $instancia->getSistemaOperativo()->getNombre() ?></td>
 				<td><?php echo $instancia->getSistemaOperativo()->getVersion() ?></td>
 				<td><?php echo $patron != null ? $patron->getFechaCreacion() : "" ?></td>
-				<td><samp><?php
-					$strSolucion = "";
-					$truncamiento = GetConfig("truncamientoSolucionPatronSoporteTecnico");
-					
-					if($patron != null)
-					{
-						if(strlen($patron->getSolucion()) <= $truncamiento)
-							$strSolucion = htmlentities($patron->getSolucion());
-						else {
-							$strSolucion = htmlentities(substr($patron->getSolucion(), 0, $truncamiento - 3)) . '...';
+			</tr>
+			<tr>
+				<td></td>
+				<td colspan="5">
+					<samp><?php
+						$strSolucion = "";
+						$truncamiento = GetConfig("truncamientoSolucionPatronSTBusqueda");
+						
+						if($patron != null)
+						{
+							if(strlen($patron->getSolucion()) <= $truncamiento)
+								$strSolucion = strip_tags($patron->getSolucion());
+							else {
+								$strSolucion = strip_tags(substr($patron->getSolucion(), 0, $truncamiento - 3)) . '...';
+							}
+	
 						}
-
-					}
-					echo $strSolucion;
-				
-				?></samp></td>
-				<td>
-					<form class="form-horizontal buscarOpciones" role="form" action="desinstalacionAplicacion.php" method="post">
-						<div style="display:none;">
-							<input type="hidden" name="accion" value="desplegarDetalles">
-							<input type="hidden" name="iri" value="<?php echo $instancia->getIri() ?>">
-						</div>
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary btn-xs">Ver Detalles</button>
-						</div>
-					</form>
+						echo trim($strSolucion);
+					
+					?></samp>
 				</td>
 			</tr>
 		<?php

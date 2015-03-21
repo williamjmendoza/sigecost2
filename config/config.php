@@ -51,5 +51,6 @@
 	
 	$GLOBALS['SIGECOST_CFG']["prefijoPatronSoporteTecnico"] = "PST_";
 	$GLOBALS['SIGECOST_CFG']["truncamientoSolucionPatronSoporteTecnico"] = 30;
+	$GLOBALS['SIGECOST_CFG']["truncamientoSolucionPatronSTBusqueda"] = 300;
 	
 ?>

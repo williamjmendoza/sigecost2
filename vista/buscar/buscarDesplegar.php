@@ -63,7 +63,7 @@
 ?>
 			<div class="page-header">
 				<h1>
-					<small>Reestablecer barra de herramientas, funci&oacute;n, formato y dibujo de aplicaci&oacute;n ofim&aacute;tica</small>
+					<small>Reestablecer las barras de herramientas, funci&oacute;n, formato y/o dibujo de aplicaci&oacute;n ofim&aacute;tica</small>
 				</h1>
 			</div>
 <?php
