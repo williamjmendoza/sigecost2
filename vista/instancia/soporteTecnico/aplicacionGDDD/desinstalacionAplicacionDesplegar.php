@@ -1,4 +1,5 @@
 <?php
+
 	$instancias = $GLOBALS['SigecostRequestVars']['instanciasClaseST'];
 	
 	if (is_array($instancias) && count($instancias) > 0)

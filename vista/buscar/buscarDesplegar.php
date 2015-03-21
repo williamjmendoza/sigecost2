@@ -69,6 +69,50 @@
 <?php
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFDDesplegar.php' );
 			breaK;
+			
+		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA:
+?>
+			<div class="page-header">
+				<h1>
+					<small>Corregir impresi&oacute;n manchada</small>
+				</h1>
+			</div>
+<?php
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaDesplegar.php' );
+			breaK;
+			
+		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESATASCAR_PAPEL:
+?>
+			<div class="page-header">
+				<h1>
+					<small>Desatascar papel en impresora</small>
+				</h1>
+			</div>
+<?php
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/desatascarPapelDesplegar.php' );
+			breaK;
+			
+		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA:
+?>
+			<div class="page-header">
+				<h1>
+					<small>Instalaci&oacute;n de impresora</small>
+				</h1>
+			</div>
+<?php
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/instalacionImpresoraDesplegar.php' );
+			breaK;
+			
+		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA:
+?>
+			<div class="page-header">
+				<h1>
+					<small>Reparar impresi&oacute;n corrida</small>
+				</h1>
+			</div>
+<?php
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/repararImpresionCorridaDesplegar.php' );
+			breaK;
 
 		default:
 ?>
