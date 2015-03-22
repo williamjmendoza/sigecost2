@@ -53,8 +53,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>B&uacute;squeda de patrones
-				</h1>
+				<h1>B&uacute;squeda de patrones</h1>
 			</div>
 		
 			<form id="formBusqueda" class="form-horizontal" role="form" method="post" action="buscar.php">
@@ -65,8 +64,22 @@
 					<input id="iriInstanciaSTVerDetalles" type="hidden" name="iriInstanciaSTVerDetalles" value="false">
 				</div>
 				<div class="form-group">
+					<label class="control-label col-sm-2" for="buscarEn">Buscar en:</label>
+					<div class="col-sm-10">
+						<label class="checkbox-inline">
+							<input type="checkbox" value="">Clases de elemento tecnol&oacute;gico
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" value="">Clases se soporte t&eacute;cnico
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" value="">Instancias
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="sr-only" for="clave">B&uacute;squeda:</label>
-					<div class="col-sm-4">
+					<div class="col-sm-4 col-sm-offset-2">
 						<div class="input-group">
 							<input type="text" class="form-control" id="clave" name="clave" autocomplete="off" autofocus="autofocus"
 								placeholder="Introduzca una o mas palabras claves" value="<?php echo $clave != null ? $clave : '' ?>"
@@ -90,11 +103,12 @@
 				<div style="display:none;">
 					<input id="pag" type="hidden" name="pag" value="<?php echo $GLOBALS['SigecostRequestVars']['pag']; ?>">
 				</div>
+				<hr>
 				<?php
 					
 					require ( SIGECOST_PATH_VISTA . '/buscar/buscarVerDetalles.php' );
 					
-				} else {
+				} else if($clave != null) {
 					if($paginacion != null && $paginacion->getTotalPaginas() > 1)
 					{
 				?>
@@ -108,6 +122,7 @@
 					{
 						$GLOBALS['SigecostRequestVars']['contador'] = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
 				?>
+				<hr>
 				<?php require ( SIGECOST_PATH_VISTA . '/paginacion.php' ); ?>
 				<div class="table-responsive">
 				<?php
@@ -124,6 +139,7 @@
 				<?php
 					} else {
 				?>
+				<hr>
 				<p>No existen elementos que coincidan con la b&uacute;squeda.</p>
 				<?php
 					}

@@ -442,23 +442,6 @@
 					$instancias = array();
 					
 					foreach ($rows AS $row){
-						/*
-						 $instancias[] = array(
-						 		'iri' => $row['iri'],
-						 		'urlSoporteTecnico' => $row['urlSoporteTecnico']
-						 );
-						*/
-						
-						/*
-						switch ($row['claseST']){
-							case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO:
-								
-								
-								
-								break;
-						}
-						*/
-						
 						$instancias[] = $row;
 					}
 				}
@@ -466,49 +449,51 @@
 				$claseSTAnterior = '';
 				$irisInstanciasST = array();
 				
-				foreach ($instancias AS $instancia)
+				if(is_array($instancias))
 				{
-					$claseSTActual = $instancia['claseST'];
-					
-					if ($claseSTAnterior == '')
+					foreach ($instancias AS $instancia)
 					{
-						$irisInstanciasST[] = $instancia['instanciaST'];
+						$claseSTActual = $instancia['claseST'];
 						
-					} else {
-						
-						if(strcmp($claseSTAnterior, $claseSTActual) == 0 )
+						if ($claseSTAnterior == '')
 						{
-							// Borrar
-							//error_log("Igual: Anterior: " . $claseSTAnterior . ", Actual: " . $claseSTActual);
 							$irisInstanciasST[] = $instancia['instanciaST'];
 							
 						} else {
-						
-							// Consultar las instancias en el array $irisInstanciasST
-							$instanciasConsultadas = self::consultarInstancias($claseSTAnterior, $irisInstanciasST);
-							$datos[$claseSTAnterior] = $instanciasConsultadas;
-							// Borrar
-							//error_log("Diferente: Anterior: " . $claseSTAnterior . ", Actual: " . $claseSTActual);
-							//error_log(print_r($irisInstanciasST, true));
 							
-							$irisInstanciasST = array();
-							$irisInstanciasST[] = $instancia['instanciaST'];
+							if(strcmp($claseSTAnterior, $claseSTActual) == 0 )
+							{
+								// Borrar
+								//error_log("Igual: Anterior: " . $claseSTAnterior . ", Actual: " . $claseSTActual);
+								$irisInstanciasST[] = $instancia['instanciaST'];
+								
+							} else {
+							
+								// Consultar las instancias en el array $irisInstanciasST
+								$instanciasConsultadas = self::consultarInstancias($claseSTAnterior, $irisInstanciasST);
+								$datos[$claseSTAnterior] = $instanciasConsultadas;
+								// Borrar
+								//error_log("Diferente: Anterior: " . $claseSTAnterior . ", Actual: " . $claseSTActual);
+								//error_log(print_r($irisInstanciasST, true));
+								
+								$irisInstanciasST = array();
+								$irisInstanciasST[] = $instancia['instanciaST'];
+							}
 						}
+						
+						$claseSTAnterior = $claseSTActual;
 					}
 					
-					$claseSTAnterior = $claseSTActual;
+					// Consultar las instancias en el array $irisInstanciasST
+					$instanciasConsultadas = self::consultarInstancias($claseSTAnterior, $irisInstanciasST);
+					$datos[$claseSTAnterior] = $instanciasConsultadas;
+					// Borrar
+					//error_log(print_r($irisInstanciasST, true));
+					
+					
+					// Borrar
+					//error_log(print_r($datos, true));
 				}
-				
-				// Consultar las instancias en el array $irisInstanciasST
-				$instanciasConsultadas = self::consultarInstancias($claseSTAnterior, $irisInstanciasST);
-				$datos[$claseSTAnterior] = $instanciasConsultadas;
-				// Borrar
-				//error_log(print_r($irisInstanciasST, true));
-				
-				
-				// Borrar
-				//error_log(print_r($datos, true));
-				
 				
 				return $datos;
 				

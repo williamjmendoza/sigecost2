@@ -34,7 +34,6 @@
 			}
 			else if($clave != '')
 			{
-				
 				// Búsquedas en clases de elemento tecnológico
 				$filtroClaseET = ModeloBuscar::getFiltroClaseElementoTecnologico(array('clave' => $clave));
 				// Búsquedas en clases de soporte técnico
