@@ -406,6 +406,8 @@
 				if(!isset($parametros['filtroClaseST']))
 					throw new Exception($preMsg . ' El parámetro \'$parametros[\'filtroClaseST\']\' no está presente.');
 				
+				$buscarEnPropiedades = ( isset($parametros['buscarEnPropiedades']) ? ( $parametros['buscarEnPropiedades'] === true ? true : false ) : true);
+				$buscarEnInstancias = ( isset($parametros['buscarEnInstancias']) ? ( $parametros['buscarEnInstancias'] === true ? true : false ) : true); 
 				$filtroClaseET = trim($parametros['filtroClaseET']);
 				$filtroClaseST = trim($parametros['filtroClaseST']);
 				
@@ -424,7 +426,7 @@
 						?instanciaST
 					WHERE
 					{
-						'.self::buscarInstanciasSubQuery($clave, $filtroClaseET, $filtroClaseST).'
+						'.self::buscarInstanciasSubQuery($clave, $buscarEnPropiedades, $buscarEnInstancias, $filtroClaseET, $filtroClaseST).'
 					}
 					ORDER BY
 						?claseST
@@ -598,6 +600,8 @@
 				if(!isset($parametros['filtroClaseST']))
 					throw new Exception($preMsg . ' El parámetro \'$parametros[\'filtroClaseST\']\' no está presente.');
 				
+				$buscarEnPropiedades = ( isset($parametros['buscarEnPropiedades']) ? ( $parametros['buscarEnPropiedades'] === true ? true : false ) : true);
+				$buscarEnInstancias = ( isset($parametros['buscarEnInstancias']) ? ( $parametros['buscarEnInstancias'] === true ? true : false ) : true);
 				$filtroClaseET = trim($parametros['filtroClaseET']);
 				$filtroClaseST = trim($parametros['filtroClaseST']);
 				
@@ -613,7 +617,7 @@
 						(COUNT(?instanciaST) AS ?totalElementos)
 					WHERE
 					{
-						'.self::buscarInstanciasSubQuery($clave, $filtroClaseET, $filtroClaseST).'
+						'.self::buscarInstanciasSubQuery($clave, $buscarEnPropiedades, $buscarEnInstancias, $filtroClaseET, $filtroClaseST).'
 					}
 				';
 				
@@ -635,9 +639,33 @@
 				
 		}
 		
-		public static function buscarInstanciasSubQuery($clave, $filtroHojasCoincidentesClaseET = '', $filtroHojasCoincidentesClaseST = '')
-		{
-			return
+		public static function buscarInstanciasSubQuery($clave, $buscarEnPropiedades = true, $buscarEnInstancias = true, $filtroHojasCoincidentesClaseET = '',
+				$filtroHojasCoincidentesClaseST = ''
+		){
+			$where = '';
+			
+			if ($buscarEnPropiedades === true)
+			{
+				$where = '
+								# Filtro sobre las propiedades
+								regex(?labelPropiedadET, "'.$clave.'"^^xsd:string,  "i")		
+				';
+			}
+			
+			if($buscarEnInstancias === true)
+			{
+				$where .= '
+								# Filtro sobre las instancias (valor de propiedad)
+								'.($where != '' ? '|| ' : '').'regex(?valorPropiedadET, "'.$clave.'"^^xsd:string,  "i")
+				';
+			}
+			
+			if($where == '')
+				$where = '
+								1 = 2 # Provocar un filtro false, de manera que las coincidencias sean provocadas por los otros filtros 
+				';
+			
+			return 
 			'
 							?claseST rdf:type owl:Class .
 							?instanciaST rdf:type ?claseST .
@@ -648,11 +676,7 @@
 							?instanciaET ?propiedadET ?valorPropiedadET .
 							?propiedadET rdfs:label ?labelPropiedadET .
 							FILTER (
-		
-								# Filtro sobre las instancias
-		
-								regex(?valorPropiedadET, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre el valor del dato
-								|| regex(?labelPropiedadET, "'.$clave.'"^^xsd:string,  "i") # Filtro sobre propiedad de datos
+								'.$where.'
 		
 								# Filtro sobre clases de elemento tecnológico
 								'.$filtroHojasCoincidentesClaseET.'
@@ -662,7 +686,7 @@
 							) .
 							FILTER isLiteral(?valorPropiedadET) .
 			';
-		
+			
 		}
 		
 		public static function verDetalles($iriClaseST, $iriIstanciaST)

@@ -85,6 +85,6 @@
 </div>
 <div class="form-group">
 	<div class="col-sm-offset-2 col-sm-10">
-		<button type="submit" class="btn btn-primary">Regresar a la búsqueda</button>
+		<button type="button" class="btn btn-primary" onclick="regresarBusqueda();">Regresar a la búsqueda</button>
 	</div>
 </div>

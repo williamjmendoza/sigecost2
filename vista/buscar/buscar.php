@@ -1,9 +1,13 @@
 <?php
 
 	$form = FormularioManejador::getFormulario(FORM_BUSCAR);
-	$subaccion = isset($GLOBALS['SigecostRequestVars']['subaccion']) ? $GLOBALS['SigecostRequestVars']['subaccion'] : false;
+	$subaccion = isset($GLOBALS['SigecostRequestVars']['subaccion']) ? $GLOBALS['SigecostRequestVars']['subaccion'] : null;
 	$datos = $GLOBALS['SigecostRequestVars']['datos'];
 	$clave = isset($GLOBALS['SigecostRequestVars']['clave']) ? $GLOBALS['SigecostRequestVars']['clave'] : null;
+	$buscarEnClasesET = isset($GLOBALS['SigecostRequestVars']['buscarEnClasesET']) && trim($GLOBALS['SigecostRequestVars']['buscarEnClasesET']) == true ? true : false;
+	$buscarEnClasesST = isset($GLOBALS['SigecostRequestVars']['buscarEnClasesST']) && trim($GLOBALS['SigecostRequestVars']['buscarEnClasesST']) == true ? true : false;
+	$buscarEnPropiedades = isset($GLOBALS['SigecostRequestVars']['buscarEnPropiedades']) && trim($GLOBALS['SigecostRequestVars']['buscarEnPropiedades']) == true ? true : false;
+	$buscarEnInstancias = isset($GLOBALS['SigecostRequestVars']['buscarEnInstancias']) && trim($GLOBALS['SigecostRequestVars']['buscarEnInstancias']) == true ? true : false;
 	$formPaginacion = $GLOBALS['SigecostRequestVars']['formPaginacion'];
 	$paginacion = $formPaginacion != null ? $formPaginacion->getPaginacion() : null;
 	
@@ -27,19 +31,44 @@
 		</style>
 		
 		<script type="text/javascript">
-
+		
 			function verDetallesInstanciaSTenBusquedaClave(iriClaseST, iriInstanciaST)
 			{
 				$('#subaccion').val('verDetalles');
 				$('#iriClaseSTVerDetalles').val(iriClaseST);
 				$('#iriInstanciaSTVerDetalles').val(iriInstanciaST);
 
+				reeestablecerCheckboxBusquedaEfectuada();
+				
+				$('#formBusqueda').submit();
+			}
+
+			function regresarBusqueda()
+			{
+				reeestablecerCheckboxBusquedaEfectuada();
+				
 				$('#formBusqueda').submit();
 			}
 
 			function establecerPrimeraPagina()
 			{
 				$('#pag').val(1);
+			}
+
+			function reeestablecerCheckboxBusquedaEfectuada()
+			{
+				$('#buscarEnClasesET').each(function () {
+					this.checked = <?php echo $buscarEnClasesET ? 1 : 0; ?>
+				});
+				$('#buscarEnClasesST').each(function () {
+					this.checked = <?php echo $buscarEnClasesST ? 1 : 0; ?>
+				});
+				$('#buscarEnPropiedades').each(function () {
+					this.checked = <?php echo $buscarEnPropiedades ? 1 : 0; ?>
+				});
+				$('#buscarEnInstancias').each(function () {
+					this.checked = <?php echo $buscarEnInstancias ? 1 : 0; ?>
+				});
 			}
 		
 		</script>
@@ -67,13 +96,19 @@
 					<label class="control-label col-sm-2" for="buscarEn">Buscar en:</label>
 					<div class="col-sm-10">
 						<label class="checkbox-inline">
-							<input type="checkbox" value="">Clases de elemento tecnol&oacute;gico
+							<input id="buscarEnClasesET" name="buscarEnClasesET" type="checkbox" value="true"<?php echo $buscarEnClasesET ? ' checked="checked"' : '' ?>>
+								Clases de elemento tecnol&oacute;gico
 						</label>
 						<label class="checkbox-inline">
-							<input type="checkbox" value="">Clases se soporte t&eacute;cnico
+							<input id="buscarEnClasesST" name="buscarEnClasesST" type="checkbox" value="true"<?php echo $buscarEnClasesST ? ' checked="checked"' : '' ?>>
+								Clases se soporte t&eacute;cnico
 						</label>
 						<label class="checkbox-inline">
-							<input type="checkbox" value="">Instancias
+							<input id="buscarEnPropiedades" name="buscarEnPropiedades" type="checkbox" value="true"<?php echo $buscarEnPropiedades ? ' checked="checked"' : '' ?>>
+							Propiedades
+						</label>
+						<label class="checkbox-inline">
+							<input id="buscarEnInstancias" name="buscarEnInstancias" type="checkbox" value="true"<?php echo $buscarEnInstancias ? ' checked="checked"' : '' ?>>Instancias
 						</label>
 					</div>
 				</div>
@@ -149,7 +184,15 @@
 		</div>
 
 		<?php require ( SIGECOST_PATH_VISTA . '/general/footer.php' ); ?>
-	
+		
+		<script type="text/javascript">
+
+			$( document ).ready(function() {
+				$('#clave').focus();
+			});
+			
+		</script>
+		
 	</body>
 
 </html>
