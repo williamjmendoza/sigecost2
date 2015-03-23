@@ -648,7 +648,8 @@
 			{
 				$where = '
 								# Filtro sobre las propiedades
-								regex(?labelPropiedadET, "'.$clave.'"^^xsd:string,  "i")		
+								regex(?labelPropiedadET, "'.$clave.'"^^xsd:string,  "i")
+								|| regex(?commentPropiedadET, "'.$clave.'"^^xsd:string,  "i")
 				';
 			}
 			
@@ -675,6 +676,7 @@
 							?claseET rdf:type owl:Class .
 							?instanciaET ?propiedadET ?valorPropiedadET .
 							?propiedadET rdfs:label ?labelPropiedadET .
+							?propiedadET rdfs:comment ?commentPropiedadET .
 							FILTER (
 								'.$where.'
 		
