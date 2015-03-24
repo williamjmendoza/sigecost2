@@ -1,8 +1,9 @@
 <?php
 	$menuActivo = $GLOBALS['SigecostRequestVars']['menuActivo'];
+	$usuario = ModeloSesion::estaSesionIniciada() === true && isset($GLOBALS['SigecostInitialVars']['usuario']) ? $GLOBALS['SigecostInitialVars']['usuario'] : null; 
 ?>
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
 
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -40,15 +41,35 @@
 				</li>
 				<li class="<?php echo $menuActivo=='busqueda' ? ' active' : '' ?>"><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/buscar.php?accion=buscar">B&uacute;squeda</a></li>
 			</ul>
-			<form class="navbar-form navbar-right" role="search">
-				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Usuario">
+			<?php
+				if (ModeloSesion::estaSesionIniciada() !== true)
+				{
+			?>
+			<form class="navbar-form navbar-right" role="search" action="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/sesion.php" method="post">
+				<div style="display:none;">
+					<input type="hidden" name="accion" value="iniciarSesion">
 				</div>
 				<div class="form-group">
-					<input type="password" class="form-control" placeholder="Contrase&ntilde;a">
+					<input name="usuario" type="text" class="form-control" placeholder="Usuario">
 				</div>
-				<button type="submit" class="btn btn-default">Entrar</button>
+				<div class="form-group">
+					<input name="contrasenaCod" type="password" class="form-control" placeholder="Contrase&ntilde;a">
+				</div>
+				<button type="submit" class="btn btn-primary">Ingresar</button>
 			</form>
+			<?php
+				} else {
+			?>
+			<form class="navbar-form navbar-right" role="search" action="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/sesion.php">
+				<div style="display:none;">
+					<input type="hidden" name="accion" value="finalizarSesion">
+				</div>
+				<button type="submit" class="btn btn-primary">Salir</button>
+			</form>
+			<p class="navbar-text navbar-right">Registrado como: <?php echo $usuario != null ? $usuario->getNombre() . " " . $usuario->getapellido() : '' ?></p>
+			<?php
+				}
+			?>
 		</div><!-- /.navbar-collapse -->
 
 	</div>

@@ -1,6 +1,10 @@
 <?php
 
+	// Formularios
 	include_once(SIGECOST_PATH_FORMULARIO . '/formularioManejador.php');
+	
+	// Modelos
+	include_once(SIGECOST_PATH_MODELO . '/sesion.php');
 	
 	class Controlador
 	{
