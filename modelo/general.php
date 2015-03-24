@@ -73,5 +73,76 @@
 				return false;
 			}
 		}
+		
+		public static function getDatosBasicosClases(array $iriClases = null)
+		{
+			$preMsg = "Error al consultar los datos básicos de las clases.";
+			$clases = array();
+			$filtroClase = '';
+			
+			try
+			{
+				if ($iriClases === null)
+					throw new Exception($preMsg . ' El parámetro \'$iriClases\' es nulo.');
+				
+				if (!is_array($iriClases))
+					throw new Exception($preMsg . ' El parámetro \'$iriClases\' no es un arreglo.');
+				
+				if (count($iriClases) == 0)
+					throw new Exception($preMsg . ' El parámetro \'$iriClases\' está vacío.');
+				
+				foreach ($iriClases AS $iriClase)
+				{
+					$filtroClase .= '
+							'.( $filtroClase != '' ? '|| ' : '' ).'?clase = <'.$iriClase.'>';
+				}
+				
+				if ($filtroClase == '') $filtroClase = '1 = 2';
+				
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX owl: <http://www.w3.org/2002/07/owl#>
+					PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+				
+					SELECT
+						?clase ?labelClase ?commentClase ?clasePadre
+					WHERE
+					{
+						?clase rdf:type owl:Class .
+						?clase rdfs:label ?labelClase .
+						OPTIONAL  { ?clase rdfs:comment ?commentClase . } .
+						OPTIONAL  { ?clase rdfs:subClassOf ?clasePadre . } .
+						FILTER (
+							'.$filtroClase.'
+						) .
+					}
+					ORDER BY
+						?labelClase
+				';
+				
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+				
+				$clases = array();
+				
+				if (is_array($rows) && count($rows) > 0)
+				{
+					foreach ($rows AS $row)
+					{
+						$clases[$row['clase']] = $row;
+					}
+				}
+					
+				return $clases;
+				
+			} catch (Exception $e)
+			{
+				error_log($e, 0);
+				return false;
+			}
+		}
 	}
 ?>

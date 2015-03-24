@@ -23,66 +23,14 @@
 						</a></li>
 					</ul>
 				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Elementos tecnológicos <span class="caret"></span></a>
+				<li>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administaci&oacute;n de la ontolog&iacute;a<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class="dropdown-header">Elementos tecnol&oacute;gicos</li>
-						<li class="divider"></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/aplicacionGraficaDigitalDibujoDiseno.php?accion=insertar">
-							Aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarETLista">
+							Elemento tecnol&oacute;gico
 						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/aplicacionOfimatica.php?accion=insertar">
-							Aplicaci&oacute;n ofim&aacute;tica
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/aplicacionProduccionAudiovisualMusica.php?accion=insertar">
-							Aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/aplicacionReproduccionSonidoVideo.php?accion=insertar">
-							Aplicaci&oacute;n reproducci&oacute;n sonido y video
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/computadorEscritorio.php?accion=insertar">Computador de Escritorio</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/computadorPortatil.php?accion=insertar">Computador Portatil</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/consumible.php?accion=insertar">Consumible</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/escaner.php?accion=insertar">Escaner</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/fotocopiadora.php?accion=insertar">Fotocopiadora</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/impresora.php?accion=insertar">Impresora</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/elementoTecnologico/sistemaOperativo.php?accion=insertar">Sistema operativo</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Soporte t&eacute;cnico<span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						<li class="dropdown-header">Soporte t&eacute;cnico</li>
-						<li class="divider"></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionGDDD/desinstalacionAplicacion.php?accion=insertar">
-							Desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionGDDD/instalacionAplicacionGDDD.php?accion=insertar">
-							Instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/desinstalacionAplicacionOfimatica.php?accion=insertar">
-							Desinstalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/instalacionAplicacionOfimatica.php?accion=insertar">
-							Instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/corregirCierreInesperado.php?accion=insertar">
-							Corregir cierre inesperado de aplicaci&oacute;n ofim&aacute;tica
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFD.php?accion=insertar">
-							Restablecer barra herramientas funci&oacute;n formato dibujo de aplicaci&oacute;n ofim&aacute;tica
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/corregirImpresionManchada.php?accion=insertar">
-							Corregir impresi&oacute;n manchada
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/desatascarPapel.php?accion=insertar">
-							Desatascar Papel
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/instalacionImpresora.php?accion=insertar">
-							Instalaci&oacute;n impresora
-						</a></li>
-						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/instancia/soporteTecnico/impresora/repararImpresionCorrida.php?accion=insertar">
-							Reparar impresi&oacute;n corrida
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarSTLista">
+							Soporte t&eacute;cnico
 						</a></li>
 					</ul>
 				</li>

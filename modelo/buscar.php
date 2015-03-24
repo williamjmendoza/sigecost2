@@ -17,50 +17,11 @@
 
 	class ModeloBuscar
 	{
-		// Función recursiva de Anibal para construir e árbol
-		public static function consultar_clases($clase,$store)
-		{
-		
-		
-			$q =' 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-				PREFIX kb: <http://protege.stanford.edu/kb#>
-				SELECT ?subclase ?label
-				WHERE { 	?subclase rdfs:subClassOf kb:' . $clase . ' .
-							?subclase rdfs:label ?label .
-		}
-			';
-		
-			$rows = $store->query($q, 'rows');
-			$r = '';
-			$h = '';
-			if ($rows = $store->query($q, 'rows')) {
-		
-				$params = array();
-		
-				foreach ($rows as $row) {
-		
-					$x = consultar_clases($row['label'],$store);
-					$params[$row['label']] = $x != false?  $x : array();
-					 
-		
-		
-				}
-		
-				return $params;
-			}
-				
-			else{
-				return false;
-			}
-				
-		}
-		
 		public static function construirNodosPadresyHojasET()
 		{
 			$datos = array();
 		
-			self::construirNodosPadresyHojasRecursivo(SIGECOST_IRI_ONTOLOGIA_NUMERAL."ElementoTecnologico", $datos);
+			self::construirNodosPadresyHojasRecursivo(SIGECOST_IRI_ONTOLOGIA_NUMERAL . SIGECOST_FRAGMENTO_ELEMENTO_TECNOLOGICO, $datos);
 		
 			return $datos;
 		}
@@ -69,7 +30,7 @@
 		{
 			$datos = array();
 			
-			self::construirNodosPadresyHojasRecursivo(SIGECOST_IRI_ONTOLOGIA_NUMERAL."SoporteTecnico", $datos);
+			self::construirNodosPadresyHojasRecursivo(SIGECOST_IRI_ONTOLOGIA_NUMERAL . SIGECOST_FRAGMENTO_S_T, $datos);
 			
 			return $datos;
 		}
@@ -147,7 +108,7 @@
 		
 		public static function agregarHojasCoincidentesET($iriConsultado, $nodosPadresyHojas, array &$hojasCoincidentes)
 		{
-			if(isset($nodosPadresyHojas[SIGECOST_IRI_ONTOLOGIA_NUMERAL."ElementoTecnologico"][$iriConsultado]))
+			if(isset($nodosPadresyHojas[SIGECOST_IRI_ONTOLOGIA_NUMERAL . SIGECOST_FRAGMENTO_ELEMENTO_TECNOLOGICO][$iriConsultado]))
 				$hojasCoincidentes[$iriConsultado] = true;
 			else {
 				foreach ($nodosPadresyHojas[$iriConsultado] AS $iriHoja => $elemento)
@@ -159,7 +120,7 @@
 		
 		public static function agregarHojasCoincidentesST($iriConsultado, $nodosPadresyHojas, array &$hojasCoincidentes)
 		{
-			if(isset($nodosPadresyHojas[SIGECOST_IRI_ONTOLOGIA_NUMERAL."SoporteTecnico"][$iriConsultado]))
+			if(isset($nodosPadresyHojas[SIGECOST_IRI_ONTOLOGIA_NUMERAL . SIGECOST_FRAGMENTO_S_T][$iriConsultado]))
 				$hojasCoincidentes[$iriConsultado] = true;
 			else {
 				foreach ($nodosPadresyHojas[$iriConsultado] AS $iriHoja => $elemento)
@@ -205,7 +166,7 @@
 				}
 				
 				// Filtro con los nodos hojas de elemento tecnológico
-				foreach ($nodosPadresyHojasET[SIGECOST_IRI_ONTOLOGIA_NUMERAL.'ElementoTecnologico'] AS $iriPadre => $elemento)
+				foreach ($nodosPadresyHojasET[SIGECOST_IRI_ONTOLOGIA_NUMERAL . SIGECOST_FRAGMENTO_ELEMENTO_TECNOLOGICO] AS $iriPadre => $elemento)
 				{
 					$filtroClaseET .= '
 									'.( $filtroClaseET != '' ? '|| ' : '' ).'?claseET = <'.$iriPadre.'>';
@@ -309,7 +270,7 @@
 				}
 					
 				// Filtro con los nodos hojas de soporte técnico
-				foreach ($nodosPadresyHojasST[SIGECOST_IRI_ONTOLOGIA_NUMERAL.'SoporteTecnico'] AS $iriPadre => $elemento)
+				foreach ($nodosPadresyHojasST[SIGECOST_IRI_ONTOLOGIA_NUMERAL . SIGECOST_FRAGMENTO_S_T] AS $iriPadre => $elemento)
 				{
 					$filtroClaseST .= '
 								'.( $filtroClaseST != '' ? '|| ' : '' ).'?claseST = <'.$iriPadre.'>';

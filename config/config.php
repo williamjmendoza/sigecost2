@@ -2,6 +2,20 @@
 	
 	$GLOBALS['SIGECOST_CFG']["siteURL"] = '<URL completo del sigecost>';
 
+	// Revisar el archivo lib/definiciones y estrablecer la siguiente definición
+	// define('SIGECOST_IRI_GRAFO_POR_DEFECTO', 'http://localhost/sigecost2/controlador/soporte_tecnico.owl');
+	// Iri del grafo por defecto. El grafo por defecto puede ser verificado ejecutando el siguiente query
+	// en la base de datos de la ontología:
+	/*
+	SELECT DISTINCT
+	 onto_st.st_id2val.val AS iri_grafo_por_defecto
+	FROM
+	onto_st.st_g2t
+	INNER JOIN onto_st.st_id2val ON (onto_st.st_id2val.id = onto_st.st_g2t.g)
+	WHERE
+	onto_st.st_g2t.g = 1
+	*/
+	
 	// Configuración de la base de datos de patrones de soporte técnico
 	$GLOBALS['SIGECOST_CFG']["dbType"] = "<Tipo de manejador de base de datos>"; // Ejemplo: $GLOBALS['SIGECOST_CFG']["dbType"] = 'mysql'
 	$GLOBALS['SIGECOST_CFG']["dbEncoding"] = "<Codificación de caracteres de base de datos>"; // Ejemplo: $GLOBALS['SIGECOST_CFG']["dbEncoding"] = "UTF8";
