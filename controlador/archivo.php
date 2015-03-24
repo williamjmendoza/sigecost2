@@ -10,6 +10,13 @@
 	
 	class ControladorArchivo extends Controlador
 	{
+		public function __construct()
+		{
+			$GLOBALS['SigecostRequestVars']['menuActivo'] = 'archivo';
+			
+			parent::__construct();
+		}
+		
 		public function exportar()
 		{
 			require ( SIGECOST_PATH_VISTA . '/archivo/exportar.php' );

@@ -8,6 +8,13 @@
 	
 	class ControladorInstanciaSoporteTecnico extends Controlador
 	{
+		public function __construct()
+		{
+			$GLOBALS['SigecostRequestVars']['menuActivo'] = 'administracionOntologia';
+			
+			parent::__construct();
+		}
+		
 		protected function __validarSolucionSoporteTecnico(FormularioInstanciaSoporteTecnico $form)
 		{
 			if(!isset($_POST['solucionSoporteTecnico']) || ($solucion=trim($_POST['solucionSoporteTecnico'])) == ''){

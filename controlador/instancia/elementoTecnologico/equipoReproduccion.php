@@ -1,9 +1,9 @@
 <?php
 	
 	// Controladores
-	require_once ( SIGECOST_PATH_CONTROLADOR . '/controlador.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/elementoTecnologico/elementoTecnologico.php' );
 
-	class ControladorInstanciaETEquipoReproduccion extends Controlador
+	class ControladorInstanciaETEquipoReproduccion extends ControladorInstanciaElementoTecnologico
 	{
 		
 		// Obtener y validar la marca

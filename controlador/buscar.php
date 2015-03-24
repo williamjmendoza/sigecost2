@@ -13,6 +13,13 @@
 	{
 		use ControladorTraitPaginacion;
 		
+		public function __construct()
+		{
+			$GLOBALS['SigecostRequestVars']['menuActivo'] = 'busqueda';
+			
+			parent::__construct();
+		}
+		
 		public function buscar()
 		{
 			// Obtener el formulario

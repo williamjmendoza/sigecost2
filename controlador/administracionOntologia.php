@@ -13,6 +13,13 @@
 	
 	class ControladorAdministracionOntologia extends Controlador
 	{
+		public function __construct()
+		{
+			$GLOBALS['SigecostRequestVars']['menuActivo'] = 'administracionOntologia';
+			
+			parent::__construct();
+		}
+		
 		public function administrarETLista()
 		{
 			// Obtener todos los iris de las clases, de los elementos tecnológicos implementados

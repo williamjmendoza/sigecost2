@@ -1,3 +1,7 @@
+<?php
+	$menuActivo = $GLOBALS['SigecostRequestVars']['menuActivo'];
+?>
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 
@@ -15,7 +19,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li class="dropdown">
+				<li class="dropdown<?php echo $menuActivo=='archivo' ? ' active' : '' ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Archivo<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/archivo.php?accion=exportar">
@@ -23,7 +27,7 @@
 						</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="dropdown<?php echo $menuActivo=='administracionOntologia' ? ' active' : '' ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administaci&oacute;n de la ontolog&iacute;a<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarETLista">
@@ -34,9 +38,17 @@
 						</a></li>
 					</ul>
 				</li>
-				<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/buscar.php?accion=buscar">B&uacute;squeda</a></li>
-				<li class="active"><a href="#">Opciones</a></li>
+				<li class="<?php echo $menuActivo=='busqueda' ? ' active' : '' ?>"><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/buscar.php?accion=buscar">B&uacute;squeda</a></li>
 			</ul>
+			<form class="navbar-form navbar-right" role="search">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Usuario">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" placeholder="Contrase&ntilde;a">
+				</div>
+				<button type="submit" class="btn btn-default">Entrar</button>
+			</form>
 		</div><!-- /.navbar-collapse -->
 
 	</div>

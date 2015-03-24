@@ -3,13 +3,13 @@
 	require_once( dirname(__FILE__) . '/../../../init.php' );
 
 	// Controladores
-	require_once ( SIGECOST_PATH_CONTROLADOR . '/controlador.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/elementoTecnologico/elementoTecnologico.php' );
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/paginacion.php' );
 
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/instancia/elementoTecnologico/sistemaOperativo.php' );
 
-	class ControladorInstanciaETSistemaOperativo extends Controlador
+	class ControladorInstanciaETSistemaOperativo extends ControladorInstanciaElementoTecnologico
 	{
 		use ControladorTraitPaginacion;
 		

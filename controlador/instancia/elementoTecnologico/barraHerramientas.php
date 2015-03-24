@@ -1,9 +1,9 @@
 <?php
 
 	// Controladores
-	require_once ( SIGECOST_PATH_CONTROLADOR . '/controlador.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/elementoTecnologico/elementoTecnologico.php' );
 
-	class ControladorInstanciaETBarraHerramientas extends Controlador
+	class ControladorInstanciaETBarraHerramientas extends ControladorInstanciaElementoTecnologico
 	{
 
 		// Obtener y validar el nombre
