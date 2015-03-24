@@ -6,3 +6,7 @@
 		<script type="text/javascript" src="<?php echo SIGECOST_PATH_URL_JAVASCRIPT ?>/general.js"></script>
 		
 		<script type="text/javascript" src="<?php echo SIGECOST_PATH_URL_JAVASCRIPT ?>/constantes.js"></script>
+		
+		<div class="container">
+			<hr>
+		</div>
