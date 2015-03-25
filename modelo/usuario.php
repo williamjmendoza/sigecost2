@@ -87,54 +87,6 @@
 			}
 		}
 		
-		//Borrar
-		/*
-		public static function obtenerUsuarioPorDescripcionUsuario($descripcionUsuario)
-		{
-			$preMsg = 'Error al obtener un usuario, dado el usuario.';
-			$usuario = null;
-		
-			try
-			{
-				if ($descripcionUsuario === null)
-					throw new Exception($preMsg . ' El parámetro \'$descripcionUsuario\' es nulo.');
-		
-				if (($descripcionUsuario=trim($descripcionUsuario)) == "")
-					throw new Exception($preMsg . ' El parámetro \'$descripcionUsuario\' está vacío.');
-		
-				$query = "
-					SELECT
-						usuario.id AS usuario_id,
-						usuario.cedula AS usuario_cedula,
-						usuario.usuario AS usuario_usuario,
-						#usuario.contrasena AS usuario_constrasena,
-						usuario.nombre AS usuario_nombre,
-						usuario.apellido AS usuario_apellido,
-						usuario.estatus AS usuario_estatus
-					FROM
-						usuario
-					WHERE
-						usuario.usuario = '".$descripcionUsuario."'
-				";
-		
-				if(($result = $GLOBALS['PATRONES_CLASS_DB']->Query($query)) === false)
-					throw new Exception($preMsg." Detalles: ".($GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg()));
-		
-				if ($row = $GLOBALS['PATRONES_CLASS_DB']->Fetch($result))
-					$usuario = self::llenarUsuario($row);
-		
-				if($usuario === false)
-					throw new Exception($preMsg . ' No se pudo llenar el usuario.');
-		
-				return $usuario;
-					
-			} catch (Exception $e) {
-				error_log($e, 0);
-				return false;
-			}
-		}
-		*/
-		
 		public static function validarUsuario($usuario, $contrasena)
 		{
 			$preMsg = 'Error al validar un usuario.';
@@ -172,6 +124,38 @@
 				return false;
 					
 			} catch (Exception $e) {
+				error_log($e, 0);
+				return null;
+			}
+		}
+		
+		public static function tieneRol(int $idRol, $usuario)
+		{
+			$preMsg = 'Error al consultar si un usuario posee determinado rol';
+			
+			try
+			{
+				if(idRol <= 0)
+					throw new Exception($preMsg . ' El parámetro \'$idRol\' no contiene un id de rol válido.');
+				
+				if($usuario === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario\' es nulo.');
+				
+				if(!($usuario instanceof EntidadUsuario))
+					throw new Exception($preMsg . ' El parámetro \'$usuario\' es inválido.');
+				
+				if(!is_array($usuario->getRoles()))
+					return false;
+				
+				foreach ($usuario->getRoles() AS $rol)
+				{
+					if($rol->getId() == $idRol) return true;
+				}
+				
+				return false;
+				
+			} catch (Exception $e)
+			{
 				error_log($e, 0);
 				return null;
 			}
