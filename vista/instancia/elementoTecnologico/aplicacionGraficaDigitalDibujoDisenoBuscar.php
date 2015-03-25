@@ -2,6 +2,7 @@
 
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO_BUSCAR);
 	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +20,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="aplicacionGraficaDigitalDibujoDiseno.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="aplicacionGraficaDigitalDibujoDiseno.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -45,7 +48,9 @@
 							<th>#</th>
 							<th>Nombre</th>
 							<th>Versi&oacute;n</th>
+							<?php if($esAdministradorOntologia) {?>
 							<th>Opciones</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -57,6 +62,7 @@
 							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $aplicacion->getNombre() ?> </td>
 							<td><?php echo $aplicacion->getVersion() ?></td>
+							<?php if($esAdministradorOntologia) {?>
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="aplicacionGraficaDigitalDibujoDiseno.php" method="post">
 									<div style="display:none;">
@@ -68,6 +74,7 @@
 									</div>
 								</form>
 							</td>
+							<?php } ?>
 						</tr>
 			<?php
 					}

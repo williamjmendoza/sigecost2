@@ -62,9 +62,11 @@
 						<div class="panel-body">
 							<?php echo $claseST['commentClase'] ?><br>
 							<br>
+							<?php if($esAdministradorOntologia){ ?>
 							<a class="btn btn-primary btn-xs" role="button"
 								href="<?php echo isset($GLOBALS['SIGECOST_VAO']['ST'][$claseST['clase']]['insertar']) ? $GLOBALS['SIGECOST_VAO']['ST'][$claseST['clase']]['insertar'] : "#"  ?>"
 							>Insertar</a>
+							<?php } ?>
 							<a class="btn btn-primary btn-xs" role="button"
 								href="<?php echo isset($GLOBALS['SIGECOST_VAO']['ST'][$claseST['clase']]['buscar']) ? $GLOBALS['SIGECOST_VAO']['ST'][$claseST['clase']]['buscar'] : "#"  ?>"
 							>Consultar</a>

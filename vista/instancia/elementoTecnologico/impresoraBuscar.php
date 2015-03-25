@@ -2,6 +2,7 @@
 
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_IMPRESORA_BUSCAR);
 	$impresoras = $GLOBALS['SigecostRequestVars']['impresoras'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +20,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="impresora.php?accion=insertar">Insertar</a></li>
+				<?php  } ?>
 				<li class="active"><a href="impresora.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -44,7 +47,9 @@
 							<th>#</th>
 							<th>Marca</th>
 							<th>Modelo</th>
+							<?php if($esAdministradorOntologia) { ?>
 							<th>Opciones</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,6 +61,7 @@
 							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $impresora->getMarca() ?> </td>
 							<td><?php echo $impresora->getModelo() ?></td>
+							<?php if($esAdministradorOntologia) { ?>
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="impresora.php" method="post">
 									<div style="display:none;">
@@ -67,6 +73,7 @@
 									</div>
 								</form>
 							</td>
+							<?php } ?>
 						</tr>
 			<?php
 					}

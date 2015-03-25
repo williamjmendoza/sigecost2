@@ -19,7 +19,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="instalacionAplicacionOfimatica.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="instalacionAplicacionOfimatica.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>

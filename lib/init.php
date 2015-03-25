@@ -117,5 +117,6 @@
 	// Crear una referencia al objeto store de arc2
 	$GLOBALS['ONTOLOGIA_STORE'] = &$store;
 	
+	$GLOBALS['SigecostInitialVars'] = array();
 	
 ?>

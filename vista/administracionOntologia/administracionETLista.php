@@ -1,6 +1,7 @@
 <?php
 
 	$clasesET = $GLOBALS['SigecostRequestVars']['clasesET'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 	
 ?>
 <!DOCTYPE html>
@@ -62,9 +63,11 @@
 						<div class="panel-body">
 							<?php echo $claseET['commentClase'] ?><br>
 							<br>
+							<?php if($esAdministradorOntologia) { ?>
 							<a class="btn btn-primary btn-xs" role="button"
 								href="<?php echo isset($GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['insertar']) ? $GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['insertar'] : "#"  ?>"
 							>Insertar</a>
+							<?php } ?>
 							<a class="btn btn-primary btn-xs" role="button"
 								href="<?php echo isset($GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['buscar']) ? $GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['buscar'] : "#"  ?>"
 							>Consultar</a>

@@ -2,6 +2,7 @@
 
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_ESCANER_BUSCAR);
 	$escaners = $GLOBALS['SigecostRequestVars']['escaners'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +20,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="escaner.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="escaner.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -44,7 +47,9 @@
 							<th>#</th>
 							<th>Marca</th>
 							<th>Modelo</th>
+							<?php if($esAdministradorOntologia) { ?>
 							<th>Opciones</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,6 +61,7 @@
 							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $escaner->getMarca() ?> </td>
 							<td><?php echo $escaner->getModelo() ?></td>
+							<?php if($esAdministradorOntologia) { ?>
 							<td>
 								<form class="form-horizonta buscarOpciones" role="form" action="escaner.php" method="post">
 									<div style="display:none;">
@@ -67,6 +73,7 @@
 									</div>
 								</form>
 							</td>
+							<?php } ?>
 						</tr>
 			<?php
 					}

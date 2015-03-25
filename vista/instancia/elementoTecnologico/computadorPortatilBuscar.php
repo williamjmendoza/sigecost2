@@ -2,6 +2,7 @@
 
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_COMPUTADOR_PORTATIL_BUSCAR);
 	$portatiles = $GLOBALS['SigecostRequestVars']['portatiles'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +20,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="computadorPortatil.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="computadorPortatil.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -44,7 +47,9 @@
 							<th>#</th>
 							<th>Marca</th>
 							<th>Modelo</th>
+							<?php if($esAdministradorOntologia) { ?>
 							<th>Opciones</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,6 +61,7 @@
 							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $portatil->getMarca() ?> </td>
 							<td><?php echo $portatil->getModelo() ?></td>
+							<?php if($esAdministradorOntologia) { ?>
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="computadorPortatil.php" method="post">
 									<div style="display:none;">
@@ -67,6 +73,7 @@
 									</div>
 								</form>
 							</td>
+							<?php } ?>
 						</tr>
 			<?php
 					}
