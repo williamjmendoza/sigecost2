@@ -39,7 +39,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en impresora: <small>corregir impresi&oacute;n manchada</small></h1>
+				<h1>Instancia de corregir impresi&oacute;n manchada</h1>
 			</div>
 
 			<form class="form-horizontal" role="form" method="post" action="corregirImpresionManchada.php">

@@ -31,7 +31,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancias de soporte t&eacute;cnico en impresora: <small>desatascar papel</small></h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de desatascar el papel en una impresora";
+					} else {
+						echo "Desatascar el papel en una impresora";
+					}
+				?></h1>
 			</div>
 
 			<?php

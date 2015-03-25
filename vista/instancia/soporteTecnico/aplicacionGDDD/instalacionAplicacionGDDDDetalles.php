@@ -35,7 +35,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia de instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o</h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancia de instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					} else {
+						echo "Instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					}
+				?></h1>
 			</div>
 
 			<form id="formInstalacionAplicacionGDDD" class="form-horizontal" role="form" method="post" action="instalacionAplicacionGDDD.php">

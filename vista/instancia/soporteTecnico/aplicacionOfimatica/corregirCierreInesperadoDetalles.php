@@ -34,7 +34,13 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia de corregir el cierre inesperado de una aplicaci&oacute;n ofim&aacute;tica</h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancia de corregir el cierre inesperado de una aplicaci&oacute;n ofim&aacute;tica";
+					} else {
+						echo "Corregir el cierre inesperado de una aplicaci&oacute;n ofim&aacute;tica";
+					}
+				?></h1>
 			</div>
 			
 			<form id="formCorregirCierreInesperado" class="form-horizontal" role="form" method="post" action="corregirCierreInesperado.php">

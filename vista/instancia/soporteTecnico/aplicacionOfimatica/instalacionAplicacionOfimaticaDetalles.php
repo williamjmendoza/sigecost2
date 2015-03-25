@@ -35,7 +35,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia de instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica</h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancia de instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica";
+					} else {
+						echo "Instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica";
+					}
+				?></h1>
 			</div>
 
 			<form id="formInstalacionAplicacionOfimatica" class="form-horizontal" role="form" method="post" action="instalacionAplicacionOfimatica.php">

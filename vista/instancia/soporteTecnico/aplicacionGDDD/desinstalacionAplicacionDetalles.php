@@ -35,7 +35,13 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia de desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o</h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancia de desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					} else {
+						echo "Desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					}
+				?></h1>
 			</div>
 			
 			<form id="formDesinstalacionAplicacion" class="form-horizontal" role="form" method="post" action="desinstalacionAplicacion.php">

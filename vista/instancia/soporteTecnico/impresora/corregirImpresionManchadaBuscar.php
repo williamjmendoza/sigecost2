@@ -31,7 +31,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancias de soporte t&eacute;cnico en impresora: <small>corregir impresi&oacute;n manchada</small></h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de corregir impresi&oacute;n manchada";
+					} else {
+						echo "Corregir impresi&oacute;n manchada";
+					}
+				?></h1>
 			</div>
 
 			<?php

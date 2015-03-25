@@ -31,7 +31,13 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancias de soporte t&eacute;cnico en impresora: <small>instalaci&oacute;n de impresora</small></h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de instalaci&oacute;n de impresora";
+					} else {
+						echo "Instalaci&oacute;n de impresora";
+					}
+				?></h1>
 			</div>
 			
 			<?php

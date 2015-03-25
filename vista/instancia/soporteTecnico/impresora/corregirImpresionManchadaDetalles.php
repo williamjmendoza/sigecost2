@@ -34,7 +34,13 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en impresora: <small>corregir impresi&oacute;n manchada</small></h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancia de corregir impresi&oacute;n manchada";
+					} else {
+						echo "Corregir impresi&oacute;n manchada";
+					}
+				?></h1>
 			</div>
 			
 			<form id="formCorregirImpresionManchada" class="form-horizontal" role="form" method="post" action="corregirImpresionManchada.php">
