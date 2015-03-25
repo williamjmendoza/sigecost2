@@ -27,7 +27,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico fotocopiadora</h1>
+				<h1>Instancia de fotocopiadora</h1>
 			</div>
 			
 			<form id="formFotocopiadora" class="form-horizontal" role="form" method="post" action="fotocopiadora.php">

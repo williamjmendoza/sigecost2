@@ -36,7 +36,7 @@
 
 			<div class="page-header">
 				<h1>
-					Instancia del elemento tecnol&oacute;gico computador de escritorio<?php
+					Instancia de computador escritorio<?php
 						if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) {
 					?>: <small><?php echo $equipoComputacion->getMarca() . ' - ' . $equipoComputacion->getModelo() ?></small>
 					<?php } ?>

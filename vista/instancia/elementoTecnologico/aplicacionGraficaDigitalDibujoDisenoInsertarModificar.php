@@ -36,7 +36,7 @@
 		
 			<div class="page-header">
 				<h1>
-					Instancia del elemento tecnol&oacute;gico aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o<?php
+					Instancia de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o<?php
 						if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) {
 					?>: <small><?php echo $instancia->getNombre() . ' - ' . $instancia->getVersion() ?></small>
 					<?php } ?>

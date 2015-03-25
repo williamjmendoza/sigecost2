@@ -76,4 +76,8 @@
 	define('SIGECOST_FRAGMENTO_S_T_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO', 'RestablecerBarrasHerramientasFuncionFormatoDibujo');
 	define('SIGECOST_FRAGMENTO_S_T_SISTEMA_OPERATIVO', 'SoporteTecnicoSistemaOperativo');
 	
+	/* Relacionadas con el usuario que inicia una sesión */
+	define('SIGECOST_USUARIO_ADMINISTRADOR_USUARIOS', 1);
+	define('SIGECOST_USUARIO_ADMINISTRADOR_ONTOLOGIA', 2);
+	
 ?>

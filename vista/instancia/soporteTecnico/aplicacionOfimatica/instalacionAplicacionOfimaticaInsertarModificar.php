@@ -41,7 +41,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en aplicacion ofim&aacute;tica: <small>instalaci&oacute;n de aplicacion ofim&aacute;tica</small></h1>
+				<h1>Instancia de instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica</h1>
 			</div>
 
 			<form class="form-horizontal" role="form" method="post" action="instalacionAplicacionOfimatica.php">

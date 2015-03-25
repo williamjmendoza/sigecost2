@@ -19,7 +19,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="desinstalacionAplicacionOfimatica.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="desinstalacionAplicacionOfimatica.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -29,9 +31,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancias de soporte t&eacute;cnico en aplicacion ofim&aacute;tica:&nbsp;
-					<small>desinstalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica</small>
-				</h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de desinstalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica";
+					} else {
+						echo "Desinstalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica";
+					}
+				?></h1>
 			</div>
 
 			<?php

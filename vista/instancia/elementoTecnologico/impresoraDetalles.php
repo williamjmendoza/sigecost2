@@ -27,7 +27,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico impresora</h1>
+				<h1>Instancia de impresora</h1>
 			</div>
 			
 			<form id="formImpresora" class="form-horizontal" role="form" method="post" action="impresora.php">

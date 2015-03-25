@@ -27,7 +27,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico computador de escritorio</h1>
+				<h1>Instancia de computador escritorio</h1>
 			</div>
 
 			<form id="formComputadorEscritorio" class="form-horizontal" role="form" method="post" action="computadorEscritorio.php">

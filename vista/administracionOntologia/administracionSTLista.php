@@ -27,11 +27,13 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Administraci&oacute;n de la ontolog&iacute;a</h1>
-			</div>
-			
-			<div class="page-header">
-				<h1><small>Soporte t&eacute;cnico</small></h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Administraci&oacute;n de las instancias de las incidencias de soporte t&eacute;cnico";
+					} else {
+						echo "Consultas de las incidencias de soporte t&eacute;cnico";
+					}
+				?></h1>
 			</div>
 			<?php
 				if (is_array($clasesST) && count($clasesST) > 0)
@@ -62,9 +64,11 @@
 						<div class="panel-body">
 							<?php echo $claseST['commentClase'] ?><br>
 							<br>
+							<?php if($esAdministradorOntologia){ ?>
 							<a class="btn btn-primary btn-xs" role="button"
 								href="<?php echo isset($GLOBALS['SIGECOST_VAO']['ST'][$claseST['clase']]['insertar']) ? $GLOBALS['SIGECOST_VAO']['ST'][$claseST['clase']]['insertar'] : "#"  ?>"
 							>Insertar</a>
+							<?php } ?>
 							<a class="btn btn-primary btn-xs" role="button"
 								href="<?php echo isset($GLOBALS['SIGECOST_VAO']['ST'][$claseST['clase']]['buscar']) ? $GLOBALS['SIGECOST_VAO']['ST'][$claseST['clase']]['buscar'] : "#"  ?>"
 							>Consultar</a>

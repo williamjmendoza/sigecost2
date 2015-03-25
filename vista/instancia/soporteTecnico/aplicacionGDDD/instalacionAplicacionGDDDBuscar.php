@@ -27,7 +27,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="instalacionAplicacionGDDD.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="instalacionAplicacionGDDD.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -37,8 +39,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancias de soporte t&eacute;cnico en aplicaci&oacute;n de programa:&nbsp;
-				<small>instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o</small></h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					} else {
+						echo "Instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					}
+				?></h1>
 			</div>
 
 			<?php

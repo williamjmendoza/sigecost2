@@ -2,6 +2,7 @@
 
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_CONSUMIBLE_BUSCAR);
 	$sistemasOperativos = $GLOBALS['SigecostRequestVars']['consumibles'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +20,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="consumible.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="consumible.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -29,7 +32,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancias del elemento tecnol&oacute;gico consumible</h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de consumible";
+					} else {
+						echo "Consumible";
+					}
+				?></h1>
 			</div>
 
 			<?php
@@ -44,7 +53,9 @@
 							<th>#</th>
 							<th>Especificacion</th>
 							<th>Tipo</th>
+							<?php if($esAdministradorOntologia) { ?>
 							<th>Opciones</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,6 +67,7 @@
 							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $consumible->getEspecificacion() ?> </td>
 							<td><?php echo $consumible->getTipo() ?></td>
+							<?php if($esAdministradorOntologia) { ?>
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="consumible.php" method="post">
 									<div style="display:none;">
@@ -67,6 +79,7 @@
 									</div>
 								</form>
 							</td>
+							<?php } ?>
 						</tr>
 			<?php
 					}

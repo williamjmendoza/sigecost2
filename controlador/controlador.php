@@ -4,6 +4,7 @@
 	include_once(SIGECOST_PATH_FORMULARIO . '/formularioManejador.php');
 	
 	// Modelos
+	include_once(SIGECOST_PATH_MODELO . '/general.php');
 	include_once(SIGECOST_PATH_MODELO . '/sesion.php');
 	
 	class Controlador
@@ -15,6 +16,10 @@
 				// Inicializar los arrays de mensajes 
 				$GLOBALS['SigecostErrors']['general'] = array();
 				$GLOBALS['SigecostInfo']['general'] = array();
+				
+				// Establecer las variables de request comunes a todos los controladores
+				$GLOBALS['SigecostRequestVars']['esAdministradorOntologia'] = ModeloSesion::estaSesionIniciada() === true
+					? ModeloGeneral::getConfInitial('usuarioEsAdministradorOntologia') : null;
 				
 				/*
 				 * Uno de los errores que puede hacer que $_REQUEST["accion"] no se haya establecido

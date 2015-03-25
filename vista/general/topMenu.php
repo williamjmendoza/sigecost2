@@ -1,6 +1,9 @@
 <?php
+
 	$menuActivo = $GLOBALS['SigecostRequestVars']['menuActivo'];
-	$usuario = ModeloSesion::estaSesionIniciada() === true && isset($GLOBALS['SigecostInitialVars']['usuario']) ? $GLOBALS['SigecostInitialVars']['usuario'] : null; 
+	$usuario = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuario') : null;
+	$esAdministradorOntologia = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuarioEsAdministradorOntologia') : null;
+	
 ?>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -20,6 +23,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
+				<?php if($esAdministradorOntologia) {?>
 				<li class="dropdown<?php echo $menuActivo=='archivo' ? ' active' : '' ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Archivo<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
@@ -28,18 +32,25 @@
 						</a></li>
 					</ul>
 				</li>
+				<?php } ?>
 				<li class="dropdown<?php echo $menuActivo=='administracionOntologia' ? ' active' : '' ?>">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administaci&oacute;n de la ontolog&iacute;a<span class="caret"></span></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<?php if($esAdministradorOntologia) {
+							echo "Administaci&oacute;n de la ontolog&iacute;a";
+						} else {
+							echo "Consultas";
+						}
+						?><span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarETLista">
-							Elemento tecnol&oacute;gico
+							Elementos tecnol&oacute;gicos
 						</a></li>
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarSTLista">
-							Soporte t&eacute;cnico
+							Incidencias de soporte t&eacute;cnico
 						</a></li>
 					</ul>
 				</li>
-				<li class="<?php echo $menuActivo=='busqueda' ? ' active' : '' ?>"><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/buscar.php?accion=buscar">B&uacute;squeda</a></li>
+				<li class="<?php echo $menuActivo=='busqueda' ? ' active' : '' ?>"><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/buscar.php?accion=buscar">B&uacute;squedas</a></li>
 			</ul>
 			<?php
 				if (ModeloSesion::estaSesionIniciada() !== true)

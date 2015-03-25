@@ -27,7 +27,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico consumible</h1>
+				<h1>Instancia de consumible</h1>
 			</div>
 			
 			<form id="formConsumible" class="form-horizontal" role="form" method="post" action="consumible.php">

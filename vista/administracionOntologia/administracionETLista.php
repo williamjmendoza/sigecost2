@@ -1,6 +1,7 @@
 <?php
 
 	$clasesET = $GLOBALS['SigecostRequestVars']['clasesET'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 	
 ?>
 <!DOCTYPE html>
@@ -27,11 +28,13 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Administraci&oacute;n de la ontolog&iacute;a</h1>
-			</div>
-			
-			<div class="page-header">
-				<h1><small>Elemento tecnol&oacute;gico</small></h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Administraci&oacute;n de las instancias de los elementos tecnol&oacute;gicos";
+					} else {
+						echo "Consultas de los elementos tecnol&oacute;gicos";
+					}
+				?></h1>
 			</div>
 			<?php
 				if (is_array($clasesET) && count($clasesET) > 0)
@@ -62,9 +65,11 @@
 						<div class="panel-body">
 							<?php echo $claseET['commentClase'] ?><br>
 							<br>
+							<?php if($esAdministradorOntologia) { ?>
 							<a class="btn btn-primary btn-xs" role="button"
 								href="<?php echo isset($GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['insertar']) ? $GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['insertar'] : "#"  ?>"
 							>Insertar</a>
+							<?php } ?>
 							<a class="btn btn-primary btn-xs" role="button"
 								href="<?php echo isset($GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['buscar']) ? $GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['buscar'] : "#"  ?>"
 							>Consultar</a>

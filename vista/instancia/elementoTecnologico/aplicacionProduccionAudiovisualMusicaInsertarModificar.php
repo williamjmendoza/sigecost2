@@ -35,7 +35,7 @@
 		
 			<div class="page-header">
 				<h1>
-					Instancia del elemento tecnol&oacute;gico aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica<?php
+					Instancia de aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica<?php
 						if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) {
 					?>: <small><?php echo $aplicacion->getNombre() . ' - ' . $aplicacion->getVersion() ?></small>
 					<?php } ?>

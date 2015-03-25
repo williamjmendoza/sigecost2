@@ -39,9 +39,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en aplicaci&oacute;n ofim&aacute;tica:&nbsp;
-					<small>Restablecer barra herramientas funci&oacute;n formato dibujo</small>
-				</h1>
+				<h1>Instancia de restablecer las barras herramientas funci&oacute;n, formato y/o dibujo en aplicaci&oacute;n ofim&aacute;tica</h1>
 			</div>
 
 			<form class="form-horizontal" role="form" method="post" action="restablecerBarraHerramientasFFD.php">

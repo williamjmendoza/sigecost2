@@ -29,7 +29,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica</h1>
+				<h1>Instancia de aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica</h1>
 			</div>
 			
 			<form id="formAplicacionProduccionAudiovisualMusica" class="form-horizontal" role="form" method="post" action="aplicacionProduccionAudiovisualMusica.php">

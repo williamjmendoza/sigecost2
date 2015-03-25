@@ -36,7 +36,7 @@
 		
 			<div class="page-header">
 				<h1>
-					Instancia del elemento tecnol&oacute;gico consumible<?php
+					Instancia de consumible<?php
 						if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) {
 					?>: <small><?php echo $consumible->getEspecificacion() . ' - ' . $consumible->getTipo() ?></small>
 					<?php } ?>

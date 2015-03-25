@@ -19,7 +19,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="restablecerBarraHerramientasFFD.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="restablecerBarraHerramientasFFD.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -29,9 +31,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancias de soporte t&eacute;cnico en aplicaci&oacute;n ofim&aacute;tica:&nbsp;
-					<small>Restablecer barra herramientas funci&oacute;n formato dibujo</small>
-				</h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de restablecer las barras herramientas funci&oacute;n, formato y/o dibujo en aplicaci&oacute;n ofim&aacute;tica";
+					} else {
+						echo "Restablecer las barras herramientas funci&oacute;n, formato y/o dibujo en aplicaci&oacute;n ofim&aacute;tica";
+					}
+				?></h1>
 			</div>
 
 			<?php

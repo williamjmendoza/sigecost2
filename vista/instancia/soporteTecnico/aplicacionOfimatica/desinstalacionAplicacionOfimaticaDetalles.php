@@ -4,6 +4,7 @@
 	$patron = $instancia != null ? $instancia->getPatron() : null;
 	$instanciaAplicacion = $instancia->getAplicacionPrograma();
 	$instanciaSistemaOperativo = $instancia->getSistemaOperativo();
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +22,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="desinstalacionAplicacionOfimatica.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li><a href="desinstalacionAplicacionOfimatica.php?accion=Buscar">Consultar</a></li>
 				<li class="active"><a href="#">Ver Detalles</a></li>
 			</ul>
@@ -32,9 +35,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en aplicacion ofim&aacute;tica:&nbsp;
-					<small>desinstalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica</small>
-				</h1>
+				<h1>Instancia de desinstalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica</h1>
 			</div>
 
 			<form id="formDesinstalacionAplicacionOfimatica" class="form-horizontal" role="form" method="post" action="desinstalacionAplicacionOfimatica.php">
@@ -118,12 +119,14 @@
 						</div>
 					</div>
 				</div>
+				<?php if($esAdministradorOntologia) { ?>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-primary" onclick="setAccion('modificar');">Modificar</button>
 						<button type="button" class="btn btn-primary" onclick="eliminarInstancia('formDesinstalacionAplicacionOfimatica');">Eliminar</button>
 					</div>
 				</div>
+				<?php } ?>
 			</form>
 
 		</div>

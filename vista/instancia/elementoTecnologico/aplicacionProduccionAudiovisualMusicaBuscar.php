@@ -2,6 +2,7 @@
 
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_PRODUCCION_AUDIOVISUAL_MUSICA_BUSCAR);
 	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +20,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="aplicacionProduccionAudiovisualMusica.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="aplicacionProduccionAudiovisualMusica.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -29,7 +32,13 @@
 		<div class="container">
 
 			<div class="page-header">
-			<h1>Instancias del elemento tecnol&oacute;gico aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica</h1>
+			<h1><?php
+				if($esAdministradorOntologia) {
+					echo "Instancias de aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica";
+				} else {
+					echo "Aplicaci&oacute;n producci&oacute;n audiovisual y m&uacute;sica";
+				}
+			?></h1>
 			</div>
 
 			<?php
@@ -44,7 +53,9 @@
 							<th>#</th>
 							<th>Nombre</th>
 							<th>Versi&oacute;n</th>
+							<?php if($esAdministradorOntologia) {?>
 							<th>Opciones</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,6 +67,7 @@
 							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $aplicacion->getNombre() ?> </td>
 							<td><?php echo $aplicacion->getVersion() ?></td>
+							<?php if($esAdministradorOntologia) {?>
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="aplicacionProduccionAudiovisualMusica.php" method="post">
 									<div style="display:none;">
@@ -67,6 +79,7 @@
 									</div>
 								</form>
 							</td>
+							<?php } ?>
 						</tr>
 			<?php
 					}

@@ -41,8 +41,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en aplicaci&oacute;n de programa: 
-					<small>instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o</small></h1>
+				<h1>Instancia de instalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o</h1>
 			</div>
 
 			<form class="form-horizontal" role="form" method="post" action="instalacionAplicacionGDDD.php">

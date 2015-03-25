@@ -39,9 +39,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en aplicaci&oacute;n ofim&aacute;tica:&nbsp;
-					<small>corregir cierre inesperado</small>
-				</h1>
+				<h1>Instancia de corregir el cierre inesperado de una aplicaci&oacute;n ofim&aacute;tica</h1>
 			</div>
 			
 			<form class="form-horizontal" role="form" method="post" action="corregirCierreInesperado.php">

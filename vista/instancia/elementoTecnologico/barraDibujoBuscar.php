@@ -2,6 +2,7 @@
 
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_BARRA_DIBUJO_BUSCAR);
 	$barras = $GLOBALS['SigecostRequestVars']['barras'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +20,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="barraDibujo.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="barraDibujo.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -29,7 +32,13 @@
 		<div class="container">
 
 			<div class="page-header">
-			<h1>Instancias del elemento tecnol&oacute;gico barra de dibujo</h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de barra de dibujo";
+					} else {
+						echo "Barra de dibujo";
+					}
+				?></h1>
 			</div>
 
 			<?php
@@ -44,7 +53,9 @@
 							<th>#</th>
 							<th>Nombre</th>
 							<th>Versi&oacute;n</th>
+							<?php if($esAdministradorOntologia) {?>
 							<th>Opciones</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -56,6 +67,7 @@
 							<td><?php echo (++$contador) ?></td>
 							<td><?php echo $barra->getNombre() ?> </td>
 							<td><?php echo $barra->getVersion() ?></td>
+							<?php if($esAdministradorOntologia) {?>
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="barraDibujo.php" method="post">
 									<div style="display:none;">
@@ -67,6 +79,7 @@
 									</div>
 								</form>
 							</td>
+							<?php } ?>
 						</tr>
 			<?php
 					}

@@ -29,7 +29,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico aplicaci&oacute;n ofim&aacute;tica</h1>
+				<h1>Instancia de aplicaci&oacute;n ofim&aacute;tica</h1>
 			</div>
 			
 			<form id="formAplicacionOfimatica" class="form-horizontal" role="form" method="post" action="aplicacionOfimatica.php">

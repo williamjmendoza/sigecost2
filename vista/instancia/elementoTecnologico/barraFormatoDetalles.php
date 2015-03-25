@@ -29,7 +29,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico barra de formato</h1>
+				<h1>Instancia de barra de formato</h1>
 			</div>
 
 			<form id="formBarraFormato" class="form-horizontal" role="form" method="post" action="barraFormato.php">

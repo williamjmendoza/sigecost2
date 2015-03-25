@@ -3,6 +3,7 @@
 	$instancia = $GLOBALS['SigecostRequestVars']['instancia'];
 	$patron = $instancia != null ? $instancia->getPatron() : null;
 	$instanciaImpresora = $instancia != null ? $instancia->getEquipoReproduccion() : null;
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 	
 ?>
 <!DOCTYPE html>
@@ -20,7 +21,9 @@
 		
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="repararImpresionCorrida.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li><a href="repararImpresionCorrida.php?accion=Buscar">Consultar</a></li>
 				<li class="active"><a href="#">Ver Detalles</a></li>
 			</ul>
@@ -107,12 +110,14 @@
 						</div>
 					</div>
 				</div>
+				<?php if($esAdministradorOntologia) { ?>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-primary" onclick="setAccion('modificar');">Modificar</button>
 						<button type="button" class="btn btn-primary" onclick="eliminarInstancia('formRepararImpresionCorrida');">Eliminar</button>
 					</div>
 				</div>
+				<?php } ?>
 			</form>
 		
 		</div>

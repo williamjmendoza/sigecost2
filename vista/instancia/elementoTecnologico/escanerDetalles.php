@@ -27,7 +27,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico escaner</h1>
+				<h1>Instancia de esc&aacute;ner</h1>
 			</div>
 			
 			<form id="formEscaner" class="form-horizontal" role="form" method="post" action="escaner.php">

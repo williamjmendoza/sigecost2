@@ -36,7 +36,7 @@
 
 			<div class="page-header">
 				<h1>
-					Instancia del elemento tecnol&oacute;gico esc&aacute;ner<?php
+					Instancia de esc&aacute;ner<?php
 						if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) {
 					?>: <small><?php echo $equipoReproduccion->getMarca() . ' - ' . $equipoReproduccion->getModelo() ?></small>
 					<?php } ?>

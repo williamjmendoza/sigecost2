@@ -1,5 +1,8 @@
 <?php
 
+	// Librerías
+	require_once ( SIGECOST_PATH_LIB . '/definiciones.php' );
+
 	// Modelos
 	require_once ( SIGECOST_PATH_MODELO . '/usuario.php' );
 
@@ -83,6 +86,9 @@
 		
 		public static function cargarUsuario()
 		{
+			$GLOBALS['SigecostInitialVars']['usuarioEsAdministradorOntologia'] = false;
+			$GLOBALS['SigecostInitialVars']['usuarioEsAdministradorUsuarios'] = false;
+			
 			try
 			{
 				// if($usuario == false || $usuario == null || !($usuario instanceof EntidadUsuario) )
@@ -92,6 +98,22 @@
 					
 					if($usuario == false || $usuario == null || !($usuario instanceof EntidadUsuario) )
 						throw new Exception("Error al intentar cargar los datos de un usuario.");
+					
+					if(is_array($usuario->getRoles()))
+					{
+						foreach ($usuario->getRoles() AS $rol)
+						{
+							switch ($rol->getId())
+							{
+								case SIGECOST_USUARIO_ADMINISTRADOR_ONTOLOGIA:
+									$GLOBALS['SigecostInitialVars']['usuarioEsAdministradorOntologia'] = true;
+									break;
+									
+								case SIGECOST_USUARIO_ADMINISTRADOR_USUARIOS:
+									$GLOBALS['SigecostInitialVars']['usuarioEsAdministradorUsuarios'] = true;
+							}
+						}
+					}
 				
 					$GLOBALS['SigecostInitialVars']['usuario'] = &$usuario;
 					

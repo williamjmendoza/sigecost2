@@ -3,6 +3,7 @@
 	$instancia = $GLOBALS['SigecostRequestVars']['instancia'];
 	$patron = $instancia != null ? $instancia->getPatron() : null;
 	$instanciaAplicacion = $instancia->getAplicacionPrograma();
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +21,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="restablecerBarraHerramientasFFD.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li><a href="restablecerBarraHerramientasFFD.php?accion=Buscar">Consultar</a></li>
 				<li class="active"><a href="#">Ver Detalles</a></li>
 			</ul>
@@ -31,9 +34,7 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en aplicaci&oacute;n ofim&aacute;tica:&nbsp;
-					<small>restablecer barra herramientas funci&oacute;n formato dibujo</small>
-				</h1>
+				<h1>Instancia de restablecer las barras herramientas funci&oacute;n, formato y/o dibujo en aplicaci&oacute;n ofim&aacute;tica</h1>
 			</div>
 
 			<form id="formRestablecerBarraHerramientasFFD" class="form-horizontal" role="form" method="post" action="restablecerBarraHerramientasFFD.php">
@@ -109,12 +110,14 @@
 						</div>
 					</div>
 				</div>
+				<?php if($esAdministradorOntologia) { ?>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="submit" class="btn btn-primary" onclick="setAccion('modificar');">Modificar</button>
 						<button type="button" class="btn btn-primary" onclick="eliminarInstancia('formRestablecerBarraHerramientasFFD');">Eliminar</button>
 					</div>
 				</div>
+				<?php } ?>
 			</form>
 
 		</div>

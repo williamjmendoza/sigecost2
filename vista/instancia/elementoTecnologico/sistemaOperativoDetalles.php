@@ -27,7 +27,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia del elemento tecnol&oacute;gico sistema operativo</h1>
+				<h1>Instancia de sistema operativo</h1>
 			</div>
 			
 			<form id="formSistemaOperativo" class="form-horizontal" role="form" method="post" action="sistemaOperativo.php">

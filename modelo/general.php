@@ -144,5 +144,13 @@
 				return false;
 			}
 		}
+		
+		public static function getConfInitial($var)
+		{
+			if (array_key_exists($var, $GLOBALS['SigecostInitialVars'])) {
+				return $GLOBALS['SigecostInitialVars'][$var];
+			}
+			return null;
+		}
 	}
 ?>

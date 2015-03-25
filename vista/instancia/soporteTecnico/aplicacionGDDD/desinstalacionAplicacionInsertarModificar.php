@@ -41,9 +41,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Instancia de soporte t&eacute;cnico en aplicacion gr&aacute;fica digital, dibujo y dise&ntilde;o:&nbsp;
-					<small>desinstalaci&oacute;n de aplicaci&oacute;n</small>
-				</h1>
+				<h1>Instancia de desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o</h1>
 			</div>
 			
 			<form class="form-horizontal" role="form" method="post" action="desinstalacionAplicacion.php">

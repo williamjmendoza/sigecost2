@@ -36,7 +36,7 @@
 		
 			<div class="page-header">
 				<h1>
-					Instancia del elemento tecnol&oacute;gico sistema operativo<?php
+					Instancia de sistema operativo<?php
 						if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) {
 					?>: <small><?php echo $sistemaOperativo->getNombre() . ' - ' . $sistemaOperativo->getVersion() ?></small>
 					<?php } ?>

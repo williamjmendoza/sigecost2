@@ -19,7 +19,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="instalacionAplicacionOfimatica.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="instalacionAplicacionOfimatica.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -29,7 +31,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancias de soporte t&eacute;cnico en aplicaci&oacute;n ofim&aacute;tica: <small>instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica</small></h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica";
+					} else {
+						echo "Instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica";
+					}
+				?></h1>
 			</div>
 
 			<?php

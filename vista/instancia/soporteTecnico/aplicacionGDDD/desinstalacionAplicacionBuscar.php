@@ -19,7 +19,9 @@
 
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
+				<?php if($esAdministradorOntologia) {?>
 				<li><a href="desinstalacionAplicacion.php?accion=insertar">Insertar</a></li>
+				<?php } ?>
 				<li class="active"><a href="desinstalacionAplicacion.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
@@ -29,9 +31,13 @@
 		<div class="container">
 
 			<div class="page-header">
-				<h1>Instancias de soporte t&eacute;cnico en aplicacion gr&aacute;fica digital, dibujo y dise&ntilde;o:&nbsp;
-					<small>desinstalaci&oacute;n de aplicaci&oacute;n</small>
-				</h1>
+				<h1><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					} else {
+						echo "Desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					}
+				?></h1>
 			</div>
 
 			<?php
