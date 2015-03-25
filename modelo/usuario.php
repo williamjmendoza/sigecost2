@@ -131,7 +131,7 @@
 		
 		public static function tieneRol(int $idRol, $usuario)
 		{
-			$preMsg = 'Error al consultar si un usuario posee determinado rol';
+			$preMsg = 'Error al consultar si un usuario posee determinado rol.';
 			
 			try
 			{
