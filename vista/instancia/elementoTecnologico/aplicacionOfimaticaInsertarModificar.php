@@ -23,7 +23,7 @@
 				<li 
 					<?php echo ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_INSERTAR) ? ' class="active"' : ''; ?>
 				 	><a href="aplicacionOfimatica.php?accion=insertar">Insertar</a></li>
-				<li><a href="aplicacionOfimatica.php?accion=Buscar">Buscar</a></li>
+				<li><a href="aplicacionOfimatica.php?accion=Buscar">Consultar</a></li>
 				<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
 				<li class="active"><a href="#">Modificar</a></li>
 				<?php } ?>

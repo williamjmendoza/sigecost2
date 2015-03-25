@@ -20,7 +20,7 @@
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
 				<li><a href="restablecerBarraHerramientasFFD.php?accion=insertar">Insertar</a></li>
-				<li class="active"><a href="restablecerBarraHerramientasFFD.php?accion=Buscar">Buscar</a></li>
+				<li class="active"><a href="restablecerBarraHerramientasFFD.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
 
@@ -73,13 +73,13 @@
 								if($patron != null)
 								{
 									if(strlen($patron->getSolucion()) <= $truncamiento)
-										$strSolucion = htmlentities($patron->getSolucion());
+										$strSolucion = strip_tags($patron->getSolucion());
 									else {
-										$strSolucion = htmlentities(substr($patron->getSolucion(), 0, $truncamiento - 3)) . '...';
+										$strSolucion = strip_tags(substr($patron->getSolucion(), 0, $truncamiento - 3)) . '...';
 									}
 
 								}
-								echo $strSolucion;
+								echo trim($strSolucion);
 							
 							?></samp></td>
 							<td>

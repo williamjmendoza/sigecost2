@@ -87,33 +87,33 @@
 		
 			<form id="formBusqueda" class="form-horizontal" role="form" method="post" action="buscar.php">
 				<div style="display:none;">
-					<input type="hidden" name="accion" value="buscar">
+					<input type="hidden" name="accion" value="buscar2">
 					<input id="subaccion" type="hidden" name="subaccion" value="false">
 					<input id="iriClaseSTVerDetalles" type="hidden" name="iriClaseSTVerDetalles" value="false">
 					<input id="iriInstanciaSTVerDetalles" type="hidden" name="iriInstanciaSTVerDetalles" value="false">
 				</div>
+				<!-- 
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="buscarEn">Buscar en:</label>
 					<div class="col-sm-10">
 						<label class="checkbox-inline">
-							<input id="buscarEnClasesET" name="buscarEnClasesET" type="checkbox" value="true"<?php echo $buscarEnClasesET ? ' checked="checked"' : '' ?>>
+							<input id="buscarEnClasesET" name="buscarEnClasesET" type="checkbox" value="true"<?php /*echo $buscarEnClasesET ? ' checked="checked"' : ''*/ ?>>
 								Clases de elemento tecnol&oacute;gico
 						</label>
 						<label class="checkbox-inline">
-							<input id="buscarEnClasesST" name="buscarEnClasesST" type="checkbox" value="true"<?php echo $buscarEnClasesST ? ' checked="checked"' : '' ?>>
+							<input id="buscarEnClasesST" name="buscarEnClasesST" type="checkbox" value="true"<?php /*echo $buscarEnClasesST ? ' checked="checked"' : ''*/ ?>>
 								Clases se soporte t&eacute;cnico
 						</label>
-						<!-- 
 						<label class="checkbox-inline">
 							<input id="buscarEnPropiedades" name="buscarEnPropiedades" type="checkbox" value="true"<?php /*echo $buscarEnPropiedades ? ' checked="checked"' : ''*/ ?>>
 							Propiedades
 						</label>
-						 -->
 						<label class="checkbox-inline">
-							<input id="buscarEnInstancias" name="buscarEnInstancias" type="checkbox" value="true"<?php echo $buscarEnInstancias ? ' checked="checked"' : '' ?>>Instancias
+							<input id="buscarEnInstancias" name="buscarEnInstancias" type="checkbox" value="true"<?php /*echo $buscarEnInstancias ? ' checked="checked"' : ''*/ ?>>Instancias
 						</label>
 					</div>
 				</div>
+				 -->
 				<div class="form-group">
 					<label class="sr-only" for="clave">B&uacute;squeda:</label>
 					<div class="col-sm-4 col-sm-offset-2">

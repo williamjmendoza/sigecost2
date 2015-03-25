@@ -19,7 +19,7 @@
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
 				<li><a href="barraFormato.php?accion=insertar">Insertar</a></li>
-				<li><a href="barraFormato.php?accion=Buscar">Buscar</a></li>
+				<li><a href="barraFormato.php?accion=Buscar">Consultar</a></li>
 				<li class="active"><a href="#">Ver detalles</a></li>
 			</ul>
 		</div>

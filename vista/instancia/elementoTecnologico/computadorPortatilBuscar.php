@@ -20,7 +20,7 @@
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
 				<li><a href="computadorPortatil.php?accion=insertar">Insertar</a></li>
-				<li class="active"><a href="computadorPortatil.php?accion=Buscar">Buscar</a></li>
+				<li class="active"><a href="computadorPortatil.php?accion=Buscar">Consultar</a></li>
 			</ul>
 		</div>
 

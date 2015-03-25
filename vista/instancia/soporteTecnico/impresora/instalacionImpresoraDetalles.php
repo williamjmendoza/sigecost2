@@ -22,7 +22,7 @@
 		<div class="container">
 			<ul class="nav nav-tabs" role="tablist">
 				<li><a href="instalacionImpresora.php?accion=insertar">Insertar</a></li>
-				<li><a href="instalacionImpresora.php?accion=Buscar">Buscar</a></li>
+				<li><a href="instalacionImpresora.php?accion=Buscar">Consultar</a></li>
 				<li class="active"><a href="#">Ver Detalles</a></li>
 			</ul>
 		</div>

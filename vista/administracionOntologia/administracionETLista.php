@@ -67,7 +67,7 @@
 							>Insertar</a>
 							<a class="btn btn-primary btn-xs" role="button"
 								href="<?php echo isset($GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['buscar']) ? $GLOBALS['SIGECOST_VAO']['ET'][$claseET['clase']]['buscar'] : "#"  ?>"
-							>Buscar</a>
+							>Consultar</a>
 							
 						</div>
 					</div>
