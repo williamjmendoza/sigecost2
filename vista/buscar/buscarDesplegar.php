@@ -30,7 +30,7 @@
 ?>
 			<div class="page-header">
 				<h1>
-					<small>Corregir cierre inesperado de aplicaci&oacute;n ofim&aacute;tica</small>
+					<small>Corregir el cierre inesperado de una aplicaci&oacute;n ofim&aacute;tica</small>
 				</h1>
 			</div>
 <?php
@@ -63,7 +63,7 @@
 ?>
 			<div class="page-header">
 				<h1>
-					<small>Reestablecer las barras de herramientas, funci&oacute;n, formato y/o dibujo de aplicaci&oacute;n ofim&aacute;tica</small>
+					<small>Restablecer las barras herramientas funci&oacute;n, formato y/o dibujo en aplicaci&oacute;n ofim&aacute;tica</small>
 				</h1>
 			</div>
 <?php
@@ -85,7 +85,7 @@
 ?>
 			<div class="page-header">
 				<h1>
-					<small>Desatascar papel en impresora</small>
+					<small>Desatascar el papel en una impresora</small>
 				</h1>
 			</div>
 <?php
