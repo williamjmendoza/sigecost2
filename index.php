@@ -24,11 +24,14 @@
 		<?php require_once ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
 		
 		<div class="container">
-			
 			<ol class="breadcrumb">
 				<li class="active">Inicio</li>
 			</ol>
+		</div>
 		
+		<?php include( SIGECOST_PATH_VISTA . '/mensajes.php');?>
+		
+		<div class="container">
 			<div class="jumbotron">
 				<h1>Bienvenidos a Sigecost</h1>
 				<p>
@@ -37,8 +40,6 @@
 				</p>
 			</div>
 		</div>
-		
-		<?php include( SIGECOST_PATH_VISTA . '/mensajes.php');?>
 		
 		<div class="container">
 		
