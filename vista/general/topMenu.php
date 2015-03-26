@@ -28,7 +28,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Archivo<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/archivo.php?accion=exportar">
-							Exportar
+							Exportar la ontolog&iacute;a
 						</a></li>
 					</ul>
 				</li>
@@ -77,7 +77,7 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Salir</button>
 			</form>
-			<p class="navbar-text navbar-right">Registrado como: <?php echo $usuario != null ? $usuario->getNombre() . " " . $usuario->getapellido() : '' ?></p>
+			<p class="navbar-text navbar-right"><?php echo $usuario != null ? $usuario->getNombre() . " " . $usuario->getapellido() : '' ?></p>
 			<?php
 				}
 			?>

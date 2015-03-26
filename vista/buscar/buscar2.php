@@ -81,6 +81,11 @@
 		
 		<div class="container">
 		
+			<ol class="breadcrumb">
+				<li><a href="<?php echo SIGECOST_PATH_URL_BASE; ?>">Inicio</a></li>
+				<li class="active">B&uacute;squedas</li>
+			</ol>
+			
 			<div class="page-header">
 				<h1>B&uacute;squeda de patrones</h1>
 			</div>

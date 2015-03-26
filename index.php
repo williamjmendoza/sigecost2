@@ -24,6 +24,11 @@
 		<?php require_once ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
 		
 		<div class="container">
+			
+			<ol class="breadcrumb">
+				<li class="active">Inicio</li>
+			</ol>
+		
 			<div class="jumbotron">
 				<h1>Bienvenidos a Sigecost</h1>
 				<p>

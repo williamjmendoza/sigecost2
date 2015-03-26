@@ -23,8 +23,25 @@
 		<?php require ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
 		
 		<div class="container">
-			<ul class="nav nav-tabs" role="tablist">
+			<ol class="breadcrumb">
+				<li><a href="<?php echo SIGECOST_PATH_URL_BASE ?>">Inicio</a></li>
+				<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarSTLista"><?php
+					if($esAdministradorOntologia) {
+						echo "Administraci&oacute;n de las incidencias de soporte t&eacute;cnico";
+					} else {
+						echo "Consultas de las incidencias de soporte t&eacute;cnico";
+					}
+				?></a></li>
+				<li class="active"><?php
+					if($esAdministradorOntologia) {
+						echo "Instancia de reparar impresi&oacute;n corrida";
+					} else {
+						echo "Reparar impresi&oacute;n corrida";
+					}
+				?></li>
+			</ol>
 			
+			<ul class="nav nav-tabs" role="tablist">
 				<li
 					<?php echo ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_INSERTAR) ? ' class="active"' : ''; ?>
 				><a href="repararImpresionCorrida.php?accion=insertar">Insertar</a></li>

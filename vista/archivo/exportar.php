@@ -11,13 +11,19 @@
 	
 		<?php require_once ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
 		
+		<div class="container">
+			<ol class="breadcrumb">
+				<li><a href="<?php echo SIGECOST_PATH_URL_BASE ?>">Inicio</a></li>
+				<li class="active">Exportar la ontolog&iacute;a</li>
+			</ol>
+		</div>
+		
 		<?php include( SIGECOST_PATH_VISTA . '/mensajes.php');?>
 		
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Exportar <small>(Ontolog&iacute;a)</small>
-				</h1>
+				<h1>Exportar la ontolog&iacute;a</h1>
 			</div>
 			
 			<form class="form-horizontal" role="form" method="post" action="archivo.php">

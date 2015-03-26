@@ -17,6 +17,17 @@
 		<?php require_once ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
 		
 		<div class="container">
+			<ol class="breadcrumb">
+				<li><a href="<?php echo SIGECOST_PATH_URL_BASE; ?>">Inicio</a></li>
+				<li class="active"><?php
+					if($esAdministradorOntologia) {
+						echo "Administraci&oacute;n de las incidencias de soporte t&eacute;cnico";
+					} else {
+						echo "Consultas de las incidencias de soporte t&eacute;cnico";
+					}
+				?></li>
+			</ol>
+		
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="active"><a href="administracionOntologia.php?accion=administrarSTLista">Lista</a></li>
 			</ul>

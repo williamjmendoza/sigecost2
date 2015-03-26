@@ -19,6 +19,24 @@
 		<?php require ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
 
 		<div class="container">
+			<ol class="breadcrumb">
+				<li><a href="<?php echo SIGECOST_PATH_URL_BASE ?>">Inicio</a></li>
+				<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarETLista"><?php
+					if($esAdministradorOntologia) {
+						echo "Administraci&oacute;n de los elementos tecnol&oacute;gicos";
+					} else {
+						echo "Consultas de los elementos tecnol&oacute;gicos";
+					}
+				?></a></li>
+				<li class="active"><?php
+					if($esAdministradorOntologia) {
+						echo "Instancias de computador escritorio";
+					} else {
+						echo "Computador escritorio";
+					}
+				?></li>
+			</ol>
+			
 			<ul class="nav nav-tabs" role="tablist">
 				<?php if($esAdministradorOntologia) {?>
 				<li><a href="computadorEscritorio.php?accion=insertar">Insertar</a></li>

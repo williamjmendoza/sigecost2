@@ -18,6 +18,24 @@
 		<?php require ( SIGECOST_PATH_VISTA . '/general/topMenu.php' ); ?>
 		
 		<div class="container">
+			<ol class="breadcrumb">
+				<li><a href="<?php echo SIGECOST_PATH_URL_BASE ?>">Inicio</a></li>
+				<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarETLista"><?php
+					if($esAdministradorOntologia) {
+						echo "Administraci&oacute;n de los elementos tecnol&oacute;gicos";
+					} else {
+						echo "Consultas de los elementos tecnol&oacute;gicos";
+					}
+				?></a></li>
+				<li class="active"><?php
+					if($esAdministradorOntologia) {
+						echo "Instancia de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					} else {
+						echo "Aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+					}
+				?></li>
+			</ol>
+		
 			<ul class="nav nav-tabs" role="tablist">
 				<li><a href="aplicacionGraficaDigitalDibujoDiseno.php?accion=insertar">Insertar</a></li>
 				<li><a href="aplicacionGraficaDigitalDibujoDiseno.php?accion=Buscar">Consultar</a></li>
