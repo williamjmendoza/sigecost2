@@ -21,6 +21,10 @@
 		{
 			try
 			{
+				$usuario = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuario') : null;
+				if($usuario === null)
+					throw new Exception("Se debe iniciar sesi&oacute;n para poder realizar esta operaci&oacute;n");
+				
 				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_OFIMATICA_DESINSTALACION_APLICACION_OFIMATICA_INSERTAR_MODIFICAR);
 				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
 		
@@ -45,12 +49,10 @@
 					//if ($existeInstancia === true)
 						//throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
 						
-					// Borrar, temporal mientras se coloca el manejo de usuarios
+					// Establecer el usuario que realiza la modificación del patrón
 					$patron = $form->getSoporteTecnico()->getPatron();
-					$usuarioUltimaModificacion = new EntidadUsuario();
-					$usuarioUltimaModificacion->setId(3);
+					$usuarioUltimaModificacion = clone $usuario;
 					$patron->setUsuarioUltimaModificacion($usuarioUltimaModificacion);
-					// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
 						
 					// Actualizar la instancia de soporte técnico en aplicación ofimática para desinstalación de aplicación ofimática, en la base de datos
 					$resultado = ModeloInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica::actualizarInstancia($form->getSoporteTecnico());
@@ -153,6 +155,10 @@
 			{
 				try
 				{
+					$usuario = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuario') : null;
+					if($usuario === null)
+						throw new Exception("Se debe iniciar sesi&oacute;n para poder realizar esta operaci&oacute;n");
+					
 					// Consultar si existe una instancia de soporte técnico para la desinstalación de una aplicación ofimática, con las mismas características
 					//if(($existeInstancia = ModeloInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica::existeInstancia($form->getSoporteTecnico())) === null)
 						//throw new Exception("La instancia no pudo ser guardada.");
@@ -161,12 +167,10 @@
 					//if ($existeInstancia === true)
 						//throw new Exception("Ya existe una instancia con las mismas caracter&iacute;sticas.");
 						
-					// Borrar, temporal mientras se coloca el manejo de usuarios
+					// Establecer el usuario que crea el patrón
 					$patron = $form->getSoporteTecnico()->getPatron();
-					$usuarioCreador = new EntidadUsuario();
-					$usuarioCreador->setId(1);
+					$usuarioCreador = clone $usuario;
 					$patron->setUsuarioCreador($usuarioCreador);
-					// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
 
 					// Guardar la instancia de soporte técnico para la desinstalación de una aplicación ofimática, en la base de datos
 					$iriNuevaInstancia = ModeloInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica::guardarInstancia($form->getSoporteTecnico());
@@ -190,18 +194,24 @@
 
 		public function insertar()
 		{
-			$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_OFIMATICA_DESINSTALACION_APLICACION_OFIMATICA_INSERTAR_MODIFICAR);
-			
-			// Borrar, temporal mientras se coloca el manejo de usuarios
-			$patron = $form->getSoporteTecnico()->getPatron();
-			$usuarioCreador = new EntidadUsuario();
-			$usuarioCreador->setId(1);
-			$usuarioCreador->setNombre("Anibal");
-			$usuarioCreador->setApellido("Ghanem");
-			$patron->setUsuarioCreador($usuarioCreador);
-			// Fin de Borrar, temporal mientras se coloca el manejo de usuarios
-			
-			$this->__desplegarFormulario();
+			try
+			{
+				$usuario = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuario') : null;
+				if($usuario === null)
+					throw new Exception("Se debe iniciar sesi&oacute;n para poder realizar esta operaci&oacute;n");
+				
+				$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_OFIMATICA_DESINSTALACION_APLICACION_OFIMATICA_INSERTAR_MODIFICAR);
+				
+				// Establecer el usuario que crea el patrón
+					$patron = $form->getSoporteTecnico()->getPatron();
+					$usuarioCreador = clone $usuario;
+					$patron->setUsuarioCreador($usuarioCreador);
+				
+				$this->__desplegarFormulario();
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->buscar();
+			}
 		}
 
 		public function modificar()
