@@ -57,7 +57,7 @@
 					if($resultado === false)
 						throw new Exception("La instancia no pudo ser actualizada");
 					
-					$GLOBALS['SigecostErrors']['general'][] = "Instancia actualizada satisfactoriamente.";
+					$GLOBALS['SigecostInfo']['general'][] = "Instancia actualizada satisfactoriamente.";
 					
 					$this->__desplegarDetalles($iri);
 					
