@@ -44,6 +44,16 @@
 		public function getSolucion(){
 			return $this->_solucion;
 		}
+		public function getSolucionTruncada($truncamiento = null){
+			$strSolucion = trim(strip_tags(trim($this->_solucion)));
+			
+			if($truncamiento != null && $truncamiento > 0 && strlen($strSolucion) > $truncamiento)
+			{
+				$strSolucion = substr($strSolucion, 0, $truncamiento - 3) . '...';
+			}
+			
+			return $strSolucion;
+		}
 		public function setSolucion($solucion){
 			$this->_solucion = $solucion;
 		}
