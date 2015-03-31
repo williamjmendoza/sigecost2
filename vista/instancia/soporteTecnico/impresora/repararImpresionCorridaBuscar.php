@@ -2,6 +2,7 @@
 
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_REPARAR_IMPRESION_CORRIDA_BUSCAR);
 	$instancias = $GLOBALS['SigecostRequestVars']['instancias'];
+	$truncamiento = $GLOBALS['SigecostRequestVars']['truncamiento'];
 
 ?>
 <!DOCTYPE html>
@@ -65,12 +66,12 @@
 
 			?>
 			<div class="table-responsive">
-				<table class="table table table-hover table-responsive">
+				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th rowspan="2">#</th>
 							<th colspan="2">Impresora</th>
-							<th colspan="2">Patr&oacute;n soporte t&eacute;cnico</th>
+							<th colspan="2">Soluci&oacute;n de incidencia de soporte t&eacute;cnico</th>
 							<th rowspan="2">Opciones</th>
 						</tr>
 						<tr>
@@ -91,22 +92,7 @@
 							<td><?php echo $instancia->getEquipoReproduccion()->getMarca() ?> </td>
 							<td><?php echo $instancia->getEquipoReproduccion()->getModelo() ?></td>
 							<td><?php echo $patron != null ? $patron->getFechaCreacion() : "" ?></td>
-							<td><samp><?php
-								$strSolucion = "";
-								$truncamiento = GetConfig("truncamientoSolucionPatronSoporteTecnico");
-								
-								if($patron != null)
-								{
-									if(strlen($patron->getSolucion()) <= $truncamiento)
-										$strSolucion = strip_tags($patron->getSolucion());
-									else {
-										$strSolucion = strip_tags(substr($patron->getSolucion(), 0, $truncamiento - 3)) . '...';
-									}
-
-								}
-								echo trim($strSolucion);
-							
-							?></samp></td>
+							<td><?php echo $patron != null ? $patron->getSolucionTruncada($truncamiento) : '';?></td>
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="repararImpresionCorrida.php" method="post">
 									<div style="display:none;">

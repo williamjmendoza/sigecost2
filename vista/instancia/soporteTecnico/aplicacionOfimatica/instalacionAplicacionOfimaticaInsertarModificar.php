@@ -121,10 +121,9 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="solucionSoporteTecnico">Patr&oacute;n soporte t&eacute;cnico:</label>
+					<label class="control-label col-sm-2" for="solucionSoporteTecnico">Soluci&oacute;n de incidencia de soporte t&eacute;cnico:</label>
 					<div class="col-sm-10">
 						<div class="panel panel-default">
-							<div class="panel-heading">Detalles del patr&oacute;n de soporte t&eacute;cnico</div>
 							<ul class="list-group">
 								<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
 								<li class="list-group-item"><strong>Nombre: </strong><?php echo $patron != null ? $patron->getNombre() : "" ?></li>
@@ -132,7 +131,7 @@
 								<li class="list-group-item">
 									<div class="row">
 										<div class="col-sm-6">
-											<strong>Creado por: </strong>
+											<strong>Creada por: </strong>
 											<?php
 												echo $patron != null
 													? 	(	$patron->getUsuarioCreador() != null
@@ -153,7 +152,7 @@
 								<li class="list-group-item">
 									<div class="row">
 										<div class="col-sm-6">
-											<strong>Modificado por: </strong>
+											<strong>Modificada por: </strong>
 											<?php
 												echo $patron != null
 													? 	(	$patron->getUsuarioUltimaModificacion() != null
@@ -172,7 +171,7 @@
 								</li>
 								<?php  } ?>
 								<li class="list-group-item">
-									<strong>Soluci&oacute;n:</strong>
+									<strong>Descripci&oacute;n:</strong>
 									<br><br>
 									<textarea id="solucionSoporteTecnico" name="solucionSoporteTecnico" rows="3">
 										<?php echo $patron != null ? $patron->getSolucion() : "" ?>

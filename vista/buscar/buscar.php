@@ -88,7 +88,7 @@
 			</ol>
 		
 			<div class="page-header">
-				<h1>B&uacute;squeda de patrones</h1>
+				<h1>B&uacute;squedas de soluciones de incidencias</h1>
 			</div>
 		
 			<form id="formBusqueda" class="form-horizontal" role="form" method="post" action="buscar.php">

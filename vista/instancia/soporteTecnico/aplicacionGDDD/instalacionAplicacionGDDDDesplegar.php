@@ -8,7 +8,7 @@
 	{
 ?>
 <div class="table-responsive">
-	<table class="table table-striped table-hover table-responsive">
+	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
 				<th rowspan="2">#</th>

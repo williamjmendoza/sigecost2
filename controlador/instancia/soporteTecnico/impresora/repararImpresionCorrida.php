@@ -101,9 +101,12 @@
 
 			// Realizar la consulta de la búsuqeda
 			$instancias = ModeloInstanciaSTImpresoraRepararImpresionCorrida::buscarInstancias($parametros);
+			
+			$truncamiento = (int)GetConfig("truncamientoSolucionPatronSoporteTecnico");
 
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
 			$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;
+			$GLOBALS['SigecostRequestVars']['truncamiento'] = $truncamiento;
 
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/repararImpresionCorridaBuscar.php' );
 		}
