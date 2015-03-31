@@ -45,14 +45,19 @@
 			return $this->_solucion;
 		}
 		public function getSolucionTruncada($truncamiento = null){
-			$strSolucion = trim(strip_tags(trim($this->_solucion)));
+			//$strSolucion = trim(html_entity_decode(strip_tags($this->_solucion)), " \t\n\r\0\x0B\xC2\xA0");
+			$strSolucion = html_entity_decode(strip_tags($this->_solucion));
+			
+			$strSolucion = trim(str_replace(array("\r\n", "\n", "\r", "\t", "\0", "\x0B", "\xC2\xA0", "\xA0", "\xC2"), " ", $strSolucion));
+			
+			$strSolucion = preg_replace('/\s\s+/', ' ', $strSolucion);
 			
 			if($truncamiento != null && $truncamiento > 0 && strlen($strSolucion) > $truncamiento)
 			{
 				$strSolucion = substr($strSolucion, 0, $truncamiento - 3) . '...';
 			}
 			
-			return $strSolucion;
+			return htmlentities($strSolucion);
 		}
 		public function setSolucion($solucion){
 			$this->_solucion = $solucion;

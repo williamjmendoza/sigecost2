@@ -1,6 +1,7 @@
 <?php
 
-	$iriClaseST = $GLOBALS['SigecostRequestVars']['iriClaseST'];
+	$datosInstancia = isset($GLOBALS['SigecostRequestVars']['datosInstancia']) ? $GLOBALS['SigecostRequestVars']['datosInstancia'] : false;
+	$iriClaseST = is_array($datosInstancia) ? $datosInstancia['iriClaseST'] : null;
 
 	switch ($iriClaseST)
 	{
@@ -12,7 +13,7 @@
 				</h1>
 			</div>
 <?php			
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionGDDD/desinstalacionAplicacionDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionGDDD/desinstalacionAplicacionDetallesEnBusqueda.php' );
 			break;
 			
 		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_APLICACION_GRAFICA_DIGITAL_DIBUJO_DISENO:
@@ -23,7 +24,7 @@
 				</h1>
 			</div>
 <?php
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionGDDD/instalacionAplicacionGDDDDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionGDDD/instalacionAplicacionGDDDDetallesEnBusqueda.php' );
 			breaK;
 			
 		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_CORREGIR_CIERRE_INESPERADO:
@@ -34,7 +35,7 @@
 				</h1>
 			</div>
 <?php
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/corregirCierreInesperadoDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/corregirCierreInesperadoDetallesEnBusqueda.php' );
 			breaK;
 			
 		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESINSTALACION_APLICACION_OFIMATICA:
@@ -45,7 +46,7 @@
 				</h1>
 			</div>
 <?php
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/desinstalacionAplicacionOfimaticaDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/desinstalacionAplicacionOfimaticaDetallesEnBusqueda.php' );
 			breaK;
 			
 		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_APLICACION_OFIMATICA:
@@ -56,7 +57,7 @@
 				</h1>
 			</div>
 <?php
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/instalacionAplicacionOfimaticaDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/instalacionAplicacionOfimaticaDetallesEnBusqueda.php' );
 			breaK;
 			
 		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_RESTABLECER_BARRA_HERRAMIENTAS_FUNCION_FORMATO_DIBUJO:
@@ -67,7 +68,7 @@
 				</h1>
 			</div>
 <?php
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFDDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFDDetallesEnBusqueda.php' );
 			breaK;
 			
 		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_CORREGIR_IMPRESION_MANCHADA:
@@ -78,7 +79,7 @@
 				</h1>
 			</div>
 <?php
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaDetallesEnBusqueda.php' );
 			breaK;
 			
 		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_DESATASCAR_PAPEL:
@@ -89,7 +90,7 @@
 				</h1>
 			</div>
 <?php
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/desatascarPapelDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/desatascarPapelDetallesEnBusqueda.php' );
 			breaK;
 			
 		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_INSTALACION_IMPRESORA:
@@ -100,7 +101,7 @@
 				</h1>
 			</div>
 <?php
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/instalacionImpresoraDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/instalacionImpresoraDetallesEnBusqueda.php' );
 			breaK;
 			
 		case SIGECOST_IRI_ONTOLOGIA_NUMERAL.SIGECOST_FRAGMENTO_S_T_REPARAR_IMPRESION_CORRIDA:
@@ -111,7 +112,7 @@
 				</h1>
 			</div>
 <?php
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/repararImpresionCorridaDesplegar.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/repararImpresionCorridaDetallesEnBusqueda.php' );
 			breaK;
 
 		default:

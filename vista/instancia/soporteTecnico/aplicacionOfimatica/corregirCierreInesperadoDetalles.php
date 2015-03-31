@@ -126,7 +126,7 @@
 									<strong>Descripci&oacute;n:</strong>
 									<br><br>
 									<div class="well well-sm">
-										<?php echo $patron != null ? $patron->getSolucion() : "" ?>
+										<?php echo $patron != null ? $patron->getSolucion() : ""?>
 									</div>
 								</li>
 							</ul>

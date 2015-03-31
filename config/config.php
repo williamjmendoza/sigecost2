@@ -64,8 +64,8 @@
 	/* Fin de Paginación */
 	
 	$GLOBALS['SIGECOST_CFG']["prefijoPatronSoporteTecnico"] = "PST_";
-	$GLOBALS['SIGECOST_CFG']["truncamientoSolucionPatronSoporteTecnico"] = 30;
-	$GLOBALS['SIGECOST_CFG']["truncamientoSolucionPatronSTBusqueda"] = 300;
+	$GLOBALS['SIGECOST_CFG']["truncamientoSolucionPatronSoporteTecnico"] = 40;
+	$GLOBALS['SIGECOST_CFG']["truncamientoSolucionPatronSTBusqueda"] = 200;
 	
 	require_once ("myconfig.php");
 ?>

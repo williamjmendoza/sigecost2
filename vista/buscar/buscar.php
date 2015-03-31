@@ -149,7 +149,7 @@
 				<hr>
 				<?php
 					
-					require ( SIGECOST_PATH_VISTA . '/buscar/buscarVerDetalles.php' );
+					require ( SIGECOST_PATH_VISTA . '/buscar/buscarDetalles.php' );
 					
 				} else if($clave != null) {
 					if($paginacion != null && $paginacion->getTotalPaginas() > 1)
@@ -174,7 +174,7 @@
 							$GLOBALS['SigecostRequestVars']['iriClaseST'] = $iriClaseST;
 							$GLOBALS['SigecostRequestVars']['instanciasClaseST'] = $datosClaseST['instanciasClaseST'];
 							
-							require ( SIGECOST_PATH_VISTA . '/buscar/buscarDesplegar.php' );
+							require ( SIGECOST_PATH_VISTA . '/buscar/buscarListar.php' );
 						}
 				?>
 				</div>

@@ -30,11 +30,7 @@
 					<td><?php echo (++$GLOBALS['SigecostRequestVars']['contador']) ?> </td>
 					<td><?php echo $instancia->getEquipoReproduccion()->getMarca() ?> </td>
 					<td><?php echo $instancia->getEquipoReproduccion()->getModelo() ?></td>
-					<td>
-						<div class="well well-sm">
-							<a href="javascript:void();"><?php echo $patron != null ? $patron->getSolucionTruncada($truncamiento) : '';?></a>
-						</div>
-					</td>
+					<td><a href="javascript:void();"><?php echo $patron != null ? $patron->getSolucionTruncada($truncamiento) : '';?></a>
 				</tr>
 	<?php
 			}

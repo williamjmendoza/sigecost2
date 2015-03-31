@@ -35,10 +35,7 @@
 				<td><?php echo $instancia->getAplicacionPrograma()->getVersion() ?></td>
 				<td><?php echo $instancia->getSistemaOperativo()->getNombre() ?></td>
 				<td><?php echo $instancia->getSistemaOperativo()->getVersion() ?></td>
-				<td>
-					<div class="well well-sm">
-						<a href="javascript:void();"><?php echo $patron != null ? $patron->getSolucionTruncada($truncamiento) : '';?></a>
-					</div>
+				<td><a href="javascript:void();"><?php echo $patron != null ? $patron->getSolucionTruncada($truncamiento) : '';?></a>
 				</td>
 			</tr>
 		<?php
