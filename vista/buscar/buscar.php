@@ -25,7 +25,8 @@
 			tr.datoST:hover
 			{
 				 cursor:pointer;
-				 color: #357ebd;
+				 /*color: #357ebd;*/
+				 /*text-decoration: underline;*/
 			}
 		
 		</style>
@@ -102,11 +103,11 @@
 					<div class="col-sm-10">
 						<label class="checkbox-inline">
 							<input id="buscarEnClasesET" name="buscarEnClasesET" type="checkbox" value="true"<?php echo $buscarEnClasesET ? ' checked="checked"' : '' ?>>
-								Clases de elemento tecnol&oacute;gico
+								Tipos de elementos tecnol&oacute;gicos
 						</label>
 						<label class="checkbox-inline">
 							<input id="buscarEnClasesST" name="buscarEnClasesST" type="checkbox" value="true"<?php echo $buscarEnClasesST ? ' checked="checked"' : '' ?>>
-								Clases se soporte t&eacute;cnico
+								Tipos de incidencias de soporte t&eacute;cnico
 						</label>
 						<!-- 
 						<label class="checkbox-inline">
@@ -115,7 +116,7 @@
 						</label>
 						 -->
 						<label class="checkbox-inline">
-							<input id="buscarEnInstancias" name="buscarEnInstancias" type="checkbox" value="true"<?php echo $buscarEnInstancias ? ' checked="checked"' : '' ?>>Instancias
+							<input id="buscarEnInstancias" name="buscarEnInstancias" type="checkbox" value="true"<?php echo $buscarEnInstancias ? ' checked="checked"' : '' ?>>Ejemplos
 						</label>
 					</div>
 				</div>
