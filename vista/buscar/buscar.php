@@ -24,7 +24,7 @@
 		
 			tr.datoST:hover
 			{
-				 cursor:pointer;
+				 /*cursor:pointer;*/
 				 /*color: #357ebd;*/
 				 /*text-decoration: underline;*/
 			}
