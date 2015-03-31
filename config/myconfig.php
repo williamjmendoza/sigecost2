@@ -1,8 +1,6 @@
 <?php
 
-	//$GLOBALS['SIGECOST_CFG']["siteURL"] = 'http://localhost/sigecost2';
-	$GLOBALS['SIGECOST_CFG']["siteURL"] = 'http://192.168.153.113/sigecost2';
-
+	$GLOBALS['SIGECOST_CFG']["siteURL"] = 'http://localhost/sigecost2';
 	
 	// Configuración de la base de datos de patrones de soporte técnico
 	$GLOBALS['SIGECOST_CFG']["dbType"] = "mysql";
