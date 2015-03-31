@@ -33,7 +33,7 @@
 		
 		<div class="container">
 			<div class="jumbotron">
-				<h1>Bienvenidos a Sigecost</h1>
+				<h1>Bienvenidos a SigecoST</h1>
 				<p>
 					Sistema de gesti&oacute;n de conocimiento de soporte t&eacute;cnico
 					para los infocentros del pa&iacute;s.
@@ -45,19 +45,18 @@
 		
 			<div class="row">
 				<div class="col-md-4">
-					<h2>B&uacute;squedas de patrones de soluci&oacute;n de incidencias de soporte t&eacute;cnico</h2>
+					<h2>B&uacute;squedas de soluciones de incidencias de soporte t&eacute;cnico</h2>
 					<p>
-						Permite encontrar patrones de soluci&oacute;n de incidencias de soporte t&eacute;cnico proporcionando una o mas palabras claves.
+						Permite buscar soluciones de incidencias de soporte t&eacute;cnico a partir de una o mas palabras claves.
 						Se pueden seleccionar los elementos sobre los cuales se realizaran las b&uacute;squedas:
 					</p>
 					<ul>
-						<li>Clases de elemento tecnol&oacute;gico</li>
-						<li>Clases de soporte t&eacute;cnico</li>
-						<li>Instancias</li>
+						<li>Tipos de elementos tecnol&oacute;gicos</li>
+						<li>Tipos de incidencias de soporte t&eacute;cnico</li>
+						<li>Ejemplos</li>
 					</ul>
 					<p>
 						<a class="btn btn-primary btn-xs" role="button"  href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/buscar.php?accion=buscar">Buscar</a>
-						<a class="btn btn-primary btn-xs" role="button"  href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/buscar.php?accion=buscar2">Buscar 2</a>
 					</p>
 					
 				</div>
@@ -74,28 +73,28 @@
 				<div class="col-md-4">
 					<h2>Consultas de los elementos tecnol&oacute;gicos</h2>
 					<p>
-						Permite consultar los diferentes elementos tecnol&oacute;gicos definidos en el sistema. Se pueden visualizar tanto sus descripciones como sus detalles
-						t&eacute;cnicos de modelo, versi&oacute;n, etc.
+						Permite consultar los diferentes elementos tecnol&oacute;gicos definidos en el sistema. Se pueden visualizar tanto sus descripciones como los detalles
+						t&eacute;cnicos de marca, modelo, versi&oacute;n, etc.
 					</p>
 					<p><a class="btn btn-primary btn-xs" role="button" href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarETLista">Consultar</a></p>
 				</div>
 				<?php } ?>
 				<?php if($esAdministradorOntologia) { ?>
 				<div class="col-md-4">
-					<h2>Administraci&oacute;n de las instancias de incidencias de soporte t&eacute;cnico y sus patrones de soluci&oacute;n</h2>
+					<h2>Administraci&oacute;n de las instancias de incidencias de soporte t&eacute;cnico y sus soluciones</h2>
 					<p>
 						Permite consultar y realizar un conjunto de operaciones sobre las instancias de las incidencias de soporte t&eacute;cnico
 						definidas en la ontolog&iacute;a. Estas operaciones incluyen insertar, modificar y/o eliminar las instancias. Adem&aacute;s,
-						se pueden consultar e ingresar los patrones de soluci&oacute;n de incidencias de de soporte t&eacute;cnico, para cada una de estas instancias.
+						se pueden consultar e ingresar las soluciones de incidencias de soporte t&eacute;cnico, para cada una de estas instancias.
 					</p>
 					<p><a class="btn btn-primary btn-xs" role="button" href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarSTLista">Administrar</a></p>
 				</div>
 				<?php } else { ?>
 				<div class="col-md-4">
-					<h2>Consultas de las incidencias de soporte t&eacute;cnico y sus patrones de soluci&oacute;n</h2>
+					<h2>Consultas de las incidencias de soporte t&eacute;cnico y sus soluciones</h2>
 					<p>
 						Permite consultar las incidencias de soporte t&eacute;cnico definidas en el sistema. Se pueden visualizar tanto sus descipciones como los detalles
-						de los elementos tecnol&oacute;gicos involucrados en las incidencias, y los patrones que dan soluci&oacute;n a dichas incidencias.
+						de los elementos tecnol&oacute;gicos involucrados en las incidencias, y las soluciones a estas.
 					</p>
 					<p><a class="btn btn-primary btn-xs" role="button" href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarSTLista">Consultar</a></p>
 				</div>
