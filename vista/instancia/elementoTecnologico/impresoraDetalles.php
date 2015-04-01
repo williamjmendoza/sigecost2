@@ -1,5 +1,8 @@
 <?php
+
 	$impresora = $GLOBALS['SigecostRequestVars']['impresora']; 
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
+	
 ?>
 <!DOCTYPE html>
 <html lang="es">

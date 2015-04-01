@@ -5,6 +5,7 @@
 	$instancia = $form->getSoporteTecnico();
 	$patron = $instancia != null ? $instancia->getPatron() : null;
 	$instanciaImpresora = $instancia != null ? $instancia->getEquipoReproduccion() : null;
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 	
 ?>
 <!DOCTYPE html>

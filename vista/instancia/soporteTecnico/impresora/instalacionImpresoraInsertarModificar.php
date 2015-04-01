@@ -7,6 +7,7 @@
 	$patron = $instancia != null ? $instancia->getPatron() : null;
 	$instanciaImpresora = $instancia->getEquipoReproduccion();
 	$instanciaSistemaOperativo = $instancia->getSistemaOperativo();
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 	
 ?>
 <!DOCTYPE html>

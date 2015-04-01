@@ -3,6 +3,7 @@
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_IMPRESORA_DESATASCAR_PAPEL_BUSCAR);
 	$instancias = $GLOBALS['SigecostRequestVars']['instancias'];
 	$truncamiento = $GLOBALS['SigecostRequestVars']['truncamiento'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -65,19 +66,21 @@
 					$contador = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
 			?>
 			<div class="table-responsive">
-				<table class="table table-striped table-hover">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th rowspan="2">#</th>
 							<th colspan="2">Impresora</th>
-							<th colspan="2">Soluci&oacute;n de incidencia de soporte t&eacute;cnico</th>
+							<th <?php echo $esAdministradorOntologia ? 'colspan="2"' : 'rowspan="2"' ?>>Soluci&oacute;n de incidencia de soporte t&eacute;cnico</th>
 							<th rowspan="2">Opciones</th>
 						</tr>
 						<tr>
 							<th>Marca</th>
 							<th>Modelo</th>
+							<?php if($esAdministradorOntologia) { ?>
 							<th>Fecha creaci&oacute;n</th>
-							<th>Soluci&oacute;n</th>
+							<th>Descripci&oacute;n</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -90,7 +93,9 @@
 							<td><?php echo (++$contador) ?> </td>
 							<td><?php echo $instancia->getEquipoReproduccion()->getMarca() ?> </td>
 							<td><?php echo $instancia->getEquipoReproduccion()->getModelo() ?></td>
-							<td><?php echo $patron != null ? $patron->getFechaCreacion() : "" ?></td>
+							<?php if($esAdministradorOntologia) { ?>
+							<td><?php echo $patron != null ? $patron->getSoloFechaCreacion() : "" ?></td>
+							<?php } ?>
 							<td><?php echo $patron != null ? $patron->getSolucionTruncada($truncamiento) : '';?></td>
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="desatascarPapel.php" method="post">

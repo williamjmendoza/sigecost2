@@ -1,5 +1,6 @@
 <?php
-	$sistemaOperativo = $GLOBALS['SigecostRequestVars']['sistemaOperativo']; 
+	$sistemaOperativo = $GLOBALS['SigecostRequestVars']['sistemaOperativo'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 ?>
 <!DOCTYPE html>
 <html lang="es">

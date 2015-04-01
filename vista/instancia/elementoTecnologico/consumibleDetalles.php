@@ -1,5 +1,8 @@
 <?php
-	$consumible = $GLOBALS['SigecostRequestVars']['consumible']; 
+
+	$consumible = $GLOBALS['SigecostRequestVars']['consumible'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
+	
 ?>
 <!DOCTYPE html>
 <html lang="es">

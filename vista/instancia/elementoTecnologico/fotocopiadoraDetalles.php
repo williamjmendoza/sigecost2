@@ -1,5 +1,8 @@
 <?php
-	$fotocopiadora = $GLOBALS['SigecostRequestVars']['fotocopiadora']; 
+
+	$fotocopiadora = $GLOBALS['SigecostRequestVars']['fotocopiadora'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
+	
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -3,6 +3,7 @@
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ST_APLICACION_OFIMATICA_INSTALACION_APLICACION_OFIMATICA_BUSCAR);
 	$instancias = $GLOBALS['SigecostRequestVars']['instancias'];
 	$truncamiento = $GLOBALS['SigecostRequestVars']['truncamiento'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>
@@ -66,13 +67,13 @@
 
 			?>
 			<div class="table-responsive">
-				<table class="table table-striped table-hover">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th rowspan="2">#</th>
 							<th colspan="2">Aplicaci&oacute;n</th>
 							<th colspan="2">Sistema operativo</th>
-							<th colspan="2">Soluci&oacute;n de incidencia de soporte t&eacute;cnico</th>
+							<th <?php echo $esAdministradorOntologia ? 'colspan="2"' : 'rowspan="2"' ?>>Soluci&oacute;n de incidencia de soporte t&eacute;cnico</th>
 							<th rowspan="2">Opciones</th>
 						</tr>
 						<tr>
@@ -80,8 +81,10 @@
 							<th>Modelo</th>
 							<th>Nombre</th>
 							<th>Versi&oacute;n</th>
+							<?php if($esAdministradorOntologia) { ?>
 							<th>Fecha creaci&oacute;n</th>
-							<th>Soluci&oacute;n</th>
+							<th>Descripci&oacute;n</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -96,7 +99,9 @@
 							<td><?php echo $instancia->getAplicacionPrograma()->getVersion() ?></td>
 							<td><?php echo $instancia->getSistemaOperativo()->getNombre() ?></td>
 							<td><?php echo $instancia->getSistemaOperativo()->getVersion() ?></td>
-							<td><?php echo $patron != null ? $patron->getFechaCreacion() : "" ?></td>
+							<?php if($esAdministradorOntologia) { ?>
+							<td><?php echo $patron != null ? $patron->getSoloFechaCreacion() : "" ?></td>
+							<?php } ?>
 							<td><?php echo $patron != null ? $patron->getSolucionTruncada($truncamiento) : '';?></td>
 							<td>
 								<form class="form-horizontal buscarOpciones" role="form" action="instalacionAplicacionOfimatica.php" method="post">

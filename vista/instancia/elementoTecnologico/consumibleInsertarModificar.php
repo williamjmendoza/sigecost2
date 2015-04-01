@@ -3,6 +3,7 @@
 	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_CONSUMIBLE_INSERTAR_MODIFICAR);
 	$consumible = $form->getConsumible();
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 	
 ?>
 <!DOCTYPE html>

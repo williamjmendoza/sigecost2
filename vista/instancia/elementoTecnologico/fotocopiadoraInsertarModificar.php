@@ -3,6 +3,7 @@
 	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_FOTOCOPIADORA_INSERTAR_MODIFICAR);
 	$equipoReproduccion = $form->getEquipoReproduccion();
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>

@@ -100,7 +100,10 @@
 			// Realizar la consulta de la búsuqeda
 			$instancias = ModeloInstanciaSTImpresoraInstalacionImpresora::buscarInstancias($parametros);
 			
-			$truncamiento = (int)GetConfig("truncamientoSolucionPatronSoporteTecnico");
+			if($GLOBALS['SigecostRequestVars']['esAdministradorOntologia'])
+				$truncamiento = (int)GetConfig("truncamientoSolucionPatronSoporteTecnicoAdministrador");
+			else
+				$truncamiento = (int)GetConfig("truncamientoSolucionPatronSoporteTecnico");
 				
 			$GLOBALS['SigecostRequestVars']['instancias'] = $instancias;
 			$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;

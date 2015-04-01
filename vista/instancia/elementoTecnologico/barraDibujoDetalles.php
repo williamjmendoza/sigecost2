@@ -1,6 +1,7 @@
 <?php
 
 	$barra = $GLOBALS['SigecostRequestVars']['barra'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>

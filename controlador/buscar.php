@@ -25,6 +25,11 @@
 			// Obtener el formulario
 			$form = FormularioManejador::getFormulario(FORM_BUSCAR);
 			
+			$_buscarEnClasesET = true;
+			$_buscarEnClasesST = true;
+			$_buscarEnPropiedades = true;
+			$_buscarEnInstancias = true;
+			
 			if(isset($_REQUEST['clave']))
 			{
 				$buscarEnClasesET = isset($_REQUEST['buscarEnClasesET']) && trim($_REQUEST['buscarEnClasesET']) == 'true' ? true : false;
@@ -32,11 +37,11 @@
 				//$buscarEnPropiedades = isset($_REQUEST['buscarEnPropiedades']) && trim($_REQUEST['buscarEnPropiedades']) == 'true' ? true : false;
 				$buscarEnInstancias = isset($_REQUEST['buscarEnInstancias']) && trim($_REQUEST['buscarEnInstancias']) == 'true' ? true : false;
 			} else {
-				// Especifíca cuales checkbox estará activos la primera vez que se muetre la vidta de bśuquedas
-				$buscarEnClasesET = true;
-				$buscarEnClasesST = true;
+				// Especifíca cuales checkbox estará activos la primera vez que se muetre la vidta de búsquedas
+				$buscarEnClasesET = false;
+				$buscarEnClasesST = false;
 				//$buscarEnPropiedades = true;
-				$buscarEnInstancias = true;
+				$buscarEnInstancias = false;
 			}
 			$buscarEnPropiedades = false;
 			$clave = isset($_REQUEST['clave']) ? trim($_REQUEST['clave']) : '';
@@ -45,6 +50,17 @@
 			$iriInstanciaSTVerDetalles = $_REQUEST['iriInstanciaSTVerDetalles'];
 			$filtroClaseET = '';
 			$filtroClaseST = '';
+			if(!$buscarEnClasesET && !$buscarEnClasesST && !$buscarEnInstancias){
+				$_buscarEnClasesET = true;
+				$_buscarEnClasesST = true;
+				$_buscarEnPropiedades = false;
+				$_buscarEnInstancias = true;
+			} else{
+				$_buscarEnClasesET = $buscarEnClasesET;
+				$_buscarEnClasesST = $buscarEnClasesST;
+				$_buscarEnPropiedades = $buscarEnPropiedades;
+				$_buscarEnInstancias = $buscarEnInstancias;
+			}
 			
 			// Validar si se está solicitando mostrar los detalles de un patrón de solución
 			if($subAccion == 'verDetalles' && $iriClaseSTVerDetalles != "" && $iriInstanciaSTVerDetalles != "")
@@ -58,18 +74,18 @@
 			else if($clave != '')
 			{
 				// Búsquedas en clases de elemento tecnológico
-				if($buscarEnClasesET)
+				if($_buscarEnClasesET)
 					$filtroClaseET = ModeloBuscar::getFiltroClaseElementoTecnologico(array('clave' => $clave));
 				
 				// Búsquedas en clases de soporte técnico
-				if($buscarEnClasesST)
+				if($_buscarEnClasesST)
 					$filtroClaseST = ModeloBuscar::getFiltroClaseSoporteTecnico(array('clave' => $clave));
 				
 				// Realizar la consulta de la búsqueda estableciendo los parámetros para la navegación
 				$parametros = array(
 						'clave' => $clave,
-						'buscarEnPropiedades' => $buscarEnPropiedades,
-						'buscarEnInstancias' => $buscarEnInstancias,
+						'buscarEnPropiedades' => $_buscarEnPropiedades,
+						'buscarEnInstancias' => $_buscarEnInstancias,
 						'filtroClaseET' => $filtroClaseET,
 						'filtroClaseST' => $filtroClaseST
 				);

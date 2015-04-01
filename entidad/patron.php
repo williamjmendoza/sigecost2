@@ -29,6 +29,10 @@
 		public function setFechaCreacion($fechaCreacion){
 			$this->_fechaCreacion = $fechaCreacion;
 		}
+		public function getSoloFechaCreacion(){
+			$fecha = explode(' ', $this->_fechaCreacion);
+			return isset($fecha[0]) ? $fecha[0] : '';
+		}
 		public function getFechaUltimaModificacion(){
 			return $this->_fechaUltimaModificacion;
 		}

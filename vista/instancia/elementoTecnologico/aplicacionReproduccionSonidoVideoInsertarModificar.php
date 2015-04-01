@@ -3,6 +3,7 @@
 	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_APLICACION_REPRODUCCION_SONIDO_VIDEO_INSERTAR_MODIFICAR);
 	$aplicacion = $form->getAplicacionPrograma();
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>

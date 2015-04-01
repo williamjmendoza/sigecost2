@@ -65,7 +65,7 @@
 					$contador = ( $form->getPaginacion() != null) ? $form->getPaginacion()->getDesplazamiento() :  0;
 			?>
 			<div class="table-responsive">
-				<table class="table table table-hover table-responsive">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>#</th>

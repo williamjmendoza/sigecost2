@@ -1,6 +1,7 @@
 <?php
 
 	$aplicacion = $GLOBALS['SigecostRequestVars']['aplicacion'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 	
 ?>
 <!DOCTYPE html>

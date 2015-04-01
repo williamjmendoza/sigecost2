@@ -1,5 +1,8 @@
 <?php
-	$escaner = $GLOBALS['SigecostRequestVars']['escaner']; 
+
+	$escaner = $GLOBALS['SigecostRequestVars']['escaner'];
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
+	
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -3,6 +3,7 @@
 	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_INSERTAR_MODIFICAR);
 	$sistemaOperativo = $form->getSistemaOperativo();
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 	
 ?>
 <!DOCTYPE html>

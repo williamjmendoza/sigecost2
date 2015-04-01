@@ -3,6 +3,7 @@
 	$aplicaciones = $GLOBALS['SigecostRequestVars']['aplicaciones'];
 	$form = FormularioManejador::getFormulario(FORM_INSTANCIA_ET_COMPUTADOR_PORTATIL_INSERTAR_MODIFICAR);
 	$equipoComputacion = $form->getEquipoComputacion();
+	$esAdministradorOntologia = $GLOBALS['SigecostRequestVars']['esAdministradorOntologia'];
 
 ?>
 <!DOCTYPE html>

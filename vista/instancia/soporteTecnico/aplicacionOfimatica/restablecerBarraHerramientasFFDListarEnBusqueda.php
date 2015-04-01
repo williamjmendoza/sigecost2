@@ -34,7 +34,7 @@
 					<td><p><?php echo $patron != null ? $patron->getSolucionTruncada($truncamiento) : '';?></p></td>
 					<td>
 						<div class="form-group">
-							<button type="button" class="btn btn-primary btn-xs"
+							<button type="button" class="btn btn-primary btn-sm"
 								onclick="verDetallesInstanciaSTenBusquedaClave('<?php echo $iriClaseST ?>', '<?php echo $instancia->getIri() ?>');"
 							>Ver Detalles</button>
 						</div>
