@@ -284,16 +284,21 @@
 		?>
 		<style type="text/css">
 			<!--
-			table.page_header {width: 100%; border: none; background-color: #DDDDFF; border-bottom: solid 1mm #AAAADD; padding: 2mm }
+			table.page_header {width: 100%; border: none; background-color: #DDDDFF; border-bottom: solid 1mm #AAAADD; padding: 2mm}
 			table.page_footer {width: 100%; border: none; background-color: #DDDDFF; border-top: solid 1mm #AAAADD; padding: 2mm}
-			div.note {border: solid 1mm #DDDDDD;background-color: #EEEEEE; padding: 2mm; border-radius: 2mm; width: 100%; }
-			ul.main { width: 95%; list-style-type: square; }
-			ul.main li { padding-bottom: 2mm; }
-			/*h1 { text-align: center; font-size: 5mm}*/
-			h3 { text-align: center; font-size: 14mm}
+			table.incidencia{border: solid 1px #55DD44}
+			table.soloIncidencia{width: 100%; border-collapse: collapse}
+			table.incidencia td {border: solid 1px #55DD44; padding: 1mm 2mm 1mm 2mm; vertical-align: top;}
+			td.incidenciaLabel {}
+			td.incidenciaDato {}
+			div.note {border: solid 1mm #DDDDDD;background-color: #EEEEEE; padding: 2mm; border-radius: 2mm; width: 100%;}
+			ul.main {width: 95%; list-style-type: square;}
+			ul.main li {padding-bottom: 2mm;}
+			h1 {text-align: justify; font-size: 7mm}
+			h2 {text-align: center; font-size: 5mm}
     		-->
 		</style>
-		<page backtop="32mm" backbottom="14mm" backleft="14mm" backright="10mm" style="font-size: 12pt">
+		<page backtop="34mm" backbottom="14mm" backleft="14mm" backright="10mm" style="font-size: 12pt">
 			<page_header>
 				<table class="page_header">
 					<tr>
@@ -305,7 +310,7 @@
 						</td>
 					</tr>
 				</table>
-				<div style="padding: 2mm 10mm 2mm 10mm; width: 100%;">
+				<div style="padding: 0mm 10mm 0mm 14mm; width: 100%;">
 					<h1>
 						Desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o
 					</h1>
@@ -313,14 +318,21 @@
 			</page_header>
 			
 		
-			<table style="width: 100%;" align="center">
+			<table class="incidencia soloIncidencia" align="center">
+				<thead>
+					<tr>
+						<th colspan="2" style="width: 100%; text-align: left; border: solid 1px #337722; background: #CCFFCC">
+							Incidencia de soporte t&eacute;cnico
+						</th>
+					</tr>
+				</thead>
 				<tr>
-					<td style="width: 30%;"><strong>En apliaci&oacute;n de programa:</strong></td>
-					<td style="width: 70%;"><?php echo $instanciaAplicacion != null ? $instanciaAplicacion->getNombre() . ' - ' .$instanciaAplicacion->getVersion() : "" ?></td>
+					<td style="width: 33%;"><strong>En apliaci&oacute;n de programa:</strong></td>
+					<td style="width: 67%;"><?php echo $instanciaAplicacion != null ? $instanciaAplicacion->getNombre() . ' - ' .$instanciaAplicacion->getVersion() : "" ?></td>
 				</tr>
 				<tr>
-					<td style="width: 30%;"><strong>Sobre sistema operativo:</strong></td>
-					<td style="width: 70%;">
+					<td style="width: 33%;"><strong>Sobre sistema operativo:</strong></td>
+					<td style="width: 67%;">
 						<?php echo $instanciaSistemaOperativo != null ? $instanciaSistemaOperativo->getNombre() . ' - ' . $instanciaSistemaOperativo->getVersion() : "" ?>
 					</td>
 				</tr>
