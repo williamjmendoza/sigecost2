@@ -91,7 +91,7 @@
 				<h1>B&uacute;squedas de soluciones de incidencias</h1>
 			</div>
 		
-			<form id="formBusqueda" class="form-horizontal" role="form" method="post" action="buscar.php">
+			<form id="formBusqueda" class="form-horizontal" role="form" method="get" action="buscar.php">
 				<div style="display:none;">
 					<input type="hidden" name="accion" value="buscar">
 					<input id="subaccion" type="hidden" name="subaccion" value="false">
