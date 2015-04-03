@@ -274,6 +274,14 @@
 				$form->getSoporteTecnico()->getSistemaOperativo()->setIri($iriSistemaOperativo);
 			}
 		}
+		
+		protected function __generarPDF($iriInstancia)
+		{
+			$instancia = ModeloInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica::obtenerInstanciaPorIri($iriInstancia);
+			$titulo = "Desinstalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica";
+		
+			$this->__generarContenidoPDF($instancia, $titulo);
+		}
 	}
 
 	new ControladorInstanciaSTAplicacionOfimaticaDesinstalacionAplicacionOfimatica();

@@ -259,6 +259,14 @@
 
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/desatascarPapelInsertarModificar.php' );
 		}
+		
+		protected function __generarPDF($iriInstancia)
+		{
+			$instancia = ModeloInstanciaSTImpresoraDesatascarPapel::obtenerInstanciaPorIri($iriInstancia);
+			$titulo = "Desatascar el papel en una impresora";
+		
+			$this->__generarContenidoPDF($instancia, $titulo);
+		}
 	}
 
 	new ControladorInstanciaSTImpresoraDesatascarPapel();

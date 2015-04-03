@@ -259,6 +259,14 @@
 
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/repararImpresionCorridaInsertarModificar.php' );
 		}
+		
+		protected function __generarPDF($iriInstancia)
+		{
+			$instancia = ModeloInstanciaSTImpresoraRepararImpresionCorrida::obtenerInstanciaPorIri($iriInstancia);
+			$titulo = "Reparar impresi&oacute;n corrida";
+		
+			$this->__generarContenidoPDF($instancia, $titulo);
+		}
 	}
 
 	new ControladorInstanciaSTImpresoraRepararImpresionCorrida();

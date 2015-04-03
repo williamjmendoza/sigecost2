@@ -257,6 +257,14 @@
 
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFDDetalles.php' );
 		}
+		
+		protected function __generarPDF($iriInstancia)
+		{
+			$instancia = ModeloInstanciaSTAplicacionOfimaticaRestablecerBarraHerramientasFFD::obtenerInstanciaPorIri($iriInstancia);
+			$titulo = "Restablecer las barras herramientas funci&oacute;n, formato y/o dibujo en aplicaci&oacute;n ofim&aacute;tica";
+		
+			$this->__generarContenidoPDF($instancia, $titulo);
+		}
 
 	}
 

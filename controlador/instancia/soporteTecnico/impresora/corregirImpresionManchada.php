@@ -260,6 +260,14 @@
 
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/impresora/corregirImpresionManchadaInsertarModificar.php' );
 		}
+		
+		protected function __generarPDF($iriInstancia)
+		{
+			$instancia = ModeloInstanciaSTImpresoraCorregirImpresionManchada::obtenerInstanciaPorIri($iriInstancia);
+			$titulo = "Corregir impresi&oacute;n manchada";
+		
+			$this->__generarContenidoPDF($instancia, $titulo);
+		}
 	}
 
 	new ControladorInstanciaSTImpresoraCorregirImpresionManchada();

@@ -3,6 +3,7 @@
 
 	// Controladores
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/aplicacionOfimatica/aplicacionOfimatica.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/sobreSistemaOperativo.php' );
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/paginacion.php' );
 
 		// Modelos
@@ -12,6 +13,7 @@
 
 	class ControladorInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimatica extends ControladorInstanciaSTAplicacionOfimatica
 	{
+		use ControladorTraitInstanciaSTSobreSistemaOperativo;
 		use ControladorTraitPaginacion;
 
 
@@ -275,6 +277,14 @@
 			} else {
 				$form->getSoporteTecnico()->getSistemaOperativo()->setIri($iriSistemaOperativo);
 			}
+		}
+		
+		protected function __generarPDF($iriInstancia)
+		{
+			$instancia = ModeloInstanciaSTAplicacionOfimaticaInstalacionAplicacionOfimatica::obtenerInstanciaPorIri($iriInstancia);
+			$titulo = "Instalaci&oacute;n de aplicaci&oacute;n ofim&aacute;tica";
+		
+			$this->__generarContenidoPDF($instancia, $titulo);
 		}
 	}
 

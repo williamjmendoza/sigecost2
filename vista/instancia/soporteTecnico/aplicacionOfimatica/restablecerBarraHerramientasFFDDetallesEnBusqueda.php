@@ -76,5 +76,9 @@
 <div class="form-group">
 	<div class="col-sm-offset-2 col-sm-10">
 		<button type="button" class="btn btn-primary" onclick="regresarBusqueda();">Regresar a la búsqueda</button>
+		<a
+			href="<?php echo SIGECOST_PATH_URL_CONTROLADOR?>/instancia/soporteTecnico/aplicacionOfimatica/restablecerBarraHerramientasFFD.php?accion=generarPDF
+			&iri=<?php echo urlencode($instancia->getIri()) ?>" class="btn btn-primary"
+		>PDF</a>
 	</div>
 </div>

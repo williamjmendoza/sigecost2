@@ -3,6 +3,7 @@
 
 	// Controladores
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/impresora/impresora.php' );
+	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/sobreSistemaOperativo.php' );
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/paginacion.php' );
 	
 	// Modelos
@@ -13,6 +14,7 @@
 	class ControladorInstanciaSTImpresoraInstalacionImpresora extends ControladorInstanciaSTImpresora
 	{
 		use ControladorTraitPaginacion;
+		use ControladorTraitInstanciaSTSobreSistemaOperativo;
 		
 		public function actualizar()
 		{
@@ -271,6 +273,14 @@
 			} else {
 				$form->getSoporteTecnico()->getSistemaOperativo()->setIri($iriSistemaOperativo);
 			}
+		}
+		
+		protected function __generarPDF($iriInstancia)
+		{
+			$instancia = ModeloInstanciaSTImpresoraInstalacionImpresora::obtenerInstanciaPorIri($iriInstancia);
+			$titulo = "Instalaci&oacute;n de impresora";
+		
+			$this->__generarContenidoPDF($instancia, $titulo);
 		}
 	}
 	

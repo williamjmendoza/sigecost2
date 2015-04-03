@@ -6,7 +6,11 @@
 	// Formularios
 	require_once ( SIGECOST_PATH_FORMULARIO . '/instancia/soporteTecnico/soporteTecnico.php' );
 	
-	class ControladorInstanciaSoporteTecnico extends Controlador
+	// Librerías
+	require_once( SIGECOST_PATH_LIB . '/definiciones.php' );
+	require_once( SIGECOST_PATH_LIB . '/html2pdf/html2pdf.class.php' );
+	
+	abstract class ControladorInstanciaSoporteTecnico extends Controlador
 	{
 		public function __construct()
 		{
@@ -34,6 +38,31 @@
 				$form->getSoporteTecnico()->getPatron()->setSolucion($solucion);
 			}
 		}
+		
+		protected function __crearyEnviarPDF($fileName = "", $contenido)
+		{
+			$html2pdf = new HTML2PDF('P', 'Letter', 'es', true, 'UTF-8', array(0, 0, 0, 0));
+			
+			$html2pdf->writeHTML($contenido);
+			$html2pdf->Output('solucion_'.date('Ymd_His').'.pdf');
+		}
+		
+		public function generarPDF()
+		{
+		
+			if(!isset($_REQUEST['iri']) || ($iri=trim($_REQUEST['iri'])) == ''){
+				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir un iri.';
+			} else {
+				$this->__generarPDF($iri);
+			}
+		}
+		
+		abstract protected function __generarPDF($iri);
+		
+		abstract protected function __generarContenidoPDF($instancia, $titulo);
+		
+		abstract protected function __getElementosPDF();
+		
 	}
 
 ?>

@@ -247,147 +247,6 @@
 			}
 		}
 		
-		public function generarPDF()
-		{
-
-			if(!isset($_REQUEST['iri']) || ($iri=trim($_REQUEST['iri'])) == ''){
-				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir un iri.';
-			} else {
-				$this->__generarPDF($iri);
-			}
-		}
-		
-		private function __generarPDF($iriInstancia)
-		{
-			
-			$instancia = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::obtenerInstanciaPorIri($iriInstancia);
-			$GLOBALS['SigecostRequestVars']['instancia'] = $instancia;
-			
-			
-			// Librerías
-			require_once( SIGECOST_PATH_LIB . '/definiciones.php' );
-			require_once( SIGECOST_PATH_LIB . '/html2pdf/html2pdf.class.php' );
-			
-				
-			$html2pdf = new HTML2PDF('P', 'Letter', 'es', true, 'UTF-8', array(0, 0, 0, 0));
-			
-			
-			
-			
-			// Parte de la vista
-			$instancia = $GLOBALS['SigecostRequestVars']['instancia'];
-			$patron = $instancia != null ? $instancia->getPatron() : null;
-			$instanciaAplicacion = $instancia->getAplicacionPrograma();
-			$instanciaSistemaOperativo = $instancia->getSistemaOperativo();
-			
-			ob_start();
-		?>
-		<style type="text/css">
-			<!--
-			table.page_header {width: 100%; border: none; background-color: #DDDDFF; border-bottom: solid 1mm #AAAADD; padding: 2mm}
-			table.page_footer {width: 100%; border: none; background-color: #DDDDFF; border-top: solid 1mm #AAAADD; padding: 2mm}
-			table.incidencia{border: solid 1px #55DD44}
-			table.soloIncidencia{width: 100%; border-collapse: collapse}
-			table.incidencia td {border: solid 1px #55DD44; padding: 1mm 2mm 1mm 2mm; vertical-align: top;}
-			td.incidenciaLabel {}
-			td.incidenciaDato {}
-			div.note {border: solid 1mm #DDDDDD;background-color: #EEEEEE; padding: 2mm; border-radius: 2mm; width: 100%;}
-			ul.main {width: 95%; list-style-type: square;}
-			ul.main li {padding-bottom: 2mm;}
-			h1 {text-align: justify; font-size: 7mm}
-			h2 {text-align: center; font-size: 5mm}
-    		-->
-		</style>
-		<page backtop="34mm" backbottom="14mm" backleft="14mm" backright="10mm" style="font-size: 12pt">
-			<page_header>
-				<table class="page_header">
-					<tr>
-						<td style="width: 50%; text-align: left">
-							A propos de ...
-						</td>
-						<td style="width: 50%; text-align: right">
-							HTML2PDF v<?php echo __CLASS_HTML2PDF__; ?>
-						</td>
-					</tr>
-				</table>
-				<div style="padding: 0mm 10mm 0mm 14mm; width: 100%;">
-					<h1>
-						Desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o
-					</h1>
-				</div>
-			</page_header>
-			
-		
-			<table class="incidencia soloIncidencia" align="center">
-				<thead>
-					<tr>
-						<th colspan="2" style="width: 100%; text-align: left; border: solid 1px #337722; background: #CCFFCC">
-							Incidencia de soporte t&eacute;cnico
-						</th>
-					</tr>
-				</thead>
-				<tr>
-					<td style="width: 33%;"><strong>En apliaci&oacute;n de programa:</strong></td>
-					<td style="width: 67%;"><?php echo $instanciaAplicacion != null ? $instanciaAplicacion->getNombre() . ' - ' .$instanciaAplicacion->getVersion() : "" ?></td>
-				</tr>
-				<tr>
-					<td style="width: 33%;"><strong>Sobre sistema operativo:</strong></td>
-					<td style="width: 67%;">
-						<?php echo $instanciaSistemaOperativo != null ? $instanciaSistemaOperativo->getNombre() . ' - ' . $instanciaSistemaOperativo->getVersion() : "" ?>
-					</td>
-				</tr>
-			</table>
-			<br>
-			
-			<table style="width: 100%; border: solid 1px #5544DD; border-collapse: collapse" align="center">
-				<thead>
-					<tr>
-						<th colspan="2" style="width: 100%; text-align: left; border: solid 1px #337722; background: #CCFFCC">
-							Soluci&oacute;n de incidencia de soporte t&eacute;cnico
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td style="width: 20%; border: solid 1px #55DD44; vertical-align: top;"><strong>Nombre:</strong></td>
-						<td style="width: 80%; border: solid 1px #55DD44"><?php echo $patron != null ? $patron->getNombre() : "" ?></td>
-					</tr>
-					<tr>
-						<td style="width: 20%; border: solid 1px #55DD44; vertical-align: top;"><strong>Descripci&oacute;n:</strong></td>
-						<td style="width: 80%; border: solid 1px #55DD44"><?php //echo $patron != null ? $patron->getSolucion() : "" ?></td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<th colspan="2" style="width: 100%; text-align: left; border: solid 1px #337722; background: #CCFFCC">
-							Creada por
-							<?php
-								echo $patron != null
-									? 	(	$patron->getUsuarioCreador() != null
-											? $patron->getUsuarioCreador()->getNombre() . " " . $patron->getUsuarioCreador()->getApellido() : ""
-										)
-									: ""
-							?>
-							<?php echo $patron != null ? " el " . $patron->getFechaCreacion() : "" ?>
-						</th>
-					</tr>
-				</tfoot>
-			</table>
-		
-			<br>
-		
-			<div style="padding: 2mm; width: 90%;">
-				<?php echo $patron != null ? $patron->getSolucion() : "" ?>
-			</div>
-		
-		</page>
-		<?php
-			$contenido = ob_get_clean();
-			
-			$html2pdf->writeHTML($contenido);
-			$html2pdf->Output('instancia_'.date('Ymd_His').'.pdf');
-		}
-		
 		private function __desplegarDetalles($iriInstancia)
 		{
 			$instancia = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::obtenerInstanciaPorIri($iriInstancia);
@@ -419,54 +278,16 @@
 				$form->getSoporteTecnico()->getSistemaOperativo()->setIri($iriSistemaOperativo);
 			}
 		}
+		
+		protected function __generarPDF($iriInstancia)
+		{
+			$instancia = ModeloInstanciaSTAplicacionGDDDDesinstalacionAplicacion::obtenerInstanciaPorIri($iriInstancia);
+			$titulo = "Desinstalaci&oacute;n de aplicaci&oacute;n gr&aacute;fica digital, dibujo y dise&ntilde;o";
+			
+			$this->__generarContenidoPDF($instancia, $titulo);
+		}
 	}
 
 	new ControladorInstanciaSTAplicacionGDDDDesinstalacionAplicacion();
-	
-	/*
-	 * 
-	
-	
-	<page backtop="14mm" backbottom="14mm" backleft="14mm" backright="10mm" style="font-size: 12pt">
-		
-			<table border="1">
-				<tr>
-					<td colspan="2">Incidencia de soporte t&eacute;cnico</td>
-				</tr>
-				<tr>
-					<td>En apliaci&oacute;n de programa</td>
-					<td><?php echo $instanciaAplicacion != null ? $instanciaAplicacion->getNombre() . ' - ' .$instanciaAplicacion->getVersion() : "" ?></td>
-				</tr>
-				<tr>
-					<td>Sobre sistema operativo</td>
-					<td>
-						<?php echo $instanciaSistemaOperativo != null ? $instanciaSistemaOperativo->getNombre() . ' - ' . $instanciaSistemaOperativo->getVersion() : "" ?>
-					</td>
-				</tr>
-			</table>
-			
-			
-			
-			<table style="width: 80%;border: solid 1px #5544DD;" align="center">
-				<tbody>
-					<tr>
-						<td colspan="2">Soluci&oacute;n de incidencia de soporte t&eacute;cnico</td>
-					</tr>
-					<tr>
-						<td>Nombre:</td>
-						<td><?php echo $patron != null ? $patron->getNombre() : "" ?></td>
-					</tr>
-					<tr>
-						<td>Descripci&oacute;n:</td>
-						<td><?php echo $patron != null ? $patron->getSolucion() : "" ?></td>
-					</tr>
-				</tbody>	
-			</table>
-		
-		</page>
-	
-	
-	 * 
-	 * */
 	
 ?>

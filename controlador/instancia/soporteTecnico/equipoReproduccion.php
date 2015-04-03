@@ -3,7 +3,7 @@
 	// Controladores
 	require_once ( SIGECOST_PATH_CONTROLADOR . '/instancia/soporteTecnico/soporteTecnico.php' );
 
-	class ControladorInstanciaSTEquipoReproduccion extends ControladorInstanciaSoporteTecnico
+	abstract class ControladorInstanciaSTEquipoReproduccion extends ControladorInstanciaSoporteTecnico
 	{
 		// Obtener y validar el iri de la instancia de equipo de reproducción
 		protected function __validarIriEquipoReproduccion(FormularioInstanciaSTEquipoReproduccion $form)

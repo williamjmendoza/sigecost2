@@ -260,6 +260,14 @@
 
 			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/aplicacionOfimatica/corregirCierreInesperadoDetalles.php' );
 		}
+		
+		protected function __generarPDF($iriInstancia)
+		{
+			$instancia = ModeloInstanciaSTAplicacionOfimaticaCorregirCierreInesperado::obtenerInstanciaPorIri($iriInstancia);
+			$titulo = "Corregir el cierre inesperado de una aplicaci&oacute;n ofim&aacute;tica";
+				
+			$this->__generarContenidoPDF($instancia, $titulo);
+		}
 
 	}
 
