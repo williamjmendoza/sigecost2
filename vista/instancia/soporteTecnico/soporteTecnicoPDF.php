@@ -3,6 +3,7 @@
 	$htmlElementos = $GLOBALS['SigecostRequestVars']['htmlElementos'];
 	$instancia = $GLOBALS['SigecostRequestVars']['instancia'];
 	$patron = $instancia != null ? $instancia->getPatron() : null;
+	$topContenido = isset($GLOBALS['SigecostRequestVars']['topContenido']) ? $GLOBALS['SigecostRequestVars']['topContenido'] : 53;
 ?>
 <style type="text/css">
 	<!--
@@ -22,7 +23,7 @@
     -->
 </style>
 
-<page backtop="70mm" backbottom="14mm" backleft="14mm" backright="10mm" style="font-size: 12pt">
+<page backtop="<?php echo $topContenido; ?>mm" backbottom="14mm" backleft="14mm" backright="10mm" style="font-size: 12pt">
 			 
 	<page_header>
 		<table class="page_header">

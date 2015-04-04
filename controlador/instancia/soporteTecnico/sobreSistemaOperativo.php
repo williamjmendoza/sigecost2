@@ -21,12 +21,13 @@
 			ob_clean();
 			ob_start();
 				
-			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/sistemaOperativoPDF.php' );
+			require ( SIGECOST_PATH_VISTA . '/instancia/soporteTecnico/sobreSistemaOperativoPDF.php' );
 				
 			$htmlElementos = ob_get_contents();
 			ob_clean();
 				
 			$GLOBALS['SigecostRequestVars']['htmlElementos'] .= $htmlElementos;
+			$GLOBALS['SigecostRequestVars']['topContenido'] = 68;
 		}
 		
 	}
