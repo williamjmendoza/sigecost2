@@ -1,9 +1,9 @@
 <?php
 
 	$menuActivo = $GLOBALS['SigecostRequestVars']['menuActivo'];
-	$usuario = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuario') : null;
+	$usuarioActual = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuario') : null;
 	$esAdministradorOntologia = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuarioEsAdministradorOntologia') : null;
-	
+	$esAdministradorUsuarios = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuarioEsAdministradorUsuarios') : null;
 ?>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -36,7 +36,7 @@
 				<li class="dropdown<?php echo $menuActivo=='administracionOntologia' ? ' active' : '' ?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<?php if($esAdministradorOntologia) {
-							echo "Administaci&oacute;n de la ontolog&iacute;a";
+							echo "Administaci&oacute;n";
 						} else {
 							echo "Consultas";
 						}
@@ -48,6 +48,11 @@
 						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/administracionOntologia.php?accion=administrarSTLista">
 							Incidencias de soporte t&eacute;cnico
 						</a></li>
+						<?php if($esAdministradorUsuarios) { ?>
+						<li><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/usuario.php?accion=buscar">
+							Usuarios
+						</a></li>
+						<?php } ?>
 					</ul>
 				</li>
 				<li class="<?php echo $menuActivo=='busqueda' ? ' active' : '' ?>"><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/buscar.php?accion=buscar">B&uacute;squedas</a></li>
@@ -78,7 +83,7 @@
 				</div>
 				<button type="submit" class="btn btn-primary">Salir</button>
 			</form>
-			<p class="navbar-text navbar-right"><?php echo $usuario != null ? $usuario->getNombre() . " " . $usuario->getapellido() : '' ?></p>
+			<p class="navbar-text navbar-right"><?php echo $usuarioActual != null ? $usuarioActual->getNombre() . " " . $usuarioActual->getapellido() : '' ?></p>
 			<?php
 				}
 			?>

@@ -160,5 +160,76 @@
 				return null;
 			}
 		}
+		
+		public static function buscarUsuarios(array $parametros = null)
+		{
+			$preMsg = 'Error al buscar los usuarios.';
+			$usuarios = null;
+			$limite = '';
+			$desplazamiento = '';
+			
+			try
+			{
+				
+				if($parametros !== null && count($parametros) > 0)
+				{
+					if(isset($parametros['limite'])) $limite = 'LIMIT ' . $parametros['limite'];
+					if(isset($parametros['desplazamiento'])) $desplazamiento = 'OFFSET ' . $parametros['desplazamiento'];
+				}
+				
+				$query = "
+					SELECT
+						usuario.id AS usuario_id,
+						usuario.cedula AS usuario_cedula,
+						usuario.usuario AS usuario_usuario,
+						#usuario.contrasena AS usuario_constrasena,
+						usuario.nombre AS usuario_nombre,
+						usuario.apellido AS usuario_apellido,
+						usuario.estatus AS usuario_estatus
+					FROM
+						usuario
+					ORDER BY
+						usuario.nombre,
+						usuario.apellido
+					".$limite."
+					".$desplazamiento."
+				";
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
+		public static function buscarUsuariosTotalElementos(array $parametros = null)
+		{
+			$preMsg = 'Error al buscar el contador de los usuarios.';
+			
+			try
+			{
+				$query = "
+					SELECT
+						count(*) AS totalElementos
+					FROM
+						usuario		
+
+				";
+				
+				if(($result = $GLOBALS['PATRONES_CLASS_DB']->Query($query)) === false)
+					throw new Exception($preMsg." Detalles: ".($GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg()));
+				
+				if ($row = $GLOBALS['PATRONES_CLASS_DB']->Fetch($result))
+				{
+					return $row['totalElementos'];
+				}
+				else return false;
+				
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 	}
 ?>
