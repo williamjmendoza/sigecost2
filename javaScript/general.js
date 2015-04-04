@@ -10,3 +10,12 @@ function eliminarInstancia(formulario)
 		$('#' + formulario).submit();
 	}
 }
+
+function ingresar() {
+	
+	if ( $.trim($('#contrasena').val()) != '')
+		$('#contrasenaCod').val(hex_md5($.trim($('#contrasena').val())));
+	
+	$('#formIngreso').submit();
+	
+}

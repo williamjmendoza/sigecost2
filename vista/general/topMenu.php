@@ -56,17 +56,18 @@
 				if (ModeloSesion::estaSesionIniciada() !== true)
 				{
 			?>
-			<form class="navbar-form navbar-right" role="search" action="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/sesion.php" method="post">
+			<form id="formIngreso" class="navbar-form navbar-right" role="search" action="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/sesion.php" method="post">
 				<div style="display:none;">
 					<input type="hidden" name="accion" value="iniciarSesion">
+					<input id="contrasenaCod" type="hidden" name="contrasenaCod">
 				</div>
 				<div class="form-group">
 					<input name="usuario" type="text" class="form-control" placeholder="Usuario">
 				</div>
 				<div class="form-group">
-					<input name="contrasenaCod" type="password" class="form-control" placeholder="Contrase&ntilde;a">
+					<input id="contrasena" type="password" class="form-control" placeholder="Contrase&ntilde;a">
 				</div>
-				<button type="submit" class="btn btn-primary">Ingresar</button>
+				<button type="button" class="btn btn-primary" onclick="ingresar();">Ingresar</button>
 			</form>
 			<?php
 				} else {
