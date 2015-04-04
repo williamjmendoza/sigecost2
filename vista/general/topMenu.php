@@ -1,6 +1,6 @@
 <?php
 
-	$menuActivo = $GLOBALS['SigecostRequestVars']['menuActivo'];
+	$menuActivo = isset($GLOBALS['SigecostRequestVars']['menuActivo']) ? $GLOBALS['SigecostRequestVars']['menuActivo'] : null;
 	$usuarioActual = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuario') : null;
 	$esAdministradorOntologia = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuarioEsAdministradorOntologia') : null;
 	$esAdministradorUsuarios = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuarioEsAdministradorUsuarios') : null;

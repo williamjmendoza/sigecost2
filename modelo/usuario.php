@@ -195,6 +195,15 @@
 					".$desplazamiento."
 				";
 				
+				if(($result = $GLOBALS['PATRONES_CLASS_DB']->Query($query)) === false)
+					throw new Exception($preMsg." Detalles: ".($GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg()));
+				$usuarios = array();
+				
+				while ($row = $GLOBALS['PATRONES_CLASS_DB']->Fetch($result))
+					$usuarios[$row['usuario_id']] = self::llenarUsuario($row);
+				
+				return $usuarios;
+				
 			} catch (Exception $e) {
 				error_log($e, 0);
 				return false;

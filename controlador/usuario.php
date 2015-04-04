@@ -11,6 +11,7 @@
 
 	class ControladorUsuario extends Controlador
 	{
+		use ControladorTraitPaginacion;
 		
 		public function buscar()
 		{
@@ -46,6 +47,24 @@
 			$GLOBALS['SigecostRequestVars']['formPaginacion'] = $form;
 			
 			require ( SIGECOST_PATH_VISTA . '/usuario/usuarioBuscar.php' );
+		}
+		
+		public function desplegarDetalles()
+		{
+			if(!isset($_REQUEST['idUsuario']) || ($idUsuario=trim($_REQUEST['idUsuario'])) == ''){
+				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir un id de usuario.';
+			} else {
+				$this->__desplegarDetalles($idUsuario);
+			}
+		}
+		
+		private function __desplegarDetalles($idUsuario)
+		{
+			$usuario = ModeloUsuario::obtenerUsuarioPorId($idUsuario);
+		
+			$GLOBALS['SigecostRequestVars']['usuario'] = $usuario;
+		
+			require ( SIGECOST_PATH_VISTA . '/usuario/usuarioDetalles.php' );
 		}
 	}
 	

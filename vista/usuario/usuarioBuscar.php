@@ -64,15 +64,15 @@
 			?>
 						<tr>
 							<td><?php echo (++$contador) ?></td>
-							<td><?php //echo $instancia->getAplicacionPrograma()->getNombre() ?> </td>
-							<td><?php //echo $instancia->getAplicacionPrograma()->getVersion() ?></td>
-							<td></td>
-							<td></td>
+							<td><?php echo $usuario->getCedula() ?> </td>
+							<td><?php echo $usuario->getUsuario() ?></td>
+							<td><?php echo $usuario->getNombre() ?></td>
+							<td><?php echo $usuario->getApellido() ?></td>
 							<td>
-								<form class="form-horizontal buscarOpciones" role="form" action="corregirCierreInesperado.php" method="post">
+								<form class="form-horizontal buscarOpciones" role="form" action="usuario.php" method="post">
 									<div style="display:none;">
 										<input type="hidden" name="accion" value="desplegarDetalles">
-										<input type="hidden" name="iri" value="<?php //echo $instancia->getIri() ?>">
+										<input type="hidden" name="idUsuario" value="<?php echo $usuario->getId() ?>">
 									</div>
 									<div class="form-group">
 										<button type="submit" class="btn btn-primary btn-xs">Ver Detalles</button>
