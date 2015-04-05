@@ -56,6 +56,12 @@
 		public function setRoles($roles){
 			$this->_roles = $roles;
 		}
+		public function setRol(EntidadRol $rol){
+			if(!is_array($this->_roles))
+				$this->_roles = array();
+			
+			$this->_roles[$rol->getId()] = $rol;
+		}
 		public function getUsuario(){
 			return $this->_usuario;
 		}

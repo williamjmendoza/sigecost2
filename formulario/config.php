@@ -48,6 +48,7 @@
 	define('FORM_INSTANCIA_ET_IMPRESORA_BUSCAR', 46);
 	define('FORM_INSTANCIA_ET_SISTEMA_OPERATIVO_BUSCAR', 47);
 	define('FORM_USUARIO_BUSCAR', 48);
+	define('FORM_USUARIO_INSERTAR_MODIFICAR', 49);
 
 	$GLOBALS['Safi']['__Forms']['__List'] = array();
 
@@ -291,6 +292,11 @@
 			'File' => 'usuario/usuarioBuscar.php',
 			'ClassName' => 'FormularioUsuarioBuscar',
 			'GlobalName' => 'ClassFormularioUsuarioBuscar'
+		),
+		FORM_USUARIO_INSERTAR_MODIFICAR  => array(
+			'File' => 'usuario/usuario.php',
+			'ClassName' => 'FormularioUsuario',
+			'GlobalName' => 'ClassFormularioUsuario'
 		)
 	);
 ?>
