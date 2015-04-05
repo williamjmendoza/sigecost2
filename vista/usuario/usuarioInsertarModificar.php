@@ -50,15 +50,8 @@
 					<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
 					<input type="hidden" name="idUsuario" value="<?php echo $form->getUsuario()->getId() ?>">
 					<?php } ?>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="cedulalUsuario">C&eacute;dula:</label>
-					<div class="col-sm-5">
-						<input
-							type="text" class="form-control" id="cedulalUsuario" name="cedulalUsuario" placeholder="Introduzca la c&eacute;dula del usuario"
-							value="<?php echo $usuario != null ? $usuario->getCedula() : "" ?>"
-						>
-					</div>
+					<input type="hidden" id="contrasenaCod" name="contrasenaCod">
+					<input type="hidden" id="contrasenaConfirmacionCod" name="contrasenaConfirmacionCod">
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="usuarioUsuario">Usuario:</label>
@@ -66,6 +59,27 @@
 						<input
 							type="text" class="form-control" id="usuarioUsuario" name="usuarioUsuario" placeholder="Introduzca el identificador del usuario"
 							value="<?php echo $usuario != null ? $usuario->getUsuario() : "" ?>"
+						>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="contrasena">Contraseña:</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="contrasena" placeholder="Introduzca una contraseña">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="contrasenaConfirmacion"></label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="contrasenaConfirmacion" placeholder="Confirme la contraseña">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="cedulalUsuario">C&eacute;dula:</label>
+					<div class="col-sm-5">
+						<input
+							type="text" class="form-control" id="cedulalUsuario" name="cedulalUsuario" placeholder="Introduzca la c&eacute;dula del usuario"
+							value="<?php echo $usuario != null ? $usuario->getCedula() : "" ?>"
 						>
 					</div>
 				</div>

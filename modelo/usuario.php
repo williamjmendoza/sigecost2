@@ -240,5 +240,84 @@
 			}
 		}
 		
+		// Guarda un nuevo usuario, y retorna su id
+		public static function guardarUsuario(EntidadUsuario $usuario)
+		{
+			$preMsg = 'Error al guardar el usuario.';
+			$resultTransaction = null;
+			
+			try
+			{
+				if($usuario === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario\' es nulo.');
+				
+				if($usuario->getCedula() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getCedula()\' es nulo.');
+				
+				if($usuario->getCedula() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getCedula()\' está vacío.');
+				
+				if($usuario->getUsuario() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getUsuario()\' es nulo.');
+				
+				if($usuario->getUsuario() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getUsuario()\' está vacío.');
+				
+				if($usuario->getNombre() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getNombre()\' es nulo.');
+				
+				if($usuario->getNombre() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getNombre()\' está vacío.');
+				
+				if($usuario->getApellido() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getApellido()\' es nulo.');
+				
+				if($usuario->getApellido() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getApellido()\' está vacío.');
+				
+				// Iniciar la transacción
+				$resultTransaction = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
+				
+				if($resultTransaction === false)
+					throw new Exception($preMsg . ' No se pudo iniciar la transacción. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				$query = "
+					INSERT INTO usuario
+						(
+							cedula,
+							usuario,
+							nombre,
+							apellido
+						)
+					VALUES
+						(
+							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getCedula())."',
+							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getUsuario())."',
+							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getNombre())."',
+							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getApellido())."'
+						)
+				";
+				
+				if($GLOBALS['PATRONES_CLASS_DB']->Query($query) === false)
+					throw new Exception($preMsg . ' Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				if(($idUsuario = $GLOBALS['PATRONES_CLASS_DB']->LastId()) == 0)
+					throw new Exception($preMsg . ' El id del último usuario guardado no pudo ser obtenido .Más detalles: '
+						. $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// Commit de la transacción
+				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
+					throw new Exception($preMsg . ' No se pudo realizar el commit  de la transacción. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// retornar el código con el que se guardó el patrón de soporte técnico
+				return $idUsuario;
+				
+			} catch (Exception $e) {
+				if(isset($resultTransaction) && $resultTransaction === true) $GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 	}
 ?>

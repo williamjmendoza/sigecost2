@@ -54,8 +54,8 @@
 			$form = FormularioManejador::getFormulario(FORM_USUARIO_INSERTAR_MODIFICAR);
 			
 			// Validar, obtener y guardar todos los inputs desde el formulario
-			$this->__validarCedula($form);
 			$this->__validarUsuario($form);
+			$this->__validarCedula($form);
 			$this->__validarNombre($form);
 			$this->__validarApellido($form);
 			$this->__validarEsAdministradorIncidencias($form);
@@ -66,7 +66,17 @@
 			{
 				try
 				{
-					throw new Exception("Todo validado correctamente");
+					// Guardar el usuario en la base de datos
+					$idUsuario = ModeloUsuario::guardarUsuario($form->getUsuario());
+					
+					// Verificar si ocurrio algún error mientras se guardaba el usuario
+					if ($idUsuario === false)
+						throw new Exception("El usuario de no pudo ser guardado.");
+					
+					// Mostrar un mensaje indicando que se ha guardado satisfactoriamente, y mostrar los detalles de la instancia guardada
+					$GLOBALS['SigecostInfo']['general'][] = "Usuario guardado satisfactoriamente.";
+					$this->__desplegarDetalles($idUsuario);
+					
 					
 				} catch (Exception $e){
 					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
@@ -118,7 +128,7 @@
 		protected function __validarCedula(FormularioUsuario $form)
 		{
 			if(!isset($_POST['cedulalUsuario']) || ($cedula=trim($_POST['cedulalUsuario'])) == ''){
-				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir un c&eacute;dula.';
+				$GLOBALS['SigecostErrors']['general'][] = 'Debe introducir una c&eacute;dula.';
 			} else {
 				$form->getUsuario()->setCedula($cedula);
 			}

@@ -49,8 +49,8 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>C&eacute;dula</th>
 							<th>Usuario</th>
+							<th>C&eacute;dula</th>
 							<th>Nombre</th>
 							<th>Apellido</th>
 							<th>Opciones</th>
@@ -64,8 +64,8 @@
 			?>
 						<tr>
 							<td><?php echo (++$contador) ?></td>
-							<td><?php echo $usuario->getCedula() ?> </td>
 							<td><?php echo $usuario->getUsuario() ?></td>
+							<td><?php echo $usuario->getCedula() ?> </td>
 							<td><?php echo $usuario->getNombre() ?></td>
 							<td><?php echo $usuario->getApellido() ?></td>
 							<td>

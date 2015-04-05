@@ -45,18 +45,18 @@
 					<input type="hidden" name="idUsuario" value="<?php echo $usuario->getId() ?>">
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="cedulaUsuario">C&eacute;dula:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static">
-							<?php echo $usuario != null ? $usuario->getCedula() : "" ?>
-						</p>
-					</div>
-				</div>
-				<div class="form-group">
 					<label class="control-label col-sm-2" for="usuarioUsuario">Usuario:</label>
 					<div class="col-sm-10">
 						<p class="form-control-static">
 							<?php echo $usuario != null ? $usuario->getUsuario() : "" ?>
+						</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="cedulaUsuario">C&eacute;dula:</label>
+					<div class="col-sm-10">
+						<p class="form-control-static">
+							<?php echo $usuario != null ? $usuario->getCedula() : "" ?>
 						</p>
 					</div>
 				</div>
@@ -74,6 +74,40 @@
 						<p class="form-control-static">
 							<?php echo $usuario != null ? $usuario->getApellido() : "" ?>
 						</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="esAdministradorIncidencias"></label>
+					<div class="col-sm-5">
+						<input id="esAdministradorIncidencias" name="esAdministradorIncidencias" type="checkbox" value="true"<?php
+							if($usuario != null)
+							{
+								$roles = $usuario->getRoles();
+								if(is_array($roles)){
+									if(array_key_exists(SIGECOST_USUARIO_ADMINISTRADOR_ONTOLOGIA, $roles)){
+										echo ' checked="checked"';
+									}
+								}
+							}
+						?> readonly="readonly">
+							Es administrador de incidencias
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="esAdministradorUsuarios"></label>
+					<div class="col-sm-5">
+						<input id="esAdministradorUsuarios" name="esAdministradorUsuarios" type="checkbox" value="true"<?php
+							if($usuario != null)
+							{
+								$roles = $usuario->getRoles();
+								if(is_array($roles)){
+									if(array_key_exists(SIGECOST_USUARIO_ADMINISTRADOR_USUARIOS, $roles)){
+										echo ' checked="checked"';
+									}
+								}
+							}
+						?> readonly="readonly">
+							Es administrador de usuarios
 					</div>
 				</div>
 				<?php //if($esAdministradorOntologia) { ?>
