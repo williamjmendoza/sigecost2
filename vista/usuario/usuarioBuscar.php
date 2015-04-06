@@ -69,7 +69,7 @@
 							<td><?php echo $usuario->getNombre() ?></td>
 							<td><?php echo $usuario->getApellido() ?></td>
 							<td>
-								<form class="form-horizontal buscarOpciones" role="form" action="usuario.php" method="post">
+								<form class="form-horizontal buscarOpciones" role="form" action="usuario.php" method="get">
 									<div style="display:none;">
 										<input type="hidden" name="accion" value="desplegarDetalles">
 										<input type="hidden" name="idUsuario" value="<?php echo $usuario->getId() ?>">

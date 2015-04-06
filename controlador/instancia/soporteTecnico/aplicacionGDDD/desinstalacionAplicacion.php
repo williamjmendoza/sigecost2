@@ -241,9 +241,9 @@
 					
 				$this->__desplegarFormulario();
 				
-				} catch (Exception $e){
-					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
-					$this->__desplegarFormulario();
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				$this->__desplegarFormulario();
 			}
 		}
 		

@@ -44,34 +44,38 @@
 				<h1>Usuario</h1>
 			</div>
 			
-			<form class="form-horizontal" role="form" method="post" action="usuario.php">
+			<form id="formUsuario" class="form-horizontal" role="form" method="post" action="usuario.php">
 				<div style="display:none;">
-					<input type="hidden" name="accion" value="">
+					<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_INSERTAR) { ?>
+						<input type="hidden" name="accion" value="guardar">
+					<?php } else if ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
+						<input type="hidden" name="accion" value="actualizar">
+					<?php } ?>
 					<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
 					<input type="hidden" name="idUsuario" value="<?php echo $form->getUsuario()->getId() ?>">
 					<?php } ?>
-					<input type="hidden" id="contrasenaCod" name="contrasenaCod">
-					<input type="hidden" id="contrasenaConfirmacionCod" name="contrasenaConfirmacionCod">
+					<input type="hidden" id="contrasenaCodUsuario" name="contrasenaCodUsuario">
+					<input type="hidden" id="contrasenaConfirmacionCodUsuario" name="contrasenaConfirmacionCodUsuario">
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="usuarioUsuario">Usuario:</label>
 					<div class="col-sm-5">
 						<input
 							type="text" class="form-control" id="usuarioUsuario" name="usuarioUsuario" placeholder="Introduzca el identificador del usuario"
-							value="<?php echo $usuario != null ? $usuario->getUsuario() : "" ?>"
+							value="<?php echo $usuario != null ? $usuario->getUsuario() : "" ?>" autocomplete="off"
 						>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="contrasena">Contraseña:</label>
+					<label class="control-label col-sm-2" for="contrasenaUsuario">Contraseña:</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" id="contrasena" placeholder="Introduzca una contraseña">
+						<input type="password" class="form-control" id="contrasenaUsuario" placeholder="Introduzca una contraseña" autocomplete="off">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-sm-2" for="contrasenaConfirmacion"></label>
+					<label class="control-label col-sm-2" for="contrasenaConfirmacionUsuario"></label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" id="contrasenaConfirmacion" placeholder="Confirme la contraseña">
+						<input type="password" class="form-control" id="contrasenaConfirmacionUsuario" placeholder="Confirme la contraseña" autocomplete="off">
 					</div>
 				</div>
 				<div class="form-group">
@@ -138,9 +142,9 @@
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<?php if($form->getTipoOperacion() == Formulario::TIPO_OPERACION_INSERTAR) { ?>
-						<button type="submit" class="btn btn-primary" onclick="setAccion('guardar');">Guardar</button>
+						<button type="button" class="btn btn-primary" onclick="guardarUsuario('formUsuario')">Guardar</button>
 						<?php } else if ($form->getTipoOperacion() == Formulario::TIPO_OPERACION_MODIFICAR) { ?>
-						<button type="submit" class="btn btn-primary" onclick="setAccion('actualizar');">Actualizar</button>
+						<button type="button" class="btn btn-primary" onclick="guardarUsuario('formUsuario')">Actualizar</button>
 						<?php } ?>
 					</div>
 				</div>

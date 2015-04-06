@@ -4,10 +4,91 @@
 	require_once( SIGECOST_PATH_ENTIDAD . '/usuario.php' );
 
 	// Modelos
+	require_once( SIGECOST_PATH_MODELO . '/usuarioRol.php' );
 	require_once( SIGECOST_PATH_MODELO . '/rol.php' );
 
 	class ModeloUsuario
 	{
+		public static function actualizarUsuario(EntidadUsuario $usuario)
+		{
+			$preMsg = 'Error al actualizar el usuario.';
+			$resultTransaction = null;
+			
+			try
+			{
+				if($usuario === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario\' es nulo.');
+				
+				if($usuario->getId() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getId()\' es nulo.');
+				
+				if($usuario->getId() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getId()\' está vacío.');
+				
+				if($usuario->getContrasena() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getContrasena()\' es nulo.');
+				
+				if($usuario->getContrasena() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getContrasena()\' está vacío.');
+				
+				if($usuario->getCedula() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getCedula()\' es nulo.');
+				
+				if($usuario->getCedula() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getCedula()\' está vacío.');
+				
+				if($usuario->getNombre() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getNombre()\' es nulo.');
+				
+				if($usuario->getNombre() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getNombre()\' está vacío.');
+				
+				if($usuario->getApellido() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getApellido()\' es nulo.');
+				
+				if($usuario->getApellido() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getApellido()\' está vacío.');
+				
+				// Iniciar la transacción
+				$resultTransaction = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
+				
+				if($resultTransaction === false)
+					throw new Exception($preMsg . ' No se pudo iniciar la transacción. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				$query = "
+					UPDATE
+						usuario
+					SET
+						usuario = '".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getUsuario())."',
+						contrasena = '".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getContrasena())."',
+						cedula = '".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getCedula())."',
+						nombre = '".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getNombre())."',
+						apellido = '".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getApellido())."'
+					WHERE
+						id = '".$usuario->getId()."'
+				";
+				
+				if($GLOBALS['PATRONES_CLASS_DB']->Query($query) === false)
+					throw new Exception($preMsg . ' Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// Actualizar los roles del usuario
+				if(ModeloUsuarioRol::actualizarUsuarioRol($usuario) === false)
+					throw new Exception($preMsg . ' No se pudieron actualizar los roles del usuario.');
+				
+				// Commit de la transacción
+				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
+					throw new Exception($preMsg . ' No se pudo realizar el commit  de la transacción. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+				
+				// Retornar el código con el que se guardó el patrón de soporte técnico
+				return $usuario->getId();
+				
+			} catch (Exception $e) {
+				if(isset($resultTransaction) && $resultTransaction === true) $GLOBALS['PATRONES_CLASS_DB']->RollbackAllTransactions();
+				error_log($e, 0);
+				return false;
+			}
+		}
+		
 		public static function llenarUsuario($row)
 		{
 			try {
@@ -20,7 +101,7 @@
 				$usuario->setId($row['usuario_id']);
 				$usuario->setCedula($row['usuario_cedula']);
 				$usuario->setUsuario($row['usuario_usuario']);
-				//$usuario->setContrasena($row['usuario_constrasena']);
+				$usuario->setContrasena($row['usuario_constrasena']);
 				$usuario->setNombre($row['usuario_nombre']);
 				$usuario->setApellido($row['usuario_apellido']);
 				$usuario->setEstatus($row['usuario_estatus']);
@@ -60,7 +141,7 @@
 						usuario.id AS usuario_id,
 						usuario.cedula AS usuario_cedula,
 						usuario.usuario AS usuario_usuario,
-						#usuario.contrasena AS usuario_constrasena,
+						usuario.contrasena AS usuario_constrasena,
 						usuario.nombre AS usuario_nombre,
 						usuario.apellido AS usuario_apellido,
 						usuario.estatus AS usuario_estatus
@@ -251,17 +332,17 @@
 				if($usuario === null)
 					throw new Exception($preMsg . ' El parámetro \'$usuario\' es nulo.');
 				
+				if($usuario->getContrasena() === null)
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getContrasena()\' es nulo.');
+				
+				if($usuario->getContrasena() === '')
+					throw new Exception($preMsg . ' El parámetro \'$usuario->getContrasena()\' está vacío.');
+				
 				if($usuario->getCedula() === null)
 					throw new Exception($preMsg . ' El parámetro \'$usuario->getCedula()\' es nulo.');
 				
 				if($usuario->getCedula() === '')
 					throw new Exception($preMsg . ' El parámetro \'$usuario->getCedula()\' está vacío.');
-				
-				if($usuario->getUsuario() === null)
-					throw new Exception($preMsg . ' El parámetro \'$usuario->getUsuario()\' es nulo.');
-				
-				if($usuario->getUsuario() === '')
-					throw new Exception($preMsg . ' El parámetro \'$usuario->getUsuario()\' está vacío.');
 				
 				if($usuario->getNombre() === null)
 					throw new Exception($preMsg . ' El parámetro \'$usuario->getNombre()\' es nulo.');
@@ -284,15 +365,17 @@
 				$query = "
 					INSERT INTO usuario
 						(
-							cedula,
 							usuario,
+							contrasena,
+							cedula,
 							nombre,
 							apellido
 						)
 					VALUES
 						(
-							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getCedula())."',
 							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getUsuario())."',
+							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getContrasena())."',
+							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getCedula())."',
 							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getNombre())."',
 							'".$GLOBALS['PATRONES_CLASS_DB']->Quote($usuario->getApellido())."'
 						)
@@ -304,7 +387,13 @@
 				if(($idUsuario = $GLOBALS['PATRONES_CLASS_DB']->LastId()) == 0)
 					throw new Exception($preMsg . ' El id del último usuario guardado no pudo ser obtenido .Más detalles: '
 						. $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
+					
+				$usuario->setId($idUsuario);
 				
+				// Guardar los roles del usuario
+				if(ModeloUsuarioRol::guardarUsuarioRol($usuario) === false)
+					throw new Exception($preMsg . ' No se pudieron guardar los roles del usuario.');
+							
 				// Commit de la transacción
 				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
 					throw new Exception($preMsg . ' No se pudo realizar el commit  de la transacción. Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());

@@ -79,7 +79,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="esAdministradorIncidencias"></label>
 					<div class="col-sm-5">
-						<input id="esAdministradorIncidencias" name="esAdministradorIncidencias" type="checkbox" value="true"<?php
+						<input id="esAdministradorIncidencias" type="checkbox" value="true"<?php
 							if($usuario != null)
 							{
 								$roles = $usuario->getRoles();
@@ -96,7 +96,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="esAdministradorUsuarios"></label>
 					<div class="col-sm-5">
-						<input id="esAdministradorUsuarios" name="esAdministradorUsuarios" type="checkbox" value="true"<?php
+						<input id="esAdministradorUsuarios" type="checkbox" value="true"<?php
 							if($usuario != null)
 							{
 								$roles = $usuario->getRoles();

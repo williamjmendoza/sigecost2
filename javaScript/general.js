@@ -19,3 +19,21 @@ function ingresar() {
 	$('#formIngreso').submit();
 	
 }
+
+function validarContrasenaUsuario()
+{
+	var contrasena = $.trim($('#contrasenaUsuario').val());
+	var contrasenaConfirmacion = $.trim($('#contrasenaConfirmacionUsuario').val());
+	
+	if ( contrasena != '')
+		$('#contrasenaCodUsuario').val(hex_md5(contrasena));
+	
+	if ( contrasenaConfirmacion != '')
+		$('#contrasenaConfirmacionCodUsuario').val(hex_md5(contrasenaConfirmacion));
+}
+
+function guardarUsuario(idForm)
+{
+	validarContrasenaUsuario();
+	$('#'+idForm+'').submit();
+}
