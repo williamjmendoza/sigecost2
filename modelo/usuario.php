@@ -9,7 +9,7 @@
 
 	class ModeloUsuario
 	{
-		public static function actualizarUsuario(EntidadUsuario $usuario)
+		public static function actualizarUsuario(EntidadUsuario $usuario, $actualizarRoles = true)
 		{
 			$preMsg = 'Error al actualizar el usuario.';
 			$resultTransaction = null;
@@ -71,9 +71,12 @@
 				if($GLOBALS['PATRONES_CLASS_DB']->Query($query) === false)
 					throw new Exception($preMsg . ' Detalles: ' . $GLOBALS['PATRONES_CLASS_DB']->GetErrorMsg());
 				
-				// Actualizar los roles del usuario
-				if(ModeloUsuarioRol::actualizarUsuarioRol($usuario) === false)
-					throw new Exception($preMsg . ' No se pudieron actualizar los roles del usuario.');
+				if($actualizarRoles === true)
+				{
+					// Actualizar los roles del usuario
+					if(ModeloUsuarioRol::actualizarUsuarioRol($usuario) === false)
+						throw new Exception($preMsg . ' No se pudieron actualizar los roles del usuario.');
+				}
 				
 				// Commit de la transacción
 				if($GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)

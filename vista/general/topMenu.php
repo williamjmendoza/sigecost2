@@ -33,7 +33,9 @@
 					</ul>
 				</li>
 				<?php } ?>
-				<li class="dropdown<?php echo $menuActivo=='administracionOntologia' ? ' active' : '' ?>">
+				<li class="dropdown<?php
+					echo $menuActivo=='administracionOntologia' || $menuActivo=='administracionUsuarios' ? ' active' : ''
+				?>">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<?php if($esAdministradorOntologia) {
 							echo "Administaci&oacute;n";
@@ -56,6 +58,9 @@
 					</ul>
 				</li>
 				<li class="<?php echo $menuActivo=='busqueda' ? ' active' : '' ?>"><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/buscar.php?accion=buscar">B&uacute;squedas</a></li>
+				<?php if($usuarioActual != null) {?>
+				<li class="<?php echo $menuActivo=='miCuenta' ? ' active' : '' ?>"><a href="<?php echo SIGECOST_PATH_URL_CONTROLADOR ?>/usuario.php?accion=modificarMiCuenta">Mi cuenta</a></li>
+				<?php } ?>
 			</ul>
 			<?php
 				if (ModeloSesion::estaSesionIniciada() !== true)

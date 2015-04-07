@@ -12,6 +12,13 @@
 	class ControladorUsuario extends Controlador
 	{
 		use ControladorTraitPaginacion;
+		
+		public function __construct()
+		{
+			$GLOBALS['SigecostRequestVars']['menuActivo'] = 'administracionUsuarios';
+				
+			parent::__construct();
+		}
 
 		public function actualizar()
 		{
@@ -55,7 +62,6 @@
 					
 					$this->__desplegarDetalles($isUsuario);
 					
-					
 				} else {
 					$this->__desplegarFormulario();
 				}
@@ -65,6 +71,54 @@
 				$this->__desplegarFormulario();
 			}
 			
+		}
+		
+		public function actualizarMiCuenta()
+		{
+			try
+			{
+				$GLOBALS['SigecostRequestVars']['menuActivo'] = 'miCuenta';
+				
+				$form = FormularioManejador::getFormulario(FORM_USUARIO_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+			
+				$usuarioActual = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuario') : null;
+				
+				if( $usuarioActual === null )
+					throw new Exception("No posee permisos para realizar esta operacion.");
+			
+				if( ($usuario = ModeloUsuario::obtenerUsuarioPorId($usuarioActual->getId())) === null || $usuario === false)
+					throw new Exception("El usuario no pudo ser cargado.");
+			
+				$form->setUsuario($usuario);
+				
+				try
+				{
+					$this->__validarUsuario($form);
+					$this->__validarContrasenaActualizar($form);
+					
+					// Verificar que no hubo nigún error con los datos suministrados en el formulario
+					if(count($GLOBALS['SigecostErrors']['general']) == 0)
+					{
+						// Actualizar los dtos del usuario en la base de datos
+						$isUsuario = ModeloUsuario::actualizarUsuario($form->getUsuario(), false);
+							
+						if($isUsuario === false)
+							throw new Exception("Los datos no pudieron ser actualizados");
+						
+						$GLOBALS['SigecostInfo']['general'][] = "Datos actualizados satisfactoriamente.";
+					}
+				} catch (Exception $e){
+					$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+					require ( SIGECOST_PATH_VISTA . '/usuario/miCuentaModificar.php' );
+				}
+				
+				require ( SIGECOST_PATH_VISTA . '/usuario/miCuentaModificar.php' );
+			
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				require ( SIGECOST_PATH_BASE . '/index.php' );
+			}
 		}
 		
 		public function buscar()
@@ -185,6 +239,33 @@
 			} catch (Exception $e){
 				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
 				$this->__desplegarFormulario();
+			}
+		}
+		
+		public function modificarMiCuenta()
+		{
+			try
+			{
+				$GLOBALS['SigecostRequestVars']['menuActivo'] = 'miCuenta';
+				
+				$form = FormularioManejador::getFormulario(FORM_USUARIO_INSERTAR_MODIFICAR);
+				$form->SetTipoOperacion(Formulario::TIPO_OPERACION_MODIFICAR);
+				
+				$usuarioActual = ModeloSesion::estaSesionIniciada() === true ? ModeloGeneral::getConfInitial('usuario') : null;
+				
+				if( $usuarioActual === null )
+					throw new Exception("No posee permisos para realizar esta operacion.");
+				
+				if( ($usuario = ModeloUsuario::obtenerUsuarioPorId($usuarioActual->getId())) === null || $usuario === false)
+					throw new Exception("El usuario no pudo ser cargado.");
+				
+				$form->setUsuario($usuario);
+				
+				require ( SIGECOST_PATH_VISTA . '/usuario/miCuentaModificar.php' );
+				
+			} catch (Exception $e){
+				$GLOBALS['SigecostErrors']['general'][] = $e->getMessage();
+				require ( SIGECOST_PATH_BASE . '/index.php' );
 			}
 		}
 		
