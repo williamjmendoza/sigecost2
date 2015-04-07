@@ -152,5 +152,122 @@
 			}
 			return null;
 		}
+		
+		public static function agregarInstanciaAColeccion($instancia)
+		{
+			$preMsg = "Error al agregar una instancia a una colección.";
+			$perteneceAColeccion = null;
+			$ultimoNodo = null;
+			
+			try
+			{
+				if ($instancia === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
+				
+				if (($instancia=trim($instancia)) == '')
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' está vacío.');
+				
+				// Consultar si la instancia pertenece a una colección
+				$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				
+						ASK
+						{
+							?nodo ?property <'.$instancia.'> .
+							FILTER (
+								?property = rdf:first
+								|| ?property = rdf:rest
+							) .
+						}
+				';
+				
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+				
+				if($result['result'] === true) // Ya pertenece a una colección
+				 return true;
+				
+				// Buscar el último miembro de la colección
+				$query = '
+					PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX owl: <http://www.w3.org/2002/07/owl#>
+					SELECT
+						?nodo
+					WHERE
+					{
+						<'.$instancia.'> rdf:type ?clase .
+						?ultimaInstancia rdf:type ?clase .
+						?nodo rdf:first ?ultimaInstancia .
+						?nodo rdf:rest rdf:nil .
+					}
+				';
+				
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . " Error al buscar el último miembro de la colección. Detalles:\n". join("\n", $errors));
+				
+				if (is_array($rows) && count($rows) > 0)
+				{
+					$row = current($rows);
+					$ultimoNodo = $row['nodo'];
+				}
+				
+				if(!$ultimoNodo || $ultimoNodo == null || $ultimoNodo == '')
+					throw new Exception($preMsg . " Error al cargar el último miembro de la colección. Detalles:\n". join("\n", $errors));
+				
+				// Guardar los registros para agregar la instancia como último mimbro de la colección
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+			
+					INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
+					{
+						?nodo rdf:rest [ rdf:first <'.$instancia.'>; rdf:rest rdf:nil ]
+					}
+					WHERE
+					{
+						<'.$instancia.'> rdf:type ?clase .
+						?ultimaInstancia rdf:type ?clase .
+						?nodo rdf:first ?ultimaInstancia .
+						?nodo rdf:rest rdf:nil .
+					}
+				';
+				
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg. "Error al agregar la instancia como ultimo miembro de la coleccion. Detalles:\n". join("\n", $errors));
+				
+				// Borrar el registro con el rdf:nill del último nodo anterior
+				$query = '
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+					DELETE FROM <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
+					{
+						'.$ultimoNodo.' rdf:rest rdf:nil
+					}
+				';
+				
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+				
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . " No se pudo eliminar el registro con el rdf:nil. Detalles:\n" . join("\n", $errors));
+				
+				if($result["result"]["t_count"] == 0)
+					throw new Exception($preMsg . ' Detalles: No se eliminó ningún registro.');
+				
+				return true;
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return null;
+			}
+		}
 	}
 ?>

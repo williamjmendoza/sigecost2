@@ -37,6 +37,11 @@
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getModelo()\' está vacío.');
 				
 				// Iniciar la transacción
+				
+				// Agregar la instancia a una colección, si no pertenece
+				if(($result = ModeloGeneral::agregarInstanciaAColeccion($instancia->getIri())) !== true)
+					throw new Exception($preMsg . ' Error al intentar agregar la instancia a una colección.');
+				
 				// Borrar los datos anteriores de la instancia}
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
@@ -381,6 +386,10 @@
 
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception("Error al guardar la instancia de impresora. Detalles:\n". join("\n", $errors));
+				
+				// Agregar la instancia a una colección
+				if(($result = ModeloGeneral::agregarInstanciaAColeccion(SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia)) !== true)
+					throw new Exception($preMsg . ' Error al intentar agregar la instancia a una colección.');
 
 				return SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia;
 

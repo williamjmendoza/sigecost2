@@ -177,6 +177,97 @@
 					
 			';
 			
+			
+			$query = '
+				PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				PREFIX owl: <http://www.w3.org/2002/07/owl#>
+				SELECT
+					?subject ?property ?object
+				WHERE
+				{
+					
+					_:instancia rdf:type kb:AplicacionOfimatica .
+					?subject ?dshhd _:instancia .
+					?subject ?property ?object .
+					
+				#	FILTER (
+				#		?property = rdf:first
+				#		|| ?property = rdf:rest
+				#	)
+				}
+					
+				#ORDER BY
+				#	?subject
+			
+			';
+			
+
+			$query = '
+				PREFIX kb: <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				PREFIX owl: <http://www.w3.org/2002/07/owl#>
+				SELECT
+					?nodo1 ?nodo2 ?instancia1 ?Clase1
+				WHERE
+				{
+					?nodo1 rdf:type owl:AllDifferent .
+					?nodo1 owl:distinctMembers ?nodo2 .
+					?nodo2 rdf:first ?instancia1 .
+					?instancia1 rdf:type ?Clase1 .
+				}
+			';
+
+
+			
+			$query = '
+				PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				PREFIX owl: <http://www.w3.org/2002/07/owl#>
+				SELECT
+					?instancia
+				WHERE
+				{
+					?instancia rdf:type :AplicacionOfimatica .
+					?algo1 ?algo2 (?instancia)
+				}
+			';
+			
+			
+			echo "Instancias Mienbros de AplicacionOfimatica";
+			
+			$query = '
+				PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				PREFIX owl: <http://www.w3.org/2002/07/owl#>
+				SELECT
+					?nodo ?instancia
+				WHERE
+				{
+					{
+						?instancia rdf:type :AplicacionOfimatica .
+						?nodo ?property ?instancia .
+						FILTER (
+							?property = owl:distinctMembers
+							|| ?property = rdf:first
+							|| ?property = rdf:rest
+						) .
+					}
+				}
+			';
+			
+			
+			
+			
+			/*
+			_:b4282073036_rcf27db198 	http://www.w3.org/1999/02/22-rdf-syntax-ns#type 	http://www.w3.org/2002/07/owl#AllDifferent
+			_:b4282073036_rcf27db198 	http://www.w3.org/2002/07/owl#distinctMembers 	_:b2285637466_rcf27db199
+			_:b2285637466_rcf27db199 	http://www.w3.org/1999/02/22-rdf-syntax-ns#first 	http://www.owl-ontologies.com/OntologySoporteTecnico.owl#ontologiasoportetecnicov1_Class30043
+			_:b2285637466_rcf27db199 	http://www.w3.org/1999/02/22-rdf-syntax-ns#rest 	_:b577024750_rcf27db200
+			 * 
+			 * */
+			
+			
 			$this->execute($query);
 		}
 		
@@ -338,6 +429,43 @@
 					))
 				LIMIT 1
 			';
+				
+			$this->execute($query);
+		}
+		
+		public function getMiemnbrosColeccion()
+		{
+			$miembrosclase = 'AplicacionOfimatica';
+			
+			echo "Instancias Miembros de ".$miembrosclase."<br><br>";
+				
+			$query = '
+				PREFIX : <http://www.owl-ontologies.com/OntologySoporteTecnico.owl#>
+				PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+				PREFIX owl: <http://www.w3.org/2002/07/owl#>
+				SELECT
+					?nodo ?instancia
+				WHERE
+				{
+					{
+						?instancia rdf:type :'.$miembrosclase.' .
+						?nodo ?property ?instancia .
+						FILTER (
+							?property = owl:distinctMembers
+							|| ?property = rdf:first
+							|| ?property = rdf:rest
+						) .
+					}
+				}
+			';
+				
+			/*
+			 _:b4282073036_rcf27db198 	http://www.w3.org/1999/02/22-rdf-syntax-ns#type 	http://www.w3.org/2002/07/owl#AllDifferent
+			_:b4282073036_rcf27db198 	http://www.w3.org/2002/07/owl#distinctMembers 	_:b2285637466_rcf27db199
+			_:b2285637466_rcf27db199 	http://www.w3.org/1999/02/22-rdf-syntax-ns#first 	http://www.owl-ontologies.com/OntologySoporteTecnico.owl#ontologiasoportetecnicov1_Class30043
+			_:b2285637466_rcf27db199 	http://www.w3.org/1999/02/22-rdf-syntax-ns#rest 	_:b577024750_rcf27db200
+			*
+			* */
 				
 			$this->execute($query);
 		}
