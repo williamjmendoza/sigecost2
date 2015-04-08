@@ -153,6 +153,47 @@
 			return null;
 		}
 		
+		public static function perteneceInstanciaAColeccion($instancia)
+		{
+			$preMsg = "Error al verificar si una instancia pertenece a una colección.";
+				
+			try
+			{
+				if ($instancia === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
+		
+				if (($instancia=trim($instancia)) == '')
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' está vacío.');
+		
+				// Consultar si la instancia pertenece a una colección
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+					ASK
+					{
+						?nodo ?property <'.$instancia.'> .
+						FILTER (
+							?property = rdf:first
+							|| ?property = rdf:rest
+						) .
+					}
+				';
+		
+				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+		
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+		
+				return $result['result'];
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return null;
+			}
+		}
+				
+		
 		public static function agregarInstanciaAColeccion($instancia)
 		{
 			$preMsg = "Error al agregar una instancia a una colección.";
@@ -167,27 +208,10 @@
 				if (($instancia=trim($instancia)) == '')
 					throw new Exception($preMsg . ' El parámetro \'$instancia\' está vacío.');
 				
-				// Consultar si la instancia pertenece a una colección
-				$query = '
-					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
-					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-			
-					ASK
-					{
-						?nodo ?property <'.$instancia.'> .
-						FILTER (
-							?property = rdf:first
-							|| ?property = rdf:rest
-						) .
-					}
-				';
+				if(($perteneceAColeccion = self::perteneceInstanciaAColeccion($instancia)) === null)
+					throw new Exception($preMsg . "  Error al verificar si la instancia pertenece a una colección");
 				
-				$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
-				
-				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
-					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
-				
-				if($result['result'] === true) // Ya pertenece a una colección
+				if($perteneceAColeccion === true) // Ya pertenece a una colección
 				 return true;
 				
 				// Consultar si existe una colección de la clase de la instancia
@@ -239,6 +263,7 @@
 					
 					if (is_array($rows) && count($rows) > 0)
 					{
+						reset($rows);
 						$row = current($rows);
 						$ultimoNodo = $row['nodo'];
 					}
@@ -267,7 +292,7 @@
 					$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
 					
 					if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
-						throw new Exception($preMsg. "Error al agregar la instancia como ultimo miembro de la coleccion. Detalles:\n". join("\n", $errors));
+						throw new Exception($preMsg. " Error al agregar la instancia como ultimo miembro de la coleccion. Detalles:\n". join("\n", $errors));
 					
 					// Borrar el registro con el rdf:nill del último nodo anterior
 					$query = '
@@ -314,6 +339,187 @@
 				error_log($e, 0);
 				return null;
 			}
+		}
+		
+		public static function eliminarInstanciaDeColeccion($instancia)
+		{
+			$preMsg = "Error al eliminar una instancia de una colección.";
+			$perteneceAColeccion = null;
+			$totalMiembros = null;
+			$datos = null;
+			
+			try
+			{
+				if ($instancia === null)
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
+				
+				if (($instancia=trim($instancia)) == '')
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' está vacío.');
+				
+				// Verificar si la instancia pertenece a una colección
+				if(($perteneceAColeccion = self::perteneceInstanciaAColeccion($instancia)) === null)
+					throw new Exception($preMsg . "  Error al verificar si la instancia pertenece a una colección");
+				
+				
+				if($perteneceAColeccion !== true) // No pertenece a ninguna colección
+					return true;
+				
+				// Contar el número de miembros de la colección
+				$query = '
+					PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+					PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+					SELECT DISTINCT
+						(COUNT(?instanciaMiembro) AS ?totalMiembros)
+					WHERE
+					{
+						<'.$instancia.'> rdf:type ?clase .
+						?instanciaMiembro rdf:type ?clase .
+						?nodo ?property ?instanciaMiembro .
+						FILTER (
+							?property = rdf:first
+							|| ?property = rdf:rest
+						) .
+					}
+				';
+				
+				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+
+				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+					throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+					
+				if (is_array($rows) && count($rows) > 0){
+					reset($rows);
+					$totalMiembros = current($rows)['totalMiembros'];
+				} else {
+					$totalMiembros = 0;
+				}
+				
+				if($totalMiembros <= 0)
+					throw new Exception($preMsg . "  No se pudo obtener el número de miembros de la colección de la clase de la instancia.");
+				
+				if($totalMiembros == 1) // Se debe eliminar la instancia miembro y toda la estructura de la colección
+				{
+					
+					// Borrar las instancia miembro y la estructura de la colección
+					$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						PREFIX owl: <http://www.w3.org/2002/07/owl#>
+						
+						DELETE FROM <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
+						{
+							?nodo1 rdf:type owl:AllDifferent .
+							?nodo1 owl:distinctMembers ?nodo2 .
+							?nodo2 rdf:first <'.$instancia.'> .
+							?nodo2 rdf:rest rdf:nil .
+						}
+						WHERE
+						{
+							?nodo1 rdf:type owl:AllDifferent .
+							?nodo1 owl:distinctMembers ?nodo2 .
+							?nodo2 rdf:first <'.$instancia.'> .
+							?nodo2 rdf:rest rdf:nil .
+						}
+					';
+					
+					$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+					
+					if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+						throw new Exception($preMsg . " . Detalles:\n" . join("\n", $errors));
+					
+					if($result["result"]["t_count"] == 0) {
+						// Excepción porque no se pudieron borrar los datos de la instancia, para que se ejecute el Rollback
+						throw new Exception($preMsg . ' Detalles: No se eliminó ningún registro.');
+					}
+					
+				} else // Se debe eliminar la instancia miembro y corregir los apuntadores
+				{
+					
+					$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+						
+						SELECT
+							?nodoPrevio ?propiedadPrevia ?nodo ?nodoSiguiente 
+						WHERE
+						{
+							?nodoPrevio ?propiedadPrevia ?nodo .
+							?nodo rdf:first <'.$instancia.'> .
+							?nodo rdf:rest ?nodoSiguiente .
+							FILTER (
+								?propiedadPrevia = owl:distinctMembers
+								|| ?propiedadPrevia = rdf:rest
+							) .
+						}
+					';
+					
+					$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
+					
+					if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+						throw new Exception($preMsg . "  Detalles:\n". join("\n", $errors));
+						
+					if (is_array($rows) && count($rows) > 0){
+						reset($rows);
+						$datos = current($rows);
+					} else 
+						throw new Exception($preMsg . "  No se pudieron consultar los datos de la instancia miembro de la colección");
+					
+					// Guardar los registros para acomodar los apuntadores de los miembros de la colección, tras eliminar una instancia miembro
+					$query = '
+						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+					
+						INSERT INTO <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
+						{
+							?nodoPrevio ?propiedadPrevia ?nodoSiguiente .
+						}
+						WHERE
+						{
+							?nodoPrevio ?propiedadPrevia ?nodo .
+							?nodo rdf:first <'.$instancia.'> .
+							?nodo rdf:rest ?nodoSiguiente .
+							FILTER (
+								?propiedadPrevia = owl:distinctMembers
+								|| ?propiedadPrevia = rdf:rest
+							) .	
+						}
+					';
+						
+					$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+						
+					if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+						throw new Exception($preMsg. " Detalles:\n". join("\n", $errors));
+						
+					// Borrar la instacia miembro de la colección
+					$query = '
+						PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+		
+						DELETE FROM <'.SIGECOST_IRI_GRAFO_POR_DEFECTO.'>
+						{
+							'.$datos['nodoPrevio'].' <'.$datos['propiedadPrevia'].'> '.$datos['nodo'].' .
+							'.$datos['nodo'].' rdf:first <'.$instancia.'> .
+							'.$datos['nodo'].' rdf:rest '
+								.($datos['nodoSiguiente']=='http://www.w3.org/1999/02/22-rdf-syntax-ns#nil' ? '<'.$datos['nodoSiguiente'].'>' : $datos['nodoSiguiente']).'
+						}
+					';
+						
+					$result = $GLOBALS['ONTOLOGIA_STORE']->query($query);
+						
+					if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
+						throw new Exception($preMsg . " Detalles:\n" . join("\n", $errors));
+						
+					if($result["result"]["t_count"] == 0)
+						throw new Exception($preMsg . ' Detalles: No se eliminó ningún registro.');
+				}
+				
+				return true;
+				
+			} catch (Exception $e) {
+				error_log($e, 0);
+				return null;
+			}
+			
 		}
 	}
 ?>
