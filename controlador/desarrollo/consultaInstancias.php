@@ -435,9 +435,47 @@
 		
 		public function getMiembrosColeccion()
 		{
+			//$miembrosclase = 'AplicacionGraficaDigitalDibujoDiseno';
+			//$miembrosclase = 'AplicacionOfimatica';
+			//$miembrosclase = 'AplicacionProduccionAudiovisualMusica';
+			//$miembrosclase = 'AplicacionReproduccionSonidoVideo';
+			//$miembrosclase = 'Consumible';
+			//$miembrosclase = 'ComputadorEscritorio';
+			//$miembrosclase = 'Fotocopiadora';
+			//$miembrosclase = 'Impresora';
+			//$miembrosclase = 'SistemaOperativo';
+			
+			$miembrosclase = 'DesinstalacionAplicacionGraficaDigitalDibujoDiseno';
+			//$miembrosclase = 'InstalacionAplicacionGraficaDigitalDibujoDiseno';
+			//$miembrosclase = 'CorregirCierreInesperado';
+			//$miembrosclase = 'DesinstalacionAplicacionOfimatica';
+			//$miembrosclase = 'InstalacionAplicacionOfimatica';
+			//$miembrosclase = 'RestablecerBarrasHerramientasFuncionFormatoDibujo';
+			//$miembrosclase = 'DesinstalacionAplicacionProduccionAudiovisualMusica';
+			//$miembrosclase = 'InstalacionAplicacionProduccionAudiovisualMusica';
+			//$miembrosclase = 'DesinstalacionAplicacionReproduccionSonidoVideo';
+			//$miembrosclase = 'InstalacionAplicacionReproduccionSonidoVideo';
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			//$miembrosclase = 'AplicacionOfimatica';
 			//$miembrosclase = 'DesinstalacionAplicacionGraficaDigitalDibujoDiseno';
-			$miembrosclase = 'Escaner';
+			//$miembrosclase = 'Escaner';
 			
 			echo "Instancias Miembros de ".$miembrosclase."<br><br>";
 				
