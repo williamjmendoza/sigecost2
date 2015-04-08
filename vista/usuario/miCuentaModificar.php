@@ -35,7 +35,7 @@
 		<div class="container">
 		
 			<div class="page-header">
-				<h1>Mi Cuenta</h1>
+				<h1>Mi cuenta</h1>
 			</div>
 			
 			<form id="formUsuario" class="form-horizontal" role="form" method="post" action="usuario.php">

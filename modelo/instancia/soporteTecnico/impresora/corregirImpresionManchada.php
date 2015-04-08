@@ -42,7 +42,7 @@
 				
 				if($instanciaGuardada->getUrlSoporteTecnico() != "" && $instanciaGuardada->getPatron() === null)
 					throw new Exception($preMsg . ' No se pudo obtener el patrón asociado a la instancia que se desea actualizar.');
-
+				
 				// Crear el nombre del patrón de soporte técnico
 				if(self::establecerNombrePatron($instancia) === false)
 					throw new Exception($preMsg . ' No se pudo establecer el nombre del patrón de soporte técnico.');
@@ -76,6 +76,10 @@
 				}
 
 				// Iniciar la transacción
+				
+				// Agregar la instancia a una colección, si no pertenece
+				if(($result = ModeloGeneral::agregarInstanciaAColeccion($instancia->getIri())) !== true)
+					throw new Exception($preMsg . ' Error al intentar agregar la instancia a una colección.');
 
 				// Borrar los datos anteriores de la instancia
 				$query = '
@@ -510,6 +514,10 @@
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception("Error al guardar la instancia de soporte técnico en impresora para corregir impresión manchada. Detalles:\n" .
 						join("\n", $errors));
+					
+				// Agregar la instancia a una colección
+				if(($result = ModeloGeneral::agregarInstanciaAColeccion(SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia)) !== true)
+					throw new Exception($preMsg . ' Error al intentar agregar la instancia a una colección.');
 					
 				// Commit de la transacción de patrones
 				if($guardarPatron && $GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)

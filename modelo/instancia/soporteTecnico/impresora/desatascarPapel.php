@@ -17,16 +17,16 @@
 			try
 			{
 				if ($instancia === null)
-					throw new Exception($preMsg . ' El par�metro \'$instancia\' es nulo.');
+					throw new Exception($preMsg . ' El parámetro \'$instancia\' es nulo.');
 
 				if($instancia->getIri() == "")
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getIri()\' está vacío.');
 				
 				if($instancia->getEquipoReproduccion() === null)
-								throw new Exception($preMsg . ' El par�metro \'$instancia->getEquipoReproduccion()\' es nulo.');
+								throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()\' es nulo.');
 
 				if($instancia->getEquipoReproduccion()->getIri() == "")
-								throw new Exception($preMsg . ' El par�metro \'$instancia->getEquipoReproduccion()->getIri()\' est� vac�o.');
+								throw new Exception($preMsg . ' El parámetro \'$instancia->getEquipoReproduccion()->getIri()\' está vacío.');
 				
 				if($instancia->getPatron() === null)
 					throw new Exception($preMsg . ' El parámetro \'$instancia->getPatron()\' es nulo.');
@@ -76,6 +76,12 @@
 				}
 
 				// Iniciar la transacción
+				
+				
+				// Agregar la instancia a una colección, si no pertenece
+				if(($result = ModeloGeneral::agregarInstanciaAColeccion($instancia->getIri())) !== true)
+					throw new Exception($preMsg . ' Error al intentar agregar la instancia a una colección.');
+				
 				// Borrar los datos anteriores de la instancia
 				$query = '
 						PREFIX : <'.SIGECOST_IRI_ONTOLOGIA_NUMERAL.'>
@@ -506,6 +512,10 @@
 				if ($errors = $GLOBALS['ONTOLOGIA_STORE']->getErrors())
 					throw new Exception("Error al guardar la instancia de soporte técnico en impresora para desatascar papel. Detalles:\n" .
 						join("\n", $errors));
+					
+				// Agregar la instancia a una colección
+				if(($result = ModeloGeneral::agregarInstanciaAColeccion(SIGECOST_IRI_ONTOLOGIA_NUMERAL.$fragmentoIriInstancia)) !== true)
+					throw new Exception($preMsg . ' Error al intentar agregar la instancia a una colección.');
 					
 				// Commit de la transacción de patrones
 				if($guardarPatron && $GLOBALS['PATRONES_CLASS_DB']->CommitTransaction() === false)
