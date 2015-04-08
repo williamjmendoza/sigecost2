@@ -460,17 +460,9 @@
 					}
 				}
 			';
-				
-			
 			
 			/*
-			 
-			_:b2795678810_arc25f3b40 	http://www.w3.org/1999/02/22-rdf-syntax-ns#type 	http://www.w3.org/2002/07/owl#AllDifferent
-			_:b2795678810_arc25f3b40 	http://www.w3.org/2002/07/owl#distinctMembers 	_:b3517291724_arc25f3b41
-			_:b3517291724_arc25f3b41 	http://www.w3.org/1999/02/22-rdf-syntax-ns#first 	http://www.owl-ontologies.com/OntologySoporteTecnico.owl#ontologiasoportetecnicov1_Class50043
-			_:b3517291724_arc25f3b41 	http://www.w3.org/1999/02/22-rdf-syntax-ns#rest 	_:b1219284342_arc25f3b42
-			  
-			 _:b4282073036_rcf27db198 	http://www.w3.org/1999/02/22-rdf-syntax-ns#type 	http://www.w3.org/2002/07/owl#AllDifferent
+			_:b4282073036_rcf27db198 	http://www.w3.org/1999/02/22-rdf-syntax-ns#type 	http://www.w3.org/2002/07/owl#AllDifferent
 			_:b4282073036_rcf27db198 	http://www.w3.org/2002/07/owl#distinctMembers 	_:b2285637466_rcf27db199
 			_:b2285637466_rcf27db199 	http://www.w3.org/1999/02/22-rdf-syntax-ns#first 	http://www.owl-ontologies.com/OntologySoporteTecnico.owl#ontologiasoportetecnicov1_Class30043
 			_:b2285637466_rcf27db199 	http://www.w3.org/1999/02/22-rdf-syntax-ns#rest 	_:b577024750_rcf27db200

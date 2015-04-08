@@ -262,6 +262,10 @@
 		
 				if($iri == "")
 					throw new Exception($preMsg . ' El parámetro \'$iri\' está vacío.');
+				
+				// Eliminar la instancia de la colección a la que pertenece
+				if(ModeloGeneral::eliminarInstanciaDeColeccion($iri) !== true)
+					throw new Exception($preMsg . ' Error al intentar eliminar la instancia de una colección.');
 
 				// Borrar los datos de la instancia desde la base de datos
 				$query = '

@@ -356,6 +356,12 @@
 				if($instanciaGuardada->getUrlSoporteTecnico() != "" && $instanciaGuardada->getPatron() === null)
 					throw new Exception($preMsg . ' No se pudo obtener el patrón asociado a la instancia que se desea actualizar.');
 				
+				// Iniciar la transacción
+				
+				// Eliminar la instancia de la colección a la que pertenece
+				if(ModeloGeneral::eliminarInstanciaDeColeccion($iri) !== true)
+					throw new Exception($preMsg . ' Error al intentar eliminar la instancia de una colección.');
+				
 				// Iniciar la transacción de patrones
 				$resultTransactionPatrones = $GLOBALS['PATRONES_CLASS_DB']->StartTransaction();
 				
