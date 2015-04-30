@@ -223,7 +223,7 @@
 				foreach ($hojasCoincidentesET AS $iriHojaCoincidente => $elemento)
 				{
 					$filtroHojasCoincidentesClaseET .= '
-									|| ?claseET = <'.$iriHojaCoincidente.'>';
+								' . ($filtroHojasCoincidentesClaseET != '' ? '|| ' : '') . ' ?claseET = <'.$iriHojaCoincidente.'>';
 				}
 				
 				return $filtroHojasCoincidentesClaseET;
@@ -326,7 +326,7 @@
 				foreach ($hojasCoincidentesST AS $iriHojaCoincidente => $elemento)
 				{
 					$filtroHojasCoincidentesClaseST .= '
-								|| ?claseST = <'.$iriHojaCoincidente.'>';
+								' . ($filtroHojasCoincidentesClaseST != '' ? '|| ' : '') . ' ?claseST = <'.$iriHojaCoincidente.'>';
 				}
 					
 				return $filtroHojasCoincidentesClaseST;
@@ -395,6 +395,8 @@
 					'.$desplazamiento.'
 					'.$limite.'
 				';
+				
+				error_log("Filtro: " .print_r($query, true));
 				
 				$rows = $GLOBALS['ONTOLOGIA_STORE']->query($query, 'rows');
 					
@@ -604,6 +606,9 @@
 				$filtroHojasCoincidentesClaseST = ''
 		){
 			$where = '';
+			$arrayClaves = explode(" ", $clave);
+			
+			error_log("Clave: " . print_r($arrayClaves, true));
 			
 			if ($buscarEnPropiedades === true)
 			{
@@ -616,16 +621,60 @@
 			
 			if($buscarEnInstancias === true)
 			{
+				//$where = '';
+				
+				
+				foreach ($arrayClaves AS $index => $palabra)
+				{
+					if($index == 0)
+					{
+						$where .= '
+								# Filtro sobre las instancias (valor de propiedad)
+								'.($where != '' ? '|| ' : '').'regex(?valorPropiedadET, "'.$palabra.'"^^xsd:string,  "i")';
+					}
+					else{
+						$where .= '
+								|| regex(?valorPropiedadET, "'.$palabra.'"^^xsd:string,  "i")';
+					}
+				}
+				
+				/*
 				$where .= '
 								# Filtro sobre las instancias (valor de propiedad)
 								'.($where != '' ? '|| ' : '').'regex(?valorPropiedadET, "'.$clave.'"^^xsd:string,  "i")
 				';
+				*/
 			}
 			
+			if($filtroHojasCoincidentesClaseET != '')
+			{
+				$where .= '
+						
+								# Filtro sobre clases de elemento tecnológico
+								'.($where != '' ? '|| ' : '').$filtroHojasCoincidentesClaseET.'
+				';
+			}
+			
+			if($filtroHojasCoincidentesClaseST != '')
+			{
+				$where .= '
+						
+								# Filtro sobre clases de soporte técnico
+								'.($where != '' ? '|| ' : '').$filtroHojasCoincidentesClaseST.'
+				';
+			}
+			
+			if($where != '')
+				$where = 'FILTER(
+								'.$where.'
+							) . ';
+			
+			/*
 			if($where == '')
 				$where = '
 								1 = 2 # Provocar un filtro false, de manera que las coincidencias sean provocadas por los otros filtros 
 				';
+			*/
 			
 			return 
 			'
@@ -638,15 +687,7 @@
 							?instanciaET ?propiedadET ?valorPropiedadET .
 							?propiedadET rdfs:label ?labelPropiedadET .
 							?propiedadET rdfs:comment ?commentPropiedadET .
-							FILTER (
-								'.$where.'
-		
-								# Filtro sobre clases de elemento tecnológico
-								'.$filtroHojasCoincidentesClaseET.'
-		
-								# Filtro sobre clases de soporte técnico
-								'.$filtroHojasCoincidentesClaseST.'
-							) .
+							'.$where.'
 							FILTER isLiteral(?valorPropiedadET) .
 			';
 			

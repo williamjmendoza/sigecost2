@@ -55,7 +55,8 @@
 				if($rows)
 				{
 					reset($rows);
-					$iriInstancia = current($rows)['iriInstanciaMayorConsecutivo'];
+					$iriInstancia = current($rows);
+					$iriInstancia = $iriInstancia['iriInstanciaMayorConsecutivo'];
 					
 					// Descomponer el iri de instancia de la clase indicada con mayor número consecutivo,
 					// para obtener dicho número consecutivo, y luego sumarle el valor de uno (1)
@@ -390,7 +391,8 @@
 					
 				if (is_array($rows) && count($rows) > 0){
 					reset($rows);
-					$totalMiembros = current($rows)['totalMiembros'];
+					$totalMiembros = current($rows);
+					$totalMiembros = $totalMiembros['totalMiembros'];
 				} else {
 					$totalMiembros = 0;
 				}
