@@ -608,8 +608,6 @@
 			$where = '';
 			$arrayClaves = explode(" ", $clave);
 			
-			error_log("Clave: " . print_r($arrayClaves, true));
-			
 			if ($buscarEnPropiedades === true)
 			{
 				$where = '
@@ -621,9 +619,7 @@
 			
 			if($buscarEnInstancias === true)
 			{
-				//$where = '';
-				
-				
+				/*
 				foreach ($arrayClaves AS $index => $palabra)
 				{
 					if($index == 0)
@@ -636,14 +632,12 @@
 						$where .= '
 								|| regex(?valorPropiedadET, "'.$palabra.'"^^xsd:string,  "i")';
 					}
-				}
+				}*/
 				
-				/*
 				$where .= '
 								# Filtro sobre las instancias (valor de propiedad)
 								'.($where != '' ? '|| ' : '').'regex(?valorPropiedadET, "'.$clave.'"^^xsd:string,  "i")
 				';
-				*/
 			}
 			
 			if($filtroHojasCoincidentesClaseET != '')
